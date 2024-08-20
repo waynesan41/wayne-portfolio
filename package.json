@@ -1,0 +1,21 @@
+{
+  "name": "background-raycast-objects",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3000 --host",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@tweenjs/tween.js": "^25.0.0",
+    "@types/three": "^0.167.1",
+    "three": "^0.167.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.4"
+  },
+  "dependencies": {
+    "lil-gui": "^0.19.2"
+  }
+}
