@@ -127,12 +127,12 @@ class HomeFlower {
     console.time('.build()')
 
     //   sampler = new MeshSurfaceSampler(surface)
-    console.log(planeModel)
+    // console.log(planeModel)
     this.sampler = new MeshSurfaceSampler(planeModel!)
       .setWeightAttribute(this.api.distribution === 'weighted' ? 'uv' : null)
       .build()
 
-    console.log(this.sampler)
+    // console.log(this.sampler)
 
     console.timeEnd('.build()')
     console.time('.sample()')

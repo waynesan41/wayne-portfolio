@@ -49,7 +49,7 @@ async function init() {
     75,
     window.innerWidth / window.innerHeight,
     0.1,
-    1000
+    700
   )
   controls = new OrbitControls(camera, renderer.domElement)
   await new RGBELoader()
@@ -65,7 +65,6 @@ async function init() {
   // ================ Home Page Loading
   homePage = new HomePage(scene)
   await homePage.loadFile()
-  console.log(homePage.pillerModel)
   addRaycast(homePage.clickables)
   // cameraControlMove.addTween(homePage.pillerModel!, homePage.pageControl)
   cameraControlMove.addTween(homePage.gltf.scene!, homePage.pageControl)
@@ -75,17 +74,22 @@ async function init() {
   await flowerGrow.loadFile()
   flowerGrow.resample(homePage.planeModel)
 
-  // ================ WebApp Page Loading
+  // ================ WEBAPP Page Loading
   webAppPage = new WebAppPage(scene)
   await webAppPage.loadFile()
   cameraControlMove.addTween(webAppPage.gltf.scene!, webAppPage.pageControl)
 
-  // ================ WebApp Page Loading
+  // ================ MOBILE Page Loading
   androidPage = new AndroidPage(scene)
   await androidPage.loadFile()
   cameraControlMove.addTween(androidPage.gltf.scene!, androidPage.pageControl)
 
-  // ================ Work Page Loading
+  // ================ WORK Page Loading
+  workPage = new WorkPage(scene)
+  await workPage.loadFile()
+  cameraControlMove.addTween(workPage.gltf.scene!, workPage.pageControl)
+
+  // ================ EDUCATION Page Loading
   educationPage = new EducationPage(scene)
   await educationPage.loadFile()
   cameraControlMove.addTween(
@@ -93,11 +97,7 @@ async function init() {
     educationPage.pageControl
   )
 
-  // ================ Work Page Loading
-  workPage = new WorkPage(scene)
-  await workPage.loadFile()
-  cameraControlMove.addTween(workPage.gltf.scene!, workPage.pageControl)
-
+  //--------------------------------------------------
   cameraControlMove.positionCamera()
   //--------------------------------------------------
   // stats = new Stats()
@@ -106,6 +106,8 @@ async function init() {
 
   window.addEventListener('resize', onWindowResize)
   animate()
+
+  navToggle()
 } // END Init
 
 function onWindowResize() {
@@ -159,5 +161,28 @@ function addRaycast(clickables: Clickable[]) {
     // intersects.forEach((i) => {
     //   ;(i.object as Pickable).clicked = !(i.object as Pickable).clicked
     // })
+  })
+}
+
+function navToggle() {
+  // document.getElementById()
+  const navBtn = document.getElementById('drop-down-btn')
+  const menu = document.getElementById('menu-list')
+  const navMenu = document.getElementById('main-nav')
+
+  console.log(navBtn?.style)
+  console.log(navBtn?.style.display)
+  console.log(menu)
+
+  navBtn?.classList.toggle('change')
+  // menu?.classList.toggle('show')
+  // Index Change for Menu
+  // navMenu?.classList.toggle('nav-over-lay')
+  navBtn?.addEventListener('click', (e) => {
+    navBtn.classList.toggle('change')
+    navMenu?.classList.toggle('nav-over-lay')
+
+    menu?.classList.toggle('show')
+    // navMenu?.classList.toggle('show2')
   })
 }

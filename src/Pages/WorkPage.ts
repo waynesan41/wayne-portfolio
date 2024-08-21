@@ -33,10 +33,10 @@ class WorkPage {
 
   async loadFile() {
     this.gltf = await loader.loadAsync('./models/Duck.glb', (gltf) => {
-      console.log(gltf)
+      // console.log(gltf)
       return gltf
     })
-    this.gltf.scene.position.y = -120
+    this.gltf.scene.position.y = -90
     this.gltf.scene.rotation.y = 135
     this.gltf.scene.scale.set(11, 11, 11)
     // this.gltf.scene.scale.set(1, 1, 1)
@@ -50,7 +50,7 @@ class WorkPage {
     this.nodejsModel = this.gltf.scene.getObjectByName('NodeJS') as THREE.Mesh
     this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh */
 
-    console.log(this.gltf.scene)
+    // console.log(this.gltf.scene)
 
     /* this.gltf = await loader.loadAsync('./models/Icons.glb', (gltf) => {
       console.log(gltf)

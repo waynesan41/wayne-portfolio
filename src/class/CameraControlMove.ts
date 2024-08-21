@@ -31,7 +31,9 @@ class CameraControlMove {
   camera: THREE.Camera
   upBtn: HTMLButtonElement
   downBtn: HTMLButtonElement
+  navBtn: HTMLButtonElement[]
   currentFloor: number = 0
+  previousFloor: number = 0
   controlTweenScene: Tween[] = []
   cameraTweenScene: Tween[] = []
 
@@ -52,6 +54,17 @@ class CameraControlMove {
     this.downBtn.addEventListener('click', (e) => {
       this.goDown()
     })
+    this.navBtn = document.getElementsByClassName('option') as any
+    console.log(this.navBtn)
+    console.log(this.navBtn[0])
+    for (let i = 0; i < this.navBtn.length; i++) {
+      this.navBtn[i].addEventListener('click', (e: any) => {
+        // const num = e.target.parentNode.getAttribute('data')
+        const num = Number(this.navBtn[i].getAttribute('data'))
+        console.log(num)
+        this.selectFloor(num)
+      })
+    }
   }
 
   positionCamera() {
@@ -81,7 +94,6 @@ class CameraControlMove {
   goUp() {
     // console.log(this.currentFloor)
     // this.upBtn.disabled = true
-    this.disableControl()
     // Down Arrow Press
     let floorNum = this.currentFloor
     if (this.currentFloor == 0) {
@@ -90,17 +102,11 @@ class CameraControlMove {
     } else {
       floorNum = --this.currentFloor
     }
-
-    this.scene.background = colors[floorNum]
-    this.cameraTweenScene[floorNum].startFromCurrentValues()
-    this.controlTweenScene[floorNum].startFromCurrentValues().onComplete(() => {
-      this.enableControl()
-    })
+    this.doAnimation(floorNum)
   }
   async goDown() {
     // console.log(this.currentFloor)
     // this.downBtn.disabled = true
-    this.disableControl()
     // Down Arrow Press
     let floorNum = this.currentFloor
     if (this.currentFloor == 4) {
@@ -109,48 +115,35 @@ class CameraControlMove {
     } else {
       floorNum = ++this.currentFloor
     }
-
-    this.scene.background = colors[floorNum]
-    this.cameraTweenScene[floorNum].startFromCurrentValues()
-    this.controlTweenScene[floorNum].startFromCurrentValues().onComplete(() => {
-      this.enableControl()
-    })
+    this.doAnimation(floorNum)
   }
   animation(time: number) {
     this.group.update()
   }
 
-  addTween(scene: THREE.Mesh, pageControl: CamCtlPosition) {
-    const camTween = new TWEEN.Tween(this.camera.position)
-      .to(
-        {
-          x: scene.position.x + pageControl.cam.x,
-          y: scene.position.y + pageControl.cam.y,
-          z: scene.position.z + pageControl.cam.z,
-        },
-        2000
-      )
-      .onUpdate((cod) => {
-        this.camera.position.set(cod.x, cod.y, cod.z)
-      })
-      .easing(TWEEN.Easing.Exponential.InOut)
-    const ctlTween = new TWEEN.Tween(this.control.target)
-      .to(
-        {
-          x: scene.position.x + pageControl.ctl.x,
-          y: scene.position.y + pageControl.ctl.y,
-          z: scene.position.z + pageControl.ctl.z,
-        },
-        2000
-      )
-      .onUpdate((cod) => {
-        this.control.target.set(cod.x, cod.y, cod.z)
-      })
-      .easing(TWEEN.Easing.Exponential.InOut)
+  selectFloor(floorNum: number) {
+    console.log(floorNum)
+    this.currentFloor = floorNum
+    this.doAnimation(floorNum)
+  }
 
-    this.cameraTweenScene.push(camTween)
-    this.controlTweenScene.push(ctlTween)
-    this.group.add(camTween, ctlTween)
+  doAnimation(floorNum: number) {
+    for (let i = 0; i < this.navBtn.length; i++) {
+      if (floorNum == i) this.navBtn[i].classList.add('selected')
+      else this.navBtn[i].classList.remove('selected')
+    }
+    this.disableControl()
+    for (let i = 0; i < this.navBtn.length; i++) {
+      this.navBtn[i].disabled = true
+    }
+    this.scene.background = colors[floorNum]
+    this.cameraTweenScene[floorNum].startFromCurrentValues()
+    this.controlTweenScene[floorNum].startFromCurrentValues().onComplete(() => {
+      this.enableControl()
+      for (let i = 0; i < this.navBtn.length; i++) {
+        this.navBtn[i].disabled = false
+      }
+    })
   }
   disableControl() {
     this.upBtn.disabled = true
@@ -163,6 +156,39 @@ class CameraControlMove {
     this.downBtn.disabled = false
     this.control.enableRotate = true
     // this.control.enablePan = true
+  }
+
+  addTween(scene: THREE.Mesh, pageControl: CamCtlPosition) {
+    const camTween = new TWEEN.Tween(this.camera.position)
+      .to(
+        {
+          x: scene.position.x + pageControl.cam.x,
+          y: scene.position.y + pageControl.cam.y,
+          z: scene.position.z + pageControl.cam.z,
+        },
+        500
+      )
+      .onUpdate((cod) => {
+        this.camera.position.set(cod.x, cod.y, cod.z)
+      })
+      .easing(TWEEN.Easing.Exponential.InOut)
+    const ctlTween = new TWEEN.Tween(this.control.target)
+      .to(
+        {
+          x: scene.position.x + pageControl.ctl.x,
+          y: scene.position.y + pageControl.ctl.y,
+          z: scene.position.z + pageControl.ctl.z,
+        },
+        500
+      )
+      .onUpdate((cod) => {
+        this.control.target.set(cod.x, cod.y, cod.z)
+      })
+      .easing(TWEEN.Easing.Exponential.InOut)
+
+    this.cameraTweenScene.push(camTween)
+    this.controlTweenScene.push(ctlTween)
+    this.group.add(camTween, ctlTween)
   }
 }
 

@@ -33,7 +33,7 @@ class AndroidPage {
 
   async loadFile() {
     this.gltf = await loader.loadAsync('./models/Android.glb', (gltf) => {
-      console.log(gltf)
+      // console.log(gltf)
       return gltf
     })
     this.gltf.scene.position.y = -60
@@ -50,7 +50,7 @@ class AndroidPage {
     this.nodejsModel = this.gltf.scene.getObjectByName('NodeJS') as THREE.Mesh
     this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh */
 
-    console.log(this.gltf.scene)
+    // console.log(this.gltf.scene)
 
     /* this.gltf = await loader.loadAsync('./models/Icons.glb', (gltf) => {
       console.log(gltf)
