@@ -138,13 +138,44 @@ class CameraControlMove {
       if (floorNum == i) this.navBtn[i].classList.add('selected')
       else this.navBtn[i].classList.remove('selected')
     }
-
     // Content Selection
-    for (let i = 0; i < this.content.length; i++) {
-      if (floorNum == i) this.content[i].classList.add('visible')
-      else this.content[i].classList.remove('visible')
-    }
+    const currentContent = this.content[floorNum]
 
+    for (let i = 0; i < this.content.length; i++) {
+      if (this.content[i].classList.contains('visible')) {
+        if (i != floorNum) {
+          if (i > floorNum) {
+            // Prepare Animation to show
+            // Hide Animation
+            currentContent.classList.toggle('hide')
+            this.content[i].classList.toggle('display')
+            // Hide the Block
+            setTimeout(() => {
+              this.content[i].classList.toggle('visible')
+              this.content[i].classList.toggle('display')
+            }, 400)
+            currentContent.classList.toggle('visible')
+            setTimeout(() => {
+              currentContent.classList.toggle('hide')
+            }, 100)
+          } else {
+            // Prepare Animation to show
+            // Hide Animation
+            currentContent.classList.toggle('display')
+            this.content[i].classList.toggle('hide')
+            // Hide the Block
+            setTimeout(() => {
+              this.content[i].classList.toggle('visible')
+              this.content[i].classList.toggle('hide')
+            }, 400)
+            currentContent.classList.toggle('visible')
+            setTimeout(() => {
+              currentContent.classList.toggle('display')
+            }, 100)
+          }
+        }
+      }
+    }
     // Three Animation
     this.disableControl()
     for (let i = 0; i < this.navBtn.length; i++) {

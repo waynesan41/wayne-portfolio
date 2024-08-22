@@ -81,7 +81,7 @@ body {
   z-index: 0 !important;
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 1200px) {
   .menu {
     display: block !important;
     float: left;
@@ -247,6 +247,12 @@ p {
 .visible {
   display: block !important;
 }
-.show .content {
-  opacity: 100;
+.hide {
+  /* transform: translate(0, 200px) rotate(-90deg); */
+  transform: translate(0, -100%);
+}
+
+.display {
+  transform: translate(-100%, 100%) rotate(90deg);
+  /* transform: translate(0, -200px); */
 }
