@@ -16,7 +16,7 @@ class MobileAppPage {
 
   constructor(scene: THREE.Scene) {
     this.scene = scene
-    this.scene.background = new THREE.Color(0x95a5a6)
+    // this.scene.background = new THREE.Color(0x95a5a6)
     // this.loadFile()
 
     // loader.load('./models/HomeSection3.glb', (gltf) => {

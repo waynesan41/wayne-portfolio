@@ -83,8 +83,12 @@ class HomeFlower {
     // Assign random colors to the blossoms.
     const blossomColor = new THREE.Color()
     const stemColor = new THREE.Color()
-    const stemPalette = [0xf20587, 0xf2d479, 0xf2c879, 0xf2b077, 0xf24405]
-    const blossomPalette = [0xa3cb38, 0xc4e538, 0x12cbc4, 0x1289a7, 0x009432]
+    const stemPalette = [
+      0xf20587, 0xf2d479, 0xf2c879, 0xf2b077, 0xf24405, 0x4b4b4b,
+    ]
+    const blossomPalette = [
+      0xa3cb38, 0xc4e538, 0x12cbc4, 0x1289a7, 0x009432, 0x34ace0, 0x3ae374,
+    ]
 
     for (let i = 0; i < this.api.count; i++) {
       blossomColor.setHex(

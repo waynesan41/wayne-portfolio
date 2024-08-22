@@ -100,13 +100,26 @@ async function init() {
   //--------------------------------------------------
   cameraControlMove.positionCamera()
   //--------------------------------------------------
+  let scrollPercent = 0
+  document.body.onscroll = () => {
+    //calculate the current scroll progress as a percentage
+    scrollPercent =
+      ((document.documentElement.scrollTop || document.body.scrollTop) /
+        ((document.documentElement.scrollHeight || document.body.scrollHeight) -
+          document.documentElement.clientHeight)) *
+      100
+    ;(document.getElementById('scrollProgress') as HTMLDivElement).innerText =
+      'Scroll Progress : ' + scrollPercent.toFixed(2)
+  }
+  //--------------------------------------------------
   // stats = new Stats()
   // document.body.appendChild(stats.dom)
+  // renderer.domElement.style.position = 'fixed'
   document.body.appendChild(renderer.domElement)
+  // document.getElementById('three')?.appendChild(renderer.domElement)
 
   window.addEventListener('resize', onWindowResize)
   animate()
-
   navToggle()
 } // END Init
 
@@ -182,7 +195,19 @@ function navToggle() {
     navBtn.classList.toggle('change')
     navMenu?.classList.toggle('nav-over-lay')
 
-    menu?.classList.toggle('show')
-    // navMenu?.classList.toggle('show2')
+    if (menu?.classList.contains('displayMenu')) {
+      // Display First than Show
+      menu?.classList.toggle('displayMenu')
+      setTimeout(() => {
+        menu?.classList.toggle('show')
+      }, 100)
+      // menu?.classList.toggle('show')
+    } else {
+      // Show Than Display None
+      menu?.classList.toggle('show')
+      setTimeout(() => {
+        menu?.classList.toggle('displayMenu')
+      }, 400)
+    }
   })
 }

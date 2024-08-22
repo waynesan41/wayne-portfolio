@@ -1,13 +1,14 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import TWEEN, { Group, Tween } from '@tweenjs/tween.js'
+import { color, floor } from 'three/webgpu'
 
 const colors = [
-  new THREE.Color(0xf4faff),
-  new THREE.Color(0xdee7e7),
-  new THREE.Color(0xb7adcf),
-  new THREE.Color(0x4f646f),
-  new THREE.Color(0xdee7e7),
+  new THREE.Color(0x0fbcf9),
+  new THREE.Color(0xd1ccc0),
+  new THREE.Color(0xffda79),
+  new THREE.Color(0x575fcf),
+  new THREE.Color(0x227093),
 ]
 
 export type CamCtlPosition = {
@@ -32,6 +33,7 @@ class CameraControlMove {
   upBtn: HTMLButtonElement
   downBtn: HTMLButtonElement
   navBtn: HTMLButtonElement[]
+  content: HTMLElement[]
   currentFloor: number = 0
   previousFloor: number = 0
   controlTweenScene: Tween[] = []
@@ -43,7 +45,7 @@ class CameraControlMove {
     control: OrbitControls
   ) {
     this.scene = scene
-    // this.scene.background = new THREE.Color(colors[0])
+    this.scene.background = new THREE.Color(colors[0])
     this.camera = camera
     this.control = control
     this.upBtn = document.getElementById('up-btn') as HTMLButtonElement
@@ -55,8 +57,9 @@ class CameraControlMove {
       this.goDown()
     })
     this.navBtn = document.getElementsByClassName('option') as any
-    console.log(this.navBtn)
-    console.log(this.navBtn[0])
+    this.content = document.getElementsByClassName('content') as any
+    console.log(this.content)
+    // Add Event Listener for Menu Button
     for (let i = 0; i < this.navBtn.length; i++) {
       this.navBtn[i].addEventListener('click', (e: any) => {
         // const num = e.target.parentNode.getAttribute('data')
@@ -71,7 +74,9 @@ class CameraControlMove {
     this.downBtn.disabled = true
     this.upBtn.disabled = true
     const floorNum = 0
-    this.scene.background = colors[floorNum]
+    // this.scene.background = colors[floorNum]
+    // this.scene.backgroundIntensity = 0.1
+
     this.cameraTweenScene[floorNum].start()
     this.controlTweenScene[floorNum].start().onComplete(() => {
       this.downBtn.disabled = false
@@ -128,15 +133,25 @@ class CameraControlMove {
   }
 
   doAnimation(floorNum: number) {
+    // Menu Bar Highlight
     for (let i = 0; i < this.navBtn.length; i++) {
       if (floorNum == i) this.navBtn[i].classList.add('selected')
       else this.navBtn[i].classList.remove('selected')
     }
+
+    // Content Selection
+    for (let i = 0; i < this.content.length; i++) {
+      if (floorNum == i) this.content[i].classList.add('visible')
+      else this.content[i].classList.remove('visible')
+    }
+
+    // Three Animation
     this.disableControl()
     for (let i = 0; i < this.navBtn.length; i++) {
       this.navBtn[i].disabled = true
     }
-    this.scene.background = colors[floorNum]
+
+    this.animateBackground(floorNum)
     this.cameraTweenScene[floorNum].startFromCurrentValues()
     this.controlTweenScene[floorNum].startFromCurrentValues().onComplete(() => {
       this.enableControl()
@@ -144,7 +159,8 @@ class CameraControlMove {
         this.navBtn[i].disabled = false
       }
     })
-  }
+  } // End DO animation
+
   disableControl() {
     this.upBtn.disabled = true
     this.downBtn.disabled = true
@@ -189,6 +205,17 @@ class CameraControlMove {
     this.cameraTweenScene.push(camTween)
     this.controlTweenScene.push(ctlTween)
     this.group.add(camTween, ctlTween)
+  }
+  animateBackground(floorNum: number) {
+    const bgTween = new TWEEN.Tween(this.scene.background as THREE.Color)
+      .dynamic(true)
+      .to(colors[floorNum], 500)
+      .onUpdate((cod) => {
+        this.scene.background = cod
+      })
+      .easing(TWEEN.Easing.Exponential.InOut)
+    this.group.add(bgTween)
+    bgTween.startFromCurrentValues()
   }
 }
 
