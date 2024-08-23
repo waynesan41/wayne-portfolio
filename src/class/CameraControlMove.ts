@@ -138,9 +138,10 @@ class CameraControlMove {
       if (floorNum == i) this.navBtn[i].classList.add('selected')
       else this.navBtn[i].classList.remove('selected')
     }
-    // Content Selection
+    // Current Display Content
     const currentContent = this.content[floorNum]
 
+    // Content Animation
     for (let i = 0; i < this.content.length; i++) {
       if (this.content[i].classList.contains('visible')) {
         if (i != floorNum) {

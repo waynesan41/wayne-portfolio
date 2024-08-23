@@ -183,9 +183,9 @@ function navToggle() {
   const menu = document.getElementById('menu-list')
   const navMenu = document.getElementById('main-nav')
 
-  console.log(navBtn?.style)
-  console.log(navBtn?.style.display)
-  console.log(menu)
+  // console.log(navBtn?.style)
+  // console.log(navBtn?.style.display)
+  // console.log(menu)
 
   navBtn?.classList.toggle('change')
   // menu?.classList.toggle('show')
@@ -210,4 +210,16 @@ function navToggle() {
       }, 400)
     }
   })
+
+  // Set up Expend Content
+  const expandBtn = document.getElementsByClassName('read')
+  const content = document.getElementsByClassName('pwords')
+  for (let i = 0; i < expandBtn.length; i++) {
+    expandBtn[i]?.addEventListener('click', (e: any) => {
+      content[i].classList.toggle('expand')
+      // const contentNode = e.target.parentNode.parentNode.childNodes[3]
+      // contentNode.classList.toggle('expand')
+      // console.log(contentNode)
+    })
+  }
 }
