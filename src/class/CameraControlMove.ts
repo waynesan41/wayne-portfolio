@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import TWEEN, { Group, Tween } from '@tweenjs/tween.js'
-import { color, floor } from 'three/webgpu'
 
 const colors = [
   new THREE.Color(0x0fbcf9),
@@ -50,10 +49,10 @@ class CameraControlMove {
     this.control = control
     this.upBtn = document.getElementById('up-btn') as HTMLButtonElement
     this.downBtn = document.getElementById('down-btn') as HTMLButtonElement
-    this.upBtn.addEventListener('click', (e) => {
+    this.upBtn.addEventListener('click', () => {
       this.goUp()
     })
-    this.downBtn.addEventListener('click', (e) => {
+    this.downBtn.addEventListener('click', () => {
       this.goDown()
     })
     this.navBtn = document.getElementsByClassName('option') as any
@@ -61,7 +60,7 @@ class CameraControlMove {
     console.log(this.content)
     // Add Event Listener for Menu Button
     for (let i = 0; i < this.navBtn.length; i++) {
-      this.navBtn[i].addEventListener('click', (e: any) => {
+      this.navBtn[i].addEventListener('click', () => {
         // const num = e.target.parentNode.getAttribute('data')
         const num = Number(this.navBtn[i].getAttribute('data'))
         console.log(num)
@@ -122,7 +121,7 @@ class CameraControlMove {
     }
     this.doAnimation(floorNum)
   }
-  animation(time: number) {
+  animation(delta: number) {
     this.group.update()
   }
 
@@ -149,10 +148,12 @@ class CameraControlMove {
             // Prepare Animation to show
             // Hide Animation
             currentContent.classList.toggle('hide')
+            // Old Content
             this.content[i].classList.toggle('display')
             // Hide the Block
             setTimeout(() => {
               this.content[i].classList.toggle('visible')
+              // Old Content
               this.content[i].classList.toggle('display')
             }, 400)
             currentContent.classList.toggle('visible')

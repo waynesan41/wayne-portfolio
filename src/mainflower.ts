@@ -4,15 +4,12 @@ import './style.css'
 
 import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
-import Stats from 'three/addons/libs/stats.module.js'
-import { GUI } from 'three/addons/libs/lil-gui.module.min.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import Clickable from './class/Clickable'
 
 let camera: THREE.PerspectiveCamera,
   scene: THREE.Scene,
-  renderer: THREE.WebGLRenderer,
-  stats: Stats
+  renderer: THREE.WebGLRenderer
 
 const api = {
   count: 150,

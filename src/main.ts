@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import './style.css'
 
 import Stats from 'three/addons/libs/stats.module.js'
-import { GUI } from 'three/addons/libs/lil-gui.module.min.js'
+
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js'
 import HomePage from './Pages/HomePage'
@@ -13,16 +13,15 @@ import WebAppPage from './Pages/WebAppPage'
 import WorkPage from './Pages/WorkPage'
 import EducationPage from './Pages/EducationPage'
 import AndroidPage from './Pages/AndroidPage'
-import TWEEN from '@tweenjs/tween.js'
+import { navToggle } from './class/StartScript'
 
 let camera: THREE.PerspectiveCamera,
   scene: THREE.Scene,
   renderer: THREE.WebGLRenderer,
   controls: OrbitControls,
   cameraControlMove: CameraControlMove,
-  stats: Stats,
   intersects,
-  delta = 0,
+  delta: number = 0,
   time = 0
 
 const mouse = new THREE.Vector2()
@@ -175,51 +174,4 @@ function addRaycast(clickables: Clickable[]) {
     //   ;(i.object as Pickable).clicked = !(i.object as Pickable).clicked
     // })
   })
-}
-
-function navToggle() {
-  // document.getElementById()
-  const navBtn = document.getElementById('drop-down-btn')
-  const menu = document.getElementById('menu-list')
-  const navMenu = document.getElementById('main-nav')
-
-  // console.log(navBtn?.style)
-  // console.log(navBtn?.style.display)
-  // console.log(menu)
-
-  navBtn?.classList.toggle('change')
-  // menu?.classList.toggle('show')
-  // Index Change for Menu
-  // navMenu?.classList.toggle('nav-over-lay')
-  navBtn?.addEventListener('click', (e) => {
-    navBtn.classList.toggle('change')
-    navMenu?.classList.toggle('nav-over-lay')
-
-    if (menu?.classList.contains('displayMenu')) {
-      // Display First than Show
-      menu?.classList.toggle('displayMenu')
-      setTimeout(() => {
-        menu?.classList.toggle('show')
-      }, 100)
-      // menu?.classList.toggle('show')
-    } else {
-      // Show Than Display None
-      menu?.classList.toggle('show')
-      setTimeout(() => {
-        menu?.classList.toggle('displayMenu')
-      }, 400)
-    }
-  })
-
-  // Set up Expend Content
-  const expandBtn = document.getElementsByClassName('read')
-  const content = document.getElementsByClassName('pwords')
-  for (let i = 0; i < expandBtn.length; i++) {
-    expandBtn[i]?.addEventListener('click', (e: any) => {
-      content[i].classList.toggle('expand')
-      // const contentNode = e.target.parentNode.parentNode.childNodes[3]
-      // contentNode.classList.toggle('expand')
-      // console.log(contentNode)
-    })
-  }
 }

@@ -112,7 +112,7 @@ class HomeFlower {
   //==========================================================
   resample(planeModel: THREE.Mesh | undefined) {
     //   const vertexCount = surface.geometry.getAttribute('position').count
-    const vertexCount = planeModel!.geometry.getAttribute('position').count
+    // const vertexCount = planeModel!.geometry.getAttribute('position').count
     // const position = planeModel!.geometry
 
     // console.log(vertexCount)
@@ -167,6 +167,7 @@ class HomeFlower {
     this.blossomMesh!.setMatrixAt(i, this.dummy.matrix)
   }
   //==========================================================
+  // updateParticle(i: number) {
   updateParticle(i: number, delta: number) {
     // Update lifecycle.
 

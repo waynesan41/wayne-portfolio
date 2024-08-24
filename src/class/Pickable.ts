@@ -3,22 +3,7 @@ import {
   Color,
   MeshStandardMaterial,
   BufferGeometry,
-  Raycaster,
-  Scene,
-  SpotLight,
-  PerspectiveCamera,
-  WebGLRenderer,
-  VSMShadowMap,
-  BoxGeometry,
-  CylinderGeometry,
-  TetrahedronGeometry,
-  PlaneGeometry,
-  Vector2,
-  Clock,
-  EquirectangularReflectionMapping,
-  MeshPhongMaterial,
   Vector3,
-  MathUtils,
 } from 'three'
 
 function lerp(from: number, to: number, speed: number) {

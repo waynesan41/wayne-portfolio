@@ -223,9 +223,8 @@ body {
   /* max-width: 85%; */
   max-width: 85%;
   max-height: fit-content;
-
   z-index: 0;
-  transition: 0.4s;
+  transition: 0.5s;
 }
 h1 {
   font-size: xx-large;
@@ -268,12 +267,13 @@ h1 {
   display: block !important;
 }
 .hide {
-  /* transform: translate(0, 200px) rotate(-90deg); */
+  /* transform: translate(0, 100%) rotate(-90deg); */
   transform: translate(0, -100%);
 }
 
 .display {
-  transform: translate(-100%, 100%) rotate(90deg);
+  transform: translate(-110%, 150%) rotate(95deg);
+  /* transform: rotate(90deg); */
   /* transform: translate(0, -200px); */
 }
 
@@ -325,4 +325,50 @@ h1 {
 .read:hover:after {
   height: 100%;
   width: 100%;
+}
+
+/* Mute Button */
+.sound {
+  font-size: medium;
+  font-weight: bold;
+  font-family: sans-serif;
+  text-decoration: none;
+  color: #333;
+  border: 2px solid #333;
+  /* letter-spacing: 2px; */
+  text-align: center;
+  position: relative;
+  transition: all 0.35s;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.mute {
+  display: none;
+}
+
+#music-audio {
+  display: none;
+}
+
+.credit-btn {
+  font-size: medium;
+  font-weight: bold;
+  font-family: sans-serif;
+  text-decoration: none;
+  color: #333;
+  border: 2px solid #333;
+  /* letter-spacing: 2px; */
+  text-align: center;
+  position: relative;
+  transition: all 0.35s;
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+}
+
+dialog::backdrop {
+  background-color: grey;
+  opacity: 0.5;
 }
