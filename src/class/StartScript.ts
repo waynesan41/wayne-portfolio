@@ -1,4 +1,5 @@
-export function navToggle() {
+export async function navToggle() {
+  // Menu Toggle for Small Screen
   //----------------------------------------------------------------------------
   // document.getElementById()
   const navBtn = document.getElementById('drop-down-btn')
@@ -35,7 +36,7 @@ export function navToggle() {
 
   //----------------------------------------------------------------------------
   // Set up Expend Content
-  const expandBtn = document.getElementsByClassName('read')
+  /* const expandBtn = document.getElementsByClassName('read')
   const content = document.getElementsByClassName('pwords')
   for (let i = 0; i < expandBtn.length; i++) {
     expandBtn[i]?.addEventListener('click', () => {
@@ -44,7 +45,7 @@ export function navToggle() {
       // contentNode.classList.toggle('expand')
       // console.log(contentNode)
     })
-  }
+  } */
   //----------------------------------------------------------------------------
   // Sound | Music Mute
 
@@ -66,9 +67,9 @@ export function navToggle() {
   //----------------------------------------------------------------------------
   // Credit Dialog
 
-  const dialog = document.querySelector('dialog') as HTMLDialogElement
+  const dialog = document.getElementById('creditPopup') as HTMLDialogElement
   const showButton = document.querySelector('dialog + button')
-  const closeButton = document.querySelector('dialog button')
+  const closeButton = document.querySelector('#creditPopup button')
   // "Show the dialog" button opens the dialog modally
   showButton?.addEventListener('click', () => {
     dialog?.showModal()
@@ -91,20 +92,17 @@ export function navToggle() {
     }
   })
 
-  // Close dialog when click on Backdrop
-
-  /* dialog?.addEventListener('click', function (event) {
-    var rect = dialog?.getBoundingClientRect()
-    var isInDialog =
-      rect.top <= event.clientY &&
-      event.clientY <= rect.top + rect.height &&
-      rect.left <= event.clientX &&
-      event.clientX <= rect.left + rect.width
-    if (!isInDialog) {
-      dialog.close()
-    }
-  }) */
-
+  // Keyboard Short Cut
   //----------------------------------------------------------------------------
-  // Tip Dialog for all the Pages
+  const upBtn = document.getElementById('up-btn')
+  const downBtn = document.getElementById('down-btn')
+  window.addEventListener('keydown', function (e: KeyboardEvent) {
+    console.log(e)
+    if (e.code == 'ArrowUp') {
+      upBtn?.click()
+    }
+    if (e.code == 'ArrowDown') {
+      downBtn?.click()
+    }
+  })
 }

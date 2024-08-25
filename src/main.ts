@@ -14,6 +14,7 @@ import WorkPage from './Pages/WorkPage'
 import EducationPage from './Pages/EducationPage'
 import AndroidPage from './Pages/AndroidPage'
 import { navToggle } from './class/StartScript'
+import mainContent from './components/MainContent'
 
 let camera: THREE.PerspectiveCamera,
   scene: THREE.Scene,
@@ -36,9 +37,11 @@ let homePage: HomePage,
   workPage: WorkPage,
   educationPage: EducationPage
 
-init()
+await init()
 
 async function init() {
+  await mainContent()
+  await navToggle()
   scene = new THREE.Scene()
   renderer = new THREE.WebGLRenderer({ antialias: true })
   renderer.setPixelRatio(window.devicePixelRatio)
@@ -119,7 +122,6 @@ async function init() {
 
   window.addEventListener('resize', onWindowResize)
   animate()
-  navToggle()
 } // END Init
 
 function onWindowResize() {

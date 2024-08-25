@@ -49,126 +49,11 @@
       </div>
     </ul>
 
-    <main id="main-content">
-      <section class="content visible">
-        <div>
-          <h1>Home</h1>
-          <p class="pwords">
-            Hello Wic the sd. The Panda has become the symbol of WWF. The
-            well-known panda logo of WWF originated from a panda named Chi Chi
-            that was transferred from the Beijing Zoo to the London Zoo in the
-            same year of the establishment of WWFe the symbol of WWF. The
-            well-known panda logo of WWF originated from a panda named Chi Chi
-            that was transferred from the Beijinge the symbol of WWF. The
-            well-known panda logo of WWF originated from a panda named Chi Chi
-            that was transferred from the hat was transferred from the Beijing
-            Zoo to the London Zoo in the same year of the establishment of WWFe
-            the symbol of WWF. The well-known panda logo of WWF originated from
-            a panda named Chi Chi that was transferred from the Beijinge the
-            symbol of WWF. The well-known panda logo of WWF originated from a
-            panda named Chi Chi that was transferred from the Beijingo of WWF
-            originated from a panda named Chi Chi that was transferred from the
-            Beijing Zoo to the London Zoo in the same year of the establishment
-            of WWFe the symbol of WWF. The well-known panda logo of WWF
-            originated from a panda named Chi Chi that was transferred from the
-            Beijinge o of WWF originated from a panda named Chi Chi that was
-            transferred from the Beijing Zoo to the London Zoo in the same year
-            of the establishment of WWFe the symbol of WWF. The well-known panda
-            logo of WWF originated from a panda named Chi Chat was transferred
-            from the Beijing Zoo to the London Zoo in the same year of the
-            establishment of WWFe the symbol of WWF. The well-known panda logo
-            of WWF originated from a panda named Chi Chi that was transferred
-            from the Beijinge the symbol of WWF. The well-known panda logo of
-            WWF originated from a panda named Chi Chi that was transferred from
-            the Beijingo of WWF originated from a panda named Chi Chi that was
-            transferred from the Beijing Zoo to the London Zoo in the same year
-            of the establishment of WWFe the symbol of WWF. The well-known panda
-            logo of WWF originated from a panda named Chi Chi that was
-            transferred from the Beijinge o of WWF originated from a panda named
-            Chi Chi that was transferred from the Beijing Zoo to the London Zoo
-            in the same year of the establishment of WWFe the symbol of WWF. The
-            well-known panda logo of WWF originated from a panda named Chi
-            CBeijingo of WWF originated from a panda named Chi Chi that was
-            transferred from the Beijing Zoo to the London Zoo in the same year
-            of the establishment of WWFe the symbol of WWF. The well-known panda
-            logo of WWF originated from a panda named Chi Chi that was
-            transferred from the Beijinge o of WWF originated from a panda named
-            Chi Chi that was transferred from the Beijing Zoo to the London Zoo
-            in the same year of the establishment of WWFe the symbol of WWF. The
-            well-known panda logo of WWF originated from a panda named Chi Chi
-            that was transferred from the Beijinge
-          </p>
-          <button class="read">
-            <span> Expand </span>
-          </button>
-        </div>
-      </section>
-      <section class="content">
-        <div>
-          <h1>Web App</h1>
-          <p class="pwords">
-            Hi My name is wayne The Panda has become the symbol of WWF. The
-            well-known panda logo of WWF originated from a panda named Chi Chi
-            that was transferred from the Beijing Zoo to the London Zoo in the
-            same year of the establishment of WWF
-          </p>
-          <button class="read">
-            <span> Expand </span>
-          </button>
-        </div>
-      </section>
-      <section class="content">
-        <div>
-          <h1>Mobile App</h1>
-          <p class="pwords">
-            Hi My name is wayne The Panda has become the symbol of WWF. The
-            well-known panda logo of WWF originated from a panda named Chi Chi
-            that was transferred from the Beijing Zoo to the London Zoo in the
-            same year of the establishment of WWF
-          </p>
-          <button class="read">
-            <span> Expand </span>
-          </button>
-        </div>
-      </section>
-      <section class="content">
-        <div>
-          <h1>Work Experience</h1>
-          <p class="pwords">
-            Hi My name is wayne The Panda has become the symbol of WWF. The
-            well-known panda logo of WWF originated from a panda named Chi Chi
-            that was transferred from the Beijing Zoo to the London Zoo in the
-            same year of the establishment of WWF
-          </p>
-          <button class="read">
-            <span> Expand </span>
-          </button>
-        </div>
-      </section>
-      <section class="content">
-        <div>
-          <h1>Education</h1>
-          <p class="pwords">
-            Hi My name is wayne The Panda has become the symbol of WWF. The
-            well-known panda logo of WWF originated from a panda named Chi Chi
-            that was transferred from the Beijing Zoo to the London Zoo in the
-            same year of the establishment of WWF
-          </p>
-          <button class="read">
-            <span> Expand </span>
-          </button>
-        </div>
-      </section>
-    </main>
+    <main id="main-content"></main>
 
+    <!-- Audio -->
     <button id="sound-btn" class="sound">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="35"
-        height="35"
-        fill="currentColor"
-        viewBox="0 0 16 16"
-      >
+      <svg width="35" height="35" fill="currentColor" viewBox="0 0 16 16">
         <path
           id="mute"
           class="mute"
@@ -190,18 +75,25 @@
       Browser does not support Audio
     </audio>
 
+    <!-- Credit -->
     <div>
-      <dialog>
-        this is credit
-        <button autofocus>Close</button>
+      <dialog id="creditPopup">
+        <button class="close-btn general-btn">
+          <span>
+            <img src="/img/close.svg" alt="close" height="30" width="30" />
+          </span>
+        </button>
+        <h1 class="page-title">Music</h1>
+        <a
+          style="color: white"
+          href="https://www.youtube.com/watch?v=eX4de4BH5lM"
+          target="_blank"
+          >Hollow Knight OST - Crossroads
+        </a>
       </dialog>
-      <button class="credit-btn">3P Credit</button>
-
-      <!-- <dialog>
-        this is Home Page
-        <button autofocus>Close</button>
-      </dialog>
-      <button class="credit-btn">CreditDialog</button> -->
+      <button class="credit-btn">
+        <img src="/img/question.svg" alt="Question" height="25" width="25" />
+      </button>
     </div>
   </body>
   <script type="module" src="/src/main.ts"></script>
