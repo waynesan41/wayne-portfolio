@@ -13,8 +13,10 @@ import WebAppPage from './Pages/WebAppPage'
 import WorkPage from './Pages/WorkPage'
 import EducationPage from './Pages/EducationPage'
 import AndroidPage from './Pages/AndroidPage'
-import { navToggle } from './class/StartScript'
+import { navToggle, stopLoading } from './class/StartScript'
 import mainContent from './components/MainContent'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 let camera: THREE.PerspectiveCamera,
   scene: THREE.Scene,
@@ -24,6 +26,13 @@ let camera: THREE.PerspectiveCamera,
   intersects,
   delta: number = 0,
   time = 0
+
+const loader = new GLTFLoader()
+const dracoLoader = new DRACOLoader()
+// dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/') // loading from a CDN
+dracoLoader.setDecoderPath('jsm/libs/draco/') // loading from own webserver
+dracoLoader.setDecoderConfig({ type: 'js' })
+loader.setDRACOLoader(dracoLoader)
 
 const mouse = new THREE.Vector2()
 const raycaster = new THREE.Raycaster()
@@ -66,34 +75,34 @@ async function init() {
 
   // ================ Home Page Loading
   homePage = new HomePage(scene)
-  await homePage.loadFile()
+  await homePage.loadFile(loader)
   addRaycast(homePage.clickables)
   // cameraControlMove.addTween(homePage.pillerModel!, homePage.pageControl)
   cameraControlMove.addTween(homePage.gltf.scene!, homePage.pageControl)
 
   // Flower in HOME PAGE
   flowerGrow = new HomeFlower(scene)
-  await flowerGrow.loadFile()
+  await flowerGrow.loadFile(loader)
   flowerGrow.resample(homePage.planeModel)
 
   // ================ WEBAPP Page Loading
   webAppPage = new WebAppPage(scene)
-  await webAppPage.loadFile()
+  await webAppPage.loadFile(loader)
   cameraControlMove.addTween(webAppPage.gltf.scene!, webAppPage.pageControl)
 
   // ================ MOBILE Page Loading
   androidPage = new AndroidPage(scene)
-  await androidPage.loadFile()
+  await androidPage.loadFile(loader)
   cameraControlMove.addTween(androidPage.gltf.scene!, androidPage.pageControl)
 
   // ================ WORK Page Loading
   workPage = new WorkPage(scene)
-  await workPage.loadFile()
+  await workPage.loadFile(loader)
   cameraControlMove.addTween(workPage.gltf.scene!, workPage.pageControl)
 
   // ================ EDUCATION Page Loading
   educationPage = new EducationPage(scene)
-  await educationPage.loadFile()
+  await educationPage.loadFile(loader)
   cameraControlMove.addTween(
     educationPage.gltf.scene!,
     educationPage.pageControl
@@ -102,7 +111,11 @@ async function init() {
   //--------------------------------------------------
   cameraControlMove.positionCamera()
   //--------------------------------------------------
-  let scrollPercent = 0
+  // Stop Loading
+  //--------------------------------------------------
+  await stopLoading()
+
+  /* let scrollPercent = 0
   document.body.onscroll = () => {
     //calculate the current scroll progress as a percentage
     scrollPercent =
@@ -112,7 +125,7 @@ async function init() {
       100
     ;(document.getElementById('scrollProgress') as HTMLDivElement).innerText =
       'Scroll Progress : ' + scrollPercent.toFixed(2)
-  }
+  } */
   //--------------------------------------------------
   // stats = new Stats()
   // document.body.appendChild(stats.dom)

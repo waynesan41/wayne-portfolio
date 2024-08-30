@@ -106,3 +106,11 @@ export async function navToggle() {
     }
   })
 }
+
+export async function stopLoading() {
+  const loading = document.getElementById('loading')
+  loading?.classList.toggle('transformLoading')
+  setTimeout(() => {
+    loading?.classList.toggle('hideLoading')
+  }, 1000)
+}

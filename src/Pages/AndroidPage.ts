@@ -31,7 +31,7 @@ class AndroidPage {
     // await this.loadFile()
   }
 
-  async loadFile() {
+  async loadFile(loader: GLTFLoader) {
     this.gltf = await loader.loadAsync('./models/Android.glb', (gltf) => {
       // console.log(gltf)
       return gltf

@@ -3,8 +3,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import Clickable from '../class/Clickable'
 import { CamCtlPosition } from '../class/CameraControlMove'
 
-const loader = new GLTFLoader()
-
 class WebAppPage {
   reactModel: THREE.Mesh | undefined
   tailwindModel: THREE.Mesh | undefined
@@ -30,7 +28,7 @@ class WebAppPage {
     // await this.loadFile()
   }
 
-  async loadFile() {
+  async loadFile(loader: GLTFLoader) {
     this.gltf = await loader.loadAsync('./models/Icons.glb', (gltf) => {
       // console.log(gltf)
       return gltf

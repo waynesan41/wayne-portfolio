@@ -13,8 +13,6 @@ const scaleCurve = function (t: number) {
   return Math.abs(easeOutCubic((t > 0.5 ? 1 - t : t) * 2))
 }
 
-const loader = new GLTFLoader()
-
 class HomeFlower {
   api = {
     count: 200,
@@ -45,7 +43,7 @@ class HomeFlower {
   }
 
   //==========================================================
-  async loadFile() {
+  async loadFile(loader: GLTFLoader) {
     const flower: any = await loader.loadAsync(
       './models/Flower.glb',
       function (gltf) {

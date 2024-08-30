@@ -122,6 +122,12 @@ const mainContent = async () => {
     expandBtn.onclick = () => {
       console.log('expand')
       pageContent.classList.toggle('expand')
+      const text = expandBtn.innerHTML
+      if (text.includes('Close')) {
+        expandBtn.innerHTML = '<span> Expand </span>'
+      } else {
+        expandBtn.innerHTML = '<span> Close </span>'
+      }
     }
     // End of
   })

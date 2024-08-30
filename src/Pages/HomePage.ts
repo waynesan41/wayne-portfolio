@@ -1,9 +1,7 @@
 import * as THREE from 'three'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import Clickable from '../class/Clickable'
 import { CamCtlPosition } from '../class/CameraControlMove'
-
-const loader = new GLTFLoader()
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 class HomePage {
   cube: THREE.Mesh | undefined
@@ -45,10 +43,13 @@ class HomePage {
   }
 
   //   loadFile(home: any) {
-  async loadFile() {
-    this.gltf = await loader.loadAsync('./models/HomeSection.glb', (gltf) => {
-      return gltf
-    })
+  async loadFile(loader: GLTFLoader) {
+    this.gltf = await loader.loadAsync(
+      './models/compress/HomeSection.glb',
+      (gltf) => {
+        return gltf
+      }
+    )
     const light = new THREE.AmbientLight(0xffffff, 3)
     this.scene.add(light)
     this.pillerModel = this.gltf.scene.getObjectByName('Piller') as THREE.Mesh

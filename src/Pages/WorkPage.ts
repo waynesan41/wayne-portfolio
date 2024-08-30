@@ -2,8 +2,15 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import Clickable from '../class/Clickable'
 import { CamCtlPosition } from '../class/CameraControlMove'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 
-const loader = new GLTFLoader()
+const dracoLoader = new DRACOLoader()
+// dracoLoader.setDecoderPath(
+//   'https://www.gstatic.com/draco/versioned/decoders/1.5.7/'
+// ) // loading from a CDN
+// dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/') // loading from a CDN
+dracoLoader.setDecoderPath('jsm/libs/draco/') // loading from own webserver
+dracoLoader.setDecoderConfig({ type: 'js' })
 
 class WorkPage {
   reactModel: THREE.Mesh | undefined
@@ -31,8 +38,8 @@ class WorkPage {
     // await this.loadFile()
   }
 
-  async loadFile() {
-    this.gltf = await loader.loadAsync('./models/Duck.glb', (gltf) => {
+  async loadFile(loader: GLTFLoader) {
+    this.gltf = await loader.loadAsync('./models/compress/Duck.glb', (gltf) => {
       // console.log(gltf)
       return gltf
     })

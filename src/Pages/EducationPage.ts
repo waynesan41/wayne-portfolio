@@ -3,8 +3,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import Clickable from '../class/Clickable'
 import { CamCtlPosition } from '../class/CameraControlMove'
 
-const loader = new GLTFLoader()
-
 class EducationPage {
   reactModel: THREE.Mesh | undefined
   tailwindModel: THREE.Mesh | undefined
@@ -31,11 +29,14 @@ class EducationPage {
     // await this.loadFile()
   }
 
-  async loadFile() {
-    this.gltf = await loader.loadAsync('./models/School.glb', (gltf) => {
-      // console.log(gltf)
-      return gltf
-    })
+  async loadFile(loader: GLTFLoader) {
+    this.gltf = await loader.loadAsync(
+      './models/compress/School.glb',
+      (gltf) => {
+        // console.log(gltf)
+        return gltf
+      }
+    )
     this.gltf.scene.position.y = -120
     // this.gltf.scene.rotation.y = 0
     // this.gltf.scene.scale.set(11, 11, 11)
