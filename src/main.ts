@@ -46,7 +46,7 @@ let homePage: HomePage,
   workPage: WorkPage,
   educationPage: EducationPage
 
-await init()
+init()
 
 async function init() {
   await mainContent()

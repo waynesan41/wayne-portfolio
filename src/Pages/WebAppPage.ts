@@ -29,10 +29,13 @@ class WebAppPage {
   }
 
   async loadFile(loader: GLTFLoader) {
-    this.gltf = await loader.loadAsync('./models/Icons.glb', (gltf) => {
-      // console.log(gltf)
-      return gltf
-    })
+    this.gltf = await loader.loadAsync(
+      './models/compress/Icons.glb',
+      (gltf) => {
+        // console.log(gltf)
+        return gltf
+      }
+    )
     this.gltf.scene.position.y = -30
     this.gltf.scene.rotation.y = 135
     this.gltf.scene.scale.set(11, 11, 11)
