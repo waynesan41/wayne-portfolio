@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image" href="/assets/favicon-AwoD9uM3.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cube Made with Sphere</title>
+    <script type="module" crossorigin src="/assets/index-Cla3cQMt.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-A1PkPvdd.css">
+  </head>
+  <body>
+    <div id="loading">
+      <div class="loader"></div>
+    </div>
+    <div class="btn-updown">
+      <button id="up-btn" class="icon-btn icon-up">
+        <!-- <span>1</span> -->
+        <span>&#x290A;</span>
+      </button>
+      <br />
+      <button id="down-btn" class="icon-btn icon-up">
+        <span>&#x290B;</span>
+      </button>
+    </div>
+
+    <ul id="main-nav" class="nav-menu2">
+      <li>
+        <div id="drop-down-btn" class="container">
+          <span>
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+          </span>
+        </div>
+      </li>
+      <div id="menu-list">
+        <li class="menu">
+          <button data="0" class="option selected">
+            <span> + Home + </span>
+          </button>
+        </li>
+        <li class="menu">
+          <button data="1" class="option"><span>P - WebApp</span></button>
+        </li>
+        <li class="menu">
+          <button data="2" class="option"><span>P - Mobile []</span></button>
+        </li>
+        <li class="menu">
+          <button data="3" class="option"><span>$ Work $</span></button>
+        </li>
+        <li class="menu">
+          <button data="4" class="option"><span>Education</span></button>
+        </li>
+      </div>
+    </ul>
+
+    <main id="main-content"></main>
+
+    <!-- Audio -->
+    <button id="sound-btn" class="sound">
+      <svg width="35" height="35" fill="currentColor" viewBox="0 0 16 16">
+        <path
+          id="mute"
+          class="mute"
+          d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+        />
+
+        <path
+          d="M11.536 14.01A8.47 8.47 0 0 0 14.026 8a8.47 8.47 0 0 0-2.49-6.01l-.708.707A7.48 7.48 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303z"
+        />
+        <path
+          d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.48 5.48 0 0 1 11.025 8a5.48 5.48 0 0 1-1.61 3.89z"
+        />
+        <path
+          d="M10.025 8a4.5 4.5 0 0 1-1.318 3.182L8 10.475A3.5 3.5 0 0 0 9.025 8c0-.966-.392-1.841-1.025-2.475l.707-.707A4.5 4.5 0 0 1 10.025 8M7 4a.5.5 0 0 0-.812-.39L3.825 5.5H1.5A.5.5 0 0 0 1 6v4a.5.5 0 0 0 .5.5h2.325l2.363 1.89A.5.5 0 0 0 7 12zM4.312 6.39 6 5.04v5.92L4.312 9.61A.5.5 0 0 0 4 9.5H2v-3h2a.5.5 0 0 0 .312-.11"
+        />
+      </svg>
+    </button>
+    <audio id="music-audio" loop>
+      <source src="/music/crossroads.mp3" type="audio/ogg" />
+      Browser does not support Audio
+    </audio>
+
+    <!-- Credit -->
+    <div>
+      <dialog id="creditPopup">
+        <button class="close-btn general-btn">
+          <span>
+            <img src="/img/close.svg" alt="close" height="30" width="30" />
+          </span>
+        </button>
+        <h1 class="page-title">Music</h1>
+        <a
+          style="color: white"
+          href="https://www.youtube.com/watch?v=eX4de4BH5lM"
+          target="_blank"
+          >Hollow Knight OST - Crossroads
+        </a>
+      </dialog>
+      <button class="credit-btn">
+        <img src="/img/question.svg" alt="Question" height="25" width="25" />
+      </button>
+    </div>
+  </body>
+</html>
