@@ -56,11 +56,11 @@ const mainContent = async () => {
 
     closeBtn.className = 'close-btn general-btn'
     closeBtn.innerHTML = `<span>
-                <img src="/img/close.svg" alt="close" height="35" width="35" />
+                <img src="img/close.svg" alt="close" height="35" width="35" />
               </span>`
     dialog.innerHTML = `<h1 class="dialog-title">${element.dialog}</h1>
     <div style="color: white">
-    <img src="/img/pageTip/${element.dialogContent}" alt="Home ThreeJS Features." width="100%" />
+    <img src="img/pageTip/${element.dialogContent}" alt="Home ThreeJS Features." width="100%" />
     </div>`
     dialogContent.appendChild(closeBtn)
     dialogContent.appendChild(dialog)
@@ -85,7 +85,7 @@ const mainContent = async () => {
     showBtn.className = 'general-btn popup-btn'
     showBtn.innerHTML = `
     <span>
-        <img src="/img/question.svg" alt="Question" height="25" width="25" />
+        <img src="img/question.svg" alt="Question" height="25" width="25" />
     </span>
     `
 

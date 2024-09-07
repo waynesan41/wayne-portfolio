@@ -45,7 +45,8 @@ class HomePage {
   //   loadFile(home: any) {
   async loadFile(loader: GLTFLoader) {
     this.gltf = await loader.loadAsync(
-      './models/compress/HomeSection.glb',
+      // './models/compress/HomeSection.glb',
+      './models/compress/HomeCool.glb',
       (gltf) => {
         return gltf
       }

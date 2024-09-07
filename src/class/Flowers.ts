@@ -15,8 +15,9 @@ const scaleCurve = function (t: number) {
 
 class HomeFlower {
   api = {
-    count: 200,
+    count: 300,
     distribution: 'random',
+    // distribution: 'random',
     // resample: this.resample,
     // surfaceColor: 0x96a39a,
     // backgroundColor: 0xe39469,

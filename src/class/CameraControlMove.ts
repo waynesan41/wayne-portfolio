@@ -4,7 +4,7 @@ import TWEEN, { Group, Tween } from '@tweenjs/tween.js'
 
 const colors = [
   new THREE.Color(0x0fbcf9),
-  new THREE.Color(0xd1ccc0),
+  new THREE.Color(0x5a716a),
   new THREE.Color(0xffda79),
   new THREE.Color(0x575fcf),
   new THREE.Color(0x227093),
@@ -34,7 +34,7 @@ class CameraControlMove {
   navBtn: HTMLButtonElement[]
   content: HTMLElement[]
   currentFloor: number = 0
-  previousFloor: number = 0
+  // previousFloor: number = 0
   controlTweenScene: Tween[] = []
   cameraTweenScene: Tween[] = []
 
@@ -72,7 +72,8 @@ class CameraControlMove {
   positionCamera() {
     this.downBtn.disabled = true
     this.upBtn.disabled = true
-    const floorNum = 0
+    const floorNum = 1
+    this.currentFloor = floorNum
     // this.scene.background = colors[floorNum]
     // this.scene.backgroundIntensity = 0.1
 
@@ -81,6 +82,7 @@ class CameraControlMove {
       this.downBtn.disabled = false
       this.upBtn.disabled = false
     })
+    this.scene.background = new THREE.Color(colors[floorNum])
 
     // this.control.target.set(mesh.position.x, mesh.position.y, mesh.position.z)
     this.control.minPolarAngle = Math.PI / 5 // ~ 100 degrees
@@ -92,7 +94,8 @@ class CameraControlMove {
     // this.control.enableZoom = false
     this.control.enablePan = false
     this.control.minDistance = 4
-    this.control.maxDistance = 16
+    this.control.maxDistance = 17
+    // this.animateBackground(2)
   }
 
   goUp() {
