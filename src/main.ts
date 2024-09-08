@@ -160,6 +160,16 @@ function animate() {
 }
 
 function addRaycast(clickables: Clickable[]) {
+  renderer.domElement.addEventListener('mousemove', (e) => {
+    mouse.set(
+      (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
+      -(e.clientY / renderer.domElement.clientHeight) * 2 + 1
+    )
+
+    intersects = raycaster.intersectObjects(clickables, false)
+    // console.log(clickables)
+    console.log(intersects)
+  })
   renderer.domElement.addEventListener('pointerdown', (e) => {
     mouse.set(
       (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
