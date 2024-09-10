@@ -3,9 +3,10 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import TWEEN, { Group, Tween } from '@tweenjs/tween.js'
 
 const colors = [
-  new THREE.Color(0x0fbcf9),
+  // new THREE.Color(0x0fbcf9),
+  new THREE.Color(0x09759c),
   new THREE.Color(0x5a716a),
-  new THREE.Color(0xffda79),
+  new THREE.Color(0xb79c56),
   new THREE.Color(0x575fcf),
   new THREE.Color(0x227093),
 ]
@@ -33,7 +34,7 @@ class CameraControlMove {
   downBtn: HTMLButtonElement
   navBtn: HTMLButtonElement[]
   content: HTMLElement[]
-  currentFloor: number = 0
+  currentFloor: number = 1
   // previousFloor: number = 0
   controlTweenScene: Tween[] = []
   cameraTweenScene: Tween[] = []
@@ -72,7 +73,7 @@ class CameraControlMove {
   positionCamera() {
     this.downBtn.disabled = true
     this.upBtn.disabled = true
-    const floorNum = 1
+    const floorNum = 0
     this.currentFloor = floorNum
     // this.scene.background = colors[floorNum]
     // this.scene.backgroundIntensity = 0.1

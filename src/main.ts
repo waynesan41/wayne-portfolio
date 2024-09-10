@@ -1,12 +1,9 @@
 import * as THREE from 'three'
 import './style.css'
 
-import Stats from 'three/addons/libs/stats.module.js'
-
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js'
 import HomePage from './Pages/HomePage'
-import Clickable from './class/Clickable'
 import CameraControlMove from './class/CameraControlMove'
 import HomeFlower from './class/Flowers'
 import WebAppPage from './Pages/WebAppPage'
@@ -17,6 +14,7 @@ import { navToggle, stopLoading } from './class/StartScript'
 import mainContent from './components/MainContent'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import ClickRaycast from './class/ClickRaycast'
 
 let camera: THREE.PerspectiveCamera,
   scene: THREE.Scene,
@@ -76,8 +74,6 @@ async function init() {
   // ================ Home Page Loading
   homePage = new HomePage(scene)
   await homePage.loadFile(loader)
-  addRaycast(homePage.clickables)
-  // cameraControlMove.addTween(homePage.pillerModel!, homePage.pageControl)
   cameraControlMove.addTween(homePage.gltf.scene!, homePage.pageControl)
 
   // Flower in HOME PAGE
@@ -88,6 +84,7 @@ async function init() {
   // ================ WEBAPP Page Loading
   webAppPage = new WebAppPage(scene)
   await webAppPage.loadFile(loader)
+  // addRaycast(webAppPage.clickables)
   cameraControlMove.addTween(webAppPage.gltf.scene!, webAppPage.pageControl)
 
   // ================ MOBILE Page Loading
@@ -107,6 +104,8 @@ async function init() {
     educationPage.gltf.scene!,
     educationPage.pageControl
   )
+
+  await addRaycast(homePage.clickables)
 
   //--------------------------------------------------
   cameraControlMove.positionCamera()
@@ -159,8 +158,8 @@ function animate() {
   renderer.render(scene, camera)
 }
 
-function addRaycast(clickables: Clickable[]) {
-  renderer.domElement.addEventListener('mousemove', (e) => {
+async function addRaycast(clickables: ClickRaycast[]) {
+  /* renderer.domElement.addEventListener('mousemove', (e) => {
     mouse.set(
       (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
       -(e.clientY / renderer.domElement.clientHeight) * 2 + 1
@@ -169,34 +168,21 @@ function addRaycast(clickables: Clickable[]) {
     intersects = raycaster.intersectObjects(clickables, false)
     // console.log(clickables)
     console.log(intersects)
-  })
+  }) */
   renderer.domElement.addEventListener('pointerdown', (e) => {
     mouse.set(
       (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
       -(e.clientY / renderer.domElement.clientHeight) * 2 + 1
     )
+    console.log(mouse)
 
     raycaster.setFromCamera(mouse, camera)
+    intersects = raycaster.intersectObjects(clickables, true)
 
     // intersects = raycaster.intersectObjects(pickables, false)
-    intersects = raycaster.intersectObjects(clickables, false)
-    // console.log(clickables)
+
     console.log(intersects)
-    // toggles `clicked` property for only the Pickable closest to the camera
-    /* intersects.length &&
-      ((intersects[0].object as Pickable).clicked = !(
-        intersects[0].object as Pickable
-      ).clicked) */
 
-    intersects.length && (intersects[0].object as Clickable).onClick()
-    /* intersects.length &&
-      ((intersects[0].object as Clickable).pause = !(
-        intersects[0].object as Clickable
-      ).pause) */
-
-    // toggles `clicked` property for all overlapping Pickables detected by the raycaster at the same time
-    // intersects.forEach((i) => {
-    //   ;(i.object as Pickable).clicked = !(i.object as Pickable).clicked
-    // })
+    intersects.length && (intersects[0].object as ClickRaycast).clickObj()
   })
 }

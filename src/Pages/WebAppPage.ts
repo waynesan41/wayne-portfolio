@@ -1,8 +1,12 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import Clickable from '../class/Clickable'
+
 import { CamCtlPosition } from '../class/CameraControlMove'
-import { vertexColor } from 'three/webgpu'
+import WebAppClickable from '../class/WebAppClickable'
+import Clickable from '../class/Clickable'
+import ClickRaycast from '../class/ClickRaycast'
+
+const color = new THREE.Color()
 
 class WebAppPage {
   reactModel: THREE.Mesh | undefined
@@ -15,13 +19,14 @@ class WebAppPage {
   docker: THREE.Mesh | undefined
   youtube: THREE.Mesh | undefined
   aws: THREE.Mesh | undefined
-  handyWeb: THREE.Mesh | undefined
+  // handyWeb: THREE.Mesh | undefined
+  handyWeb: ClickRaycast | undefined
   handStore: THREE.Mesh | undefined
   bookmark: THREE.Mesh | undefined
   planeModel: THREE.Mesh | undefined
   instancedBook: THREE.InstancedMesh | undefined
 
-  clickables: Clickable[] = [] // used in the raycaster intersects methods
+  clickables: ClickRaycast[] = [] // used in the raycaster intersects methods
   scene: THREE.Scene
   gltf: any | undefined
   pageControl: CamCtlPosition = {
@@ -44,7 +49,6 @@ class WebAppPage {
     // this.gltf.scene.rotation.y = 135
     this.gltf.scene.scale.set(9, 9, 9)
     // this.scene.add(this.gltf.scene) // This is now added later
-    this.scene.add(this.gltf.scene)
 
     this.reactModel = this.gltf.scene.getObjectByName('ReactJS') as THREE.Mesh
     this.tailwindModel = this.gltf.scene.getObjectByName(
@@ -62,7 +66,8 @@ class WebAppPage {
       'Cloudflare'
     ) as THREE.Mesh
 
-    this.handyWeb = this.gltf.scene.getObjectByName('HandyWeb') as THREE.Mesh
+    // this.handyWeb = this.gltf.scene.getObjectByName('HandyWeb') as THREE.Mesh
+    this.handyWeb = this.gltf.scene.getObjectByName('HandyWeb') as ClickRaycast
     this.handStore = this.gltf.scene.getObjectByName(
       'ChromeWebStore'
     ) as THREE.Mesh
@@ -75,7 +80,7 @@ class WebAppPage {
 
     // Instanced of Mesh [][][][][][]
     const matrix = new THREE.Matrix4()
-    const color = new THREE.Color()
+    // const color = new THREE.Color()
     const count = 88
 
     const bookGeometry = this.bookmark.geometry
@@ -89,11 +94,7 @@ class WebAppPage {
       bookMaterial,
       count
     )
-    /* this.instancedBook = new THREE.InstancedMesh(
-      this.bookmark.geometry.rotateY(Math.PI / 2).clone(),
-      this.bookmark.material,
-      count
-    ) */
+
     // this.instancedBook.rotation.y = Math.PI / 2
     const vector3Pos = this.bookmark.position as THREE.Vector3
     vector3Pos.z -= 1.5
@@ -115,9 +116,30 @@ class WebAppPage {
         i++
       }
     }
-
     this.scene.add(this.instancedBook)
+
+    // WebApp Clickables
+
+    // const instancedClickable = new ClickRaycast()
+    this.handyWeb.update = (delta: number) => {
+      this.handyWeb!.rotation.z += delta / 2
+    }
+    this.handyWeb.clickObj = () => {
+      console.log(this.handyWeb?.pause)
+      console.log('click123123')
+    }
+    this.clickables.push(this.handyWeb)
+    // this.clickables.push(this.handyWeb)
+    this.scene.add(this.gltf.scene)
+
+    this.gltf.scene.remove(this.handyWeb)
+    this.gltf.scene.remove(this.handStore)
+    this.gltf.scene.add(this.handyWeb)
+    // this.gltf.scene.add(this.handStore)
+    // this.gltf.scene.add(instancedClickable)
+    // this.gltf.scene.add(instancedClickable.meshObj)
   }
+
   animation(delta: number, time: number) {
     this.reactModel!.rotation.z += delta * 0.7
     this.tailwindModel!.rotation.x += delta * 0.7
@@ -137,6 +159,12 @@ class WebAppPage {
     this.docker!.rotation.z = -Math.cos(time) * 0.4 - Math.PI
 
     this.linux!.rotation.y += delta * 0.7
+
+    // Ray casting
+
+    this.clickables.forEach((p) => {
+      p.update(delta)
+    })
   }
 }
 

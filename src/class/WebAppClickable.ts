@@ -6,9 +6,8 @@ import { Mesh, Vector3, Clock } from 'three'
 } */
 
 let clock = new Clock()
-class Clickable extends Mesh {
+class WebAppClickable extends Mesh {
   objType: number
-  // hovered = false
   direction = 2
   pause = false
   y: number = 0
@@ -21,21 +20,28 @@ class Clickable extends Mesh {
   constructor(object: Mesh, type: number) {
     super()
     this.objType = type // To Know Piller or WELCOME
+    // this = object
     // colorTo: Color // material: MeshStandardMaterial, // geometry: BufferGeometry,
     this.geometry = object.geometry
-    this.scale.setScalar(0.5)
     this.material = object.material
+    // this.scale.setScalar(0.13)
+    // this.getWorldScale(object.scale)
+    // this.getWorldPosition(object.position)
 
-    this.position.y = object.position.y
-    this.position.x = object.position.x
-    this.position.z = object.position.z
+    // this.getWorldPosition(object.position)
+    // this.position.y = object.position.y
+    // this.position.x = object.position.x
+    // this.position.z = object.position.z
 
-    if (type === 1) {
+    // this.rotation.x = object.rotation.x
+    // this.rotation.y = object.rotation.y
+    // this.rotation.z = object.rotation.z
+
+    /* if (type === 1) {
       this.y = object.position.y
     } else if (type === 2) {
       this.rotation.x = 90
-      this.scale.setScalar(0.5)
-    }
+    } */
 
     // this.position.z = object.position.z
     // this.colorTo = objectcolorTo
@@ -43,6 +49,7 @@ class Clickable extends Mesh {
     // this.castShadow = true
   }
   onClick() {
+    console.log('clicked')
     if (this.objType == 1) {
       if (this.direction === 3) {
         this.direction = 0
@@ -55,8 +62,9 @@ class Clickable extends Mesh {
   }
   update(delta: number) {
     const time = clock.getElapsedTime()
-    // Mesh Piller
-    if (this.objType === 1) {
+
+    // Object is Piller
+    /* if (this.objType === 1) {
       this.position.y = this.y + Math.cos(time) * 0.1
       // this.rotation.x += delta / 2
       // this.clicked ? this.scale.setScalar(2) : this.scale.setScalar(1)
@@ -66,14 +74,14 @@ class Clickable extends Mesh {
         this.rotation.y += delta / 2
       }
     }
-    // WELCOME
+    // Object is Welcome
     else if (this.objType === 2) {
       if (!this.pause) {
         this.rotation.z += delta / 2
         this.rotation.x = Math.sin(time) * 0.2 + 1.7
       }
     }
-
+ */
     /* this.clicked
         ? (this.position.y = MathUtils.lerp(this.position.y, 1, delta * 5))
         : (this.position.y -= MathUtils.lerp(this.position.y, 0, delta * 5)) */
@@ -126,4 +134,4 @@ class Clickable extends Mesh {
   }
 }
 
-export default Clickable
+export default WebAppClickable
