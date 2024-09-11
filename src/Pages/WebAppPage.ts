@@ -5,8 +5,14 @@ import { CamCtlPosition } from '../class/CameraControlMove'
 import WebAppClickable from '../class/WebAppClickable'
 import Clickable from '../class/Clickable'
 import ClickRaycast from '../class/ClickRaycast'
+import { Tween } from '@tweenjs/tween.js'
 
 const color = new THREE.Color()
+
+function lerp(from: number, to: number, speed: number) {
+  const amount = (1 - speed) * from + speed * to
+  return Math.abs(from - to) < 0.001 ? to : amount
+}
 
 class WebAppPage {
   reactModel: THREE.Mesh | undefined
@@ -17,11 +23,11 @@ class WebAppPage {
   linux: THREE.Mesh | undefined
   cloudflare: THREE.Mesh | undefined
   docker: THREE.Mesh | undefined
-  youtube: THREE.Mesh | undefined
   aws: THREE.Mesh | undefined
   // handyWeb: THREE.Mesh | undefined
   handyWeb: ClickRaycast | undefined
-  handStore: THREE.Mesh | undefined
+  handyStore: ClickRaycast | undefined
+  youtube: ClickRaycast | undefined
   bookmark: THREE.Mesh | undefined
   planeModel: THREE.Mesh | undefined
   instancedBook: THREE.InstancedMesh | undefined
@@ -67,17 +73,19 @@ class WebAppPage {
     ) as THREE.Mesh
 
     // this.handyWeb = this.gltf.scene.getObjectByName('HandyWeb') as THREE.Mesh
+    this.youtube = this.gltf.scene.getObjectByName('Youtube') as ClickRaycast
     this.handyWeb = this.gltf.scene.getObjectByName('HandyWeb') as ClickRaycast
-    this.handStore = this.gltf.scene.getObjectByName(
+    this.handyStore = this.gltf.scene.getObjectByName(
       'ChromeWebStore'
-    ) as THREE.Mesh
+    ) as ClickRaycast
+    console.log(this.handyWeb)
+    console.log(this.youtube)
 
     this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh
     this.bookmark = this.gltf.scene.getObjectByName('Bookmark') as THREE.Mesh
     this.bookmark.getWorldPosition(this.bookmark.position)
 
     console.log('----------------------------')
-
     // Instanced of Mesh [][][][][][]
     const matrix = new THREE.Matrix4()
     // const color = new THREE.Color()
@@ -118,26 +126,84 @@ class WebAppPage {
     }
     this.scene.add(this.instancedBook)
 
-    // WebApp Clickables
+    // Ray Casting Handy Website xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    const handyWeb = this.handyWeb
+    handyWeb.hovered = false
+    handyWeb.update = (delta: number) => {
+      //Hover animation
+      if (handyWeb.hovered) {
+        handyWeb.scale.setScalar(lerp(handyWeb.scale.x, 0.25, delta * 5))
+      } else {
+        handyWeb.scale.setScalar(lerp(handyWeb.scale.x, 0.13, delta * 5))
+      }
+    }
+    handyWeb.clickObj = () => {
+      window.open('https://handybookmark.com/login', '_blank')
+    }
+    this.clickables.push(handyWeb)
 
-    // const instancedClickable = new ClickRaycast()
-    this.handyWeb.update = (delta: number) => {
-      this.handyWeb!.rotation.z += delta / 2
+    // Ray Casting Chrome Web Store xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    const handyStore = this.handyStore
+    handyStore.hovered = false
+    handyStore.update = (delta: number) => {
+      //Hover animation
+      if (handyStore.hovered) {
+        handyStore.scale.setScalar(lerp(handyStore.scale.x, 0.25, delta * 5))
+      } else {
+        handyStore.scale.setScalar(lerp(handyStore.scale.x, 0.13, delta * 5))
+      }
     }
-    this.handyWeb.clickObj = () => {
-      console.log(this.handyWeb?.pause)
-      console.log('click123123')
+    handyStore.clickObj = () => {
+      window.open(
+        'https://chromewebstore.google.com/detail/handy-bookmark/eoaminfjobnfghjcdhpcjndoakidhgod',
+        '_blank'
+      )
     }
-    this.clickables.push(this.handyWeb)
-    // this.clickables.push(this.handyWeb)
+    this.clickables.push(handyStore)
+
+    // Ray Casting Youtube Video xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    const youtube = this.youtube
+    youtube.hovered = false
+    youtube.update = (delta: number) => {
+      //Hover animation
+      if (youtube.hovered) {
+        console.log('hover')
+        youtube.scale.setScalar(lerp(youtube.scale.y, 0.25, delta * 5))
+      } else {
+        youtube.scale.setScalar(lerp(youtube.scale.x, 0.05, delta * 5))
+      }
+    }
+    youtube.clickObj = () => {
+      window.open('https://handybookmark.com/login', '_blank')
+    }
+    this.clickables.push(this.youtube)
+
+    // Ray Casting Bookmark Instanced xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    const bookmarkIcon = this.instancedBook
+    bookmarkIcon.update = (instanceId: number) => {}
+    bookmarkIcon.changeColor = (instanceId: number) => {
+      //Hover animation
+      const color = new THREE.Color()
+      bookmarkIcon.getColorAt(instanceId, color)
+
+      if (color.equals(new THREE.Color(0xffffff))) {
+        bookmarkIcon.setColorAt(
+          instanceId,
+          color.setHex(Math.random() * 0xffffff)
+        )
+        bookmarkIcon.instanceColor!.needsUpdate = true
+      }
+    }
+    bookmarkIcon.clickObj = () => {
+      /* for (var i = 0; i < count; i++) {
+        // Count
+        bookmarkIcon.setColorAt(i, color.setHex(0xffffff))
+      }
+      bookmarkIcon.instanceColor!.needsUpdate = true */
+    }
+    this.clickables.push(bookmarkIcon)
+
     this.scene.add(this.gltf.scene)
-
-    this.gltf.scene.remove(this.handyWeb)
-    this.gltf.scene.remove(this.handStore)
-    this.gltf.scene.add(this.handyWeb)
-    // this.gltf.scene.add(this.handStore)
-    // this.gltf.scene.add(instancedClickable)
-    // this.gltf.scene.add(instancedClickable.meshObj)
   }
 
   animation(delta: number, time: number) {

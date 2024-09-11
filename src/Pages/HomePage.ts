@@ -72,6 +72,8 @@ class HomePage {
         this.pillerModel!.rotation.y += delta / 2
       }
     } */
+
+    // Ray Castin piller xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     const piller = this.pillerModel
     piller!.direction = 2
     piller.update = (delta: number) => {
@@ -86,17 +88,28 @@ class HomePage {
       }
     }
     piller.clickObj = () => {
-      console.log('Clicked')
-      console.log(piller!.direction)
       if (piller!.direction === 3) {
         piller!.direction = 0
       } else {
         piller!.direction++
       }
     }
+    // Ray Castin WELCOME xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    const welcome = this.welcomeModel
+    welcome.pause = false
+    welcome.update = (delta: number) => {
+      const time = clock.getElapsedTime()
+      welcome.rotation.z += delta / 2
+      welcome.rotation.x = Math.sin(time) * 0.2 + 1.7
+    }
+    welcome.clickObj = () => {
+      welcome.pause = !welcome.pause
+    }
+
     this.gltf.scene.remove(piller)
     this.scene.add(piller)
     this.clickables.push(piller)
+    this.clickables.push(welcome)
     this.scene.add(this.gltf.scene)
 
     /* this.pillerModel!.direction = 2

@@ -8,15 +8,10 @@ import { objectWorldMatrix } from 'three/webgpu'
 } */
 
 interface ClickRaycast extends Mesh {
-  //   objType: number
   direction: number
-  //   meshObj: THREE.Mesh
+  hovered: boolean
   pause: boolean
   y: number
-  //   colorTo: Color
-  //   defaultColor: Color
-  //   geometry: BufferGeometry
-  //   material: MeshStandardMaterial
 
   clickObj(): void
   update(delta: number): void

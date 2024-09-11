@@ -23,8 +23,10 @@ let camera: THREE.PerspectiveCamera,
   cameraControlMove: CameraControlMove,
   intersects,
   delta: number = 0,
-  time = 0
-
+  time = 0,
+  clickable: ClickRaycast[] = [],
+  hoverable: ClickRaycast[] = [],
+  doubleClickable: ClickRaycast[] = []
 const loader = new GLTFLoader()
 const dracoLoader = new DRACOLoader()
 // dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/') // loading from a CDN
@@ -75,6 +77,7 @@ async function init() {
   homePage = new HomePage(scene)
   await homePage.loadFile(loader)
   cameraControlMove.addTween(homePage.gltf.scene!, homePage.pageControl)
+  clickable = clickable.concat(homePage.clickables) // Clickable
 
   // Flower in HOME PAGE
   flowerGrow = new HomeFlower(scene)
@@ -84,8 +87,9 @@ async function init() {
   // ================ WEBAPP Page Loading
   webAppPage = new WebAppPage(scene)
   await webAppPage.loadFile(loader)
-  // addRaycast(webAppPage.clickables)
   cameraControlMove.addTween(webAppPage.gltf.scene!, webAppPage.pageControl)
+  doubleClickable = clickable.concat(webAppPage.clickables) // Double Click
+  hoverable = clickable.concat(webAppPage.clickables)
 
   // ================ MOBILE Page Loading
   androidPage = new AndroidPage(scene)
@@ -105,7 +109,10 @@ async function init() {
     educationPage.pageControl
   )
 
-  await addRaycast(homePage.clickables)
+  console.log(clickable)
+  await addClickRaycast(clickable)
+  await addDoubleClickRaycast(doubleClickable)
+  await addHoverRaycast(hoverable)
 
   //--------------------------------------------------
   cameraControlMove.positionCamera()
@@ -158,17 +165,7 @@ function animate() {
   renderer.render(scene, camera)
 }
 
-async function addRaycast(clickables: ClickRaycast[]) {
-  /* renderer.domElement.addEventListener('mousemove', (e) => {
-    mouse.set(
-      (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
-      -(e.clientY / renderer.domElement.clientHeight) * 2 + 1
-    )
-
-    intersects = raycaster.intersectObjects(clickables, false)
-    // console.log(clickables)
-    console.log(intersects)
-  }) */
+async function addClickRaycast(clickables: ClickRaycast[]) {
   renderer.domElement.addEventListener('pointerdown', (e) => {
     mouse.set(
       (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
@@ -185,4 +182,69 @@ async function addRaycast(clickables: ClickRaycast[]) {
 
     intersects.length && (intersects[0].object as ClickRaycast).clickObj()
   })
+}
+async function addDoubleClickRaycast(doubleClickable: ClickRaycast[]) {
+  //Ray Cast
+  renderer.domElement.addEventListener('dblclick', (e) => {
+    mouse.set(
+      (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
+      -(e.clientY / renderer.domElement.clientHeight) * 2 + 1
+    )
+
+    raycaster.setFromCamera(mouse, camera)
+    intersects = raycaster.intersectObjects(doubleClickable, true)
+
+    // intersects = raycaster.intersectObjects(pickables, false)
+
+    console.log(intersects)
+
+    intersects.length && (intersects[0].object as ClickRaycast).clickObj()
+  })
+}
+
+async function addHoverRaycast(hoverable: ClickRaycast[]) {
+  renderer.domElement.addEventListener('touchmove', (e) => {
+    move(e)
+  })
+  renderer.domElement.addEventListener('mousemove', (e) => {
+    move(e)
+  })
+  function move(e: any) {
+    mouse.set(
+      (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
+      -(e.clientY / renderer.domElement.clientHeight) * 2 + 1
+    )
+
+    hoverable.forEach((p) => (p.hovered = false))
+
+    raycaster.setFromCamera(mouse, camera)
+    intersects = raycaster.intersectObjects(hoverable, false)
+    // console.log(clickables)
+
+    if (intersects.length) {
+      // IF it is an Instanced Mesh
+      // console.log(intersects[0].instanceId)
+      const instanceId = intersects[0].instanceId
+
+      if (instanceId) {
+        const instanceObj = intersects[0].object as THREE.InstancedMesh
+        instanceObj.changeColor(instanceId)
+        /* const color = new THREE.Color()
+        instanceObj.getColorAt(instanceId, color)
+        console.log(color)
+        if (color.equals(new THREE.Color(0xffffff))) {
+          instanceObj.setColorAt(
+            instanceId,
+            color.setHex(Math.random() * 0xffffff)
+          )
+          instanceObj.instanceColor!.needsUpdate = true
+        } */
+      } else {
+        ;(intersects[0].object as ClickRaycast).hovered = true
+      }
+    }
+    // intersects.length && ((intersects[0].object as ClickRaycast).hovered = true)
+
+    console.log(intersects)
+  }
 }
