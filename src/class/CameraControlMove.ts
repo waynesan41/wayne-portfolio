@@ -96,6 +96,7 @@ class CameraControlMove {
     this.control.enablePan = false
     this.control.minDistance = 4
     this.control.maxDistance = 18
+
     // this.animateBackground(2)
   }
 

@@ -122,6 +122,7 @@ const mainContent = async () => {
     expandBtn.onclick = () => {
       console.log('expand')
       pageContent.classList.toggle('expand')
+      section.classList.toggle('section-expand')
       const text = expandBtn.innerHTML
       if (text.includes('Close')) {
         expandBtn.innerHTML = '<span> Expand </span>'

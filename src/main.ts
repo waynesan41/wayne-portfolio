@@ -15,6 +15,7 @@ import mainContent from './components/MainContent'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import ClickRaycast from './class/ClickRaycast'
+import ClickInstancedRaycast from './type/ClickInstancedRaycast'
 
 let camera: THREE.PerspectiveCamera,
   scene: THREE.Scene,
@@ -63,6 +64,7 @@ async function init() {
     700
   )
   controls = new OrbitControls(camera, renderer.domElement)
+
   await new RGBELoader()
     // .loadAsync('img/venice_sunset_1k.hdr')
     .loadAsync('img/sky-compress.hdr')
@@ -70,6 +72,31 @@ async function init() {
       texture.mapping = THREE.EquirectangularReflectionMapping
       scene.environment = texture
     })
+
+  window.addEventListener('keydown', function (e: KeyboardEvent) {
+    // controls.autoRotate = true
+    // controls.autoRotateSpeed *= -1
+    // console.log(e)
+    if (controls.autoRotate != true) {
+      if (e.code == 'ArrowRight') {
+        controls.autoRotate = true
+        controls.autoRotateSpeed = -9
+      }
+      if (e.code == 'ArrowLeft') {
+        controls.autoRotate = true
+        controls.autoRotateSpeed = 9
+      }
+    }
+  })
+  window.addEventListener('keyup', function (e: KeyboardEvent) {
+    // console.log(e)
+    controls.autoRotate = false
+    if (e.code == 'ArrowRight') {
+      controls.autoRotate = false
+    } else if (e.code == 'ArrowLeft') {
+      controls.autoRotate = false
+    }
+  })
 
   cameraControlMove = new CameraControlMove(scene, camera, controls)
 
@@ -155,7 +182,7 @@ function animate() {
   delta = clock.getDelta()
   time = clock.getElapsedTime()
 
-  controls.update()
+  controls.update(delta)
 
   cameraControlMove.animation(delta)
   homePage.animation(delta)
@@ -227,7 +254,7 @@ async function addHoverRaycast(hoverable: ClickRaycast[]) {
       const instanceId = intersects[0].instanceId
 
       if (instanceId) {
-        const instanceObj = intersects[0].object as THREE.InstancedMesh
+        const instanceObj = intersects[0].object as ClickInstancedRaycast
         instanceObj.changeColor(instanceId)
         /* const color = new THREE.Color()
         instanceObj.getColorAt(instanceId, color)
@@ -245,6 +272,6 @@ async function addHoverRaycast(hoverable: ClickRaycast[]) {
     }
     // intersects.length && ((intersects[0].object as ClickRaycast).hovered = true)
 
-    console.log(intersects)
+    // console.log(intersects)
   }
 }

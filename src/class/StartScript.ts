@@ -9,7 +9,6 @@ export async function navToggle() {
   // console.log(navBtn?.style)
   // console.log(navBtn?.style.display)
   // console.log(menu)
-
   navBtn?.classList.toggle('change')
   // menu?.classList.toggle('show')
   // Index Change for Menu
@@ -33,6 +32,7 @@ export async function navToggle() {
       }, 400)
     }
   })
+  navBtn?.click()
 
   //----------------------------------------------------------------------------
   // Set up Expend Content

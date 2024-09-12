@@ -6,6 +6,7 @@ import WebAppClickable from '../class/WebAppClickable'
 import Clickable from '../class/Clickable'
 import ClickRaycast from '../class/ClickRaycast'
 import { Tween } from '@tweenjs/tween.js'
+import ClickInstancedRaycast from '../type/ClickInstancedRaycast'
 
 const color = new THREE.Color()
 
@@ -31,12 +32,13 @@ class WebAppPage {
   bookmark: THREE.Mesh | undefined
   planeModel: THREE.Mesh | undefined
   instancedBook: THREE.InstancedMesh | undefined
+  // instancedBook: ClickInstancedRaycast | undefined
 
   clickables: ClickRaycast[] = [] // used in the raycaster intersects methods
   scene: THREE.Scene
   gltf: any | undefined
   pageControl: CamCtlPosition = {
-    cam: { x: -2, y: 7, z: -16 },
+    cam: { x: -2, y: 11, z: -17 },
     ctl: { x: -2, y: 7, z: 0 },
   }
   constructor(scene: THREE.Scene) {
@@ -78,22 +80,22 @@ class WebAppPage {
     this.handyStore = this.gltf.scene.getObjectByName(
       'ChromeWebStore'
     ) as ClickRaycast
-    console.log(this.handyWeb)
+
+    console.log('----------------------------')
     console.log(this.youtube)
 
     this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh
     this.bookmark = this.gltf.scene.getObjectByName('Bookmark') as THREE.Mesh
     this.bookmark.getWorldPosition(this.bookmark.position)
 
-    console.log('----------------------------')
     // Instanced of Mesh [][][][][][]
     const matrix = new THREE.Matrix4()
     // const color = new THREE.Color()
-    const count = 88
+    const count = 234
 
     const bookGeometry = this.bookmark.geometry
       .rotateY(Math.PI / 2)
-      // .scale(0.7, 0.7, 0.7)
+      .scale(0.7, 0.7, 0.7)
       .clone()
     const bookMaterial = this.bookmark.material
 
@@ -109,10 +111,10 @@ class WebAppPage {
     matrix.setPosition(vector3Pos)
     // matrix.setPosition(this.bookmark.position)
     let i = 0
-    for (let z = 0; z < 8; z++) {
-      const zGap = z * 4
-      for (let x = 0; x < 11; x++) {
-        const xGap = x * 3
+    for (let z = 0; z < 25; z++) {
+      const zGap = z * 2.5
+      for (let x = 0; x < 18; x++) {
+        const xGap = x * 1.8
         matrix.setPosition(
           vector3Pos.x - xGap,
           vector3Pos.y,
@@ -162,24 +164,40 @@ class WebAppPage {
     this.clickables.push(handyStore)
 
     // Ray Casting Youtube Video xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    const youtubeOut = this.youtube.children[0] as ClickRaycast
+    const youtubeIn = this.youtube.children[1] as ClickRaycast
     const youtube = this.youtube
-    youtube.hovered = false
-    youtube.update = (delta: number) => {
+    youtubeIn.hovered = false
+    youtubeOut.hovered = false
+    youtubeOut.update = (delta: number) => {
       //Hover animation
-      if (youtube.hovered) {
+      if (youtubeOut.hovered || youtubeIn.hovered) {
         console.log('hover')
-        youtube.scale.setScalar(lerp(youtube.scale.y, 0.25, delta * 5))
+        youtube.scale.setScalar(lerp(youtube.scale.y, 0.1, delta * 5))
       } else {
-        youtube.scale.setScalar(lerp(youtube.scale.x, 0.05, delta * 5))
+        youtube.scale.setScalar(lerp(youtube.scale.y, 0.07, delta * 5))
       }
     }
-    youtube.clickObj = () => {
-      window.open('https://handybookmark.com/login', '_blank')
+    youtubeIn.update = (delta: number) => {
+      //Hover animation
+      /* if (youtubeIn.hovered) {
+        console.log('hover')
+        youtube.scale.setScalar(lerp(youtube.scale.y, 0.2, delta * 5))
+      } else {
+        youtube.scale.setScalar(lerp(youtube.scale.x, 0.7, delta * 5))
+      } */
     }
-    this.clickables.push(this.youtube)
+    youtubeIn.clickObj = () => {
+      window.open('https://youtu.be/s-9rdQMt6rU', '_blank')
+    }
+    youtubeOut.clickObj = () => {
+      window.open('https://youtu.be/s-9rdQMt6rU', '_blank')
+    }
+    this.clickables.push(youtubeOut)
+    this.clickables.push(youtubeIn)
 
     // Ray Casting Bookmark Instanced xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    const bookmarkIcon = this.instancedBook
+    const bookmarkIcon = this.instancedBook as ClickInstancedRaycast
     bookmarkIcon.update = (instanceId: number) => {}
     bookmarkIcon.changeColor = (instanceId: number) => {
       //Hover animation
@@ -195,11 +213,11 @@ class WebAppPage {
       }
     }
     bookmarkIcon.clickObj = () => {
-      /* for (var i = 0; i < count; i++) {
+      for (var i = 0; i < count; i++) {
         // Count
         bookmarkIcon.setColorAt(i, color.setHex(0xffffff))
       }
-      bookmarkIcon.instanceColor!.needsUpdate = true */
+      bookmarkIcon.instanceColor!.needsUpdate = true
     }
     this.clickables.push(bookmarkIcon)
 
