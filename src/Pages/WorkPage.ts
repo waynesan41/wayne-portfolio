@@ -23,7 +23,7 @@ class WorkPage {
   gltf: any | undefined
   pageControl: CamCtlPosition = {
     cam: { x: 0, y: 5, z: -15 },
-    ctl: { x: 0, y: 0, z: 0 },
+    ctl: { x: 0, y: 4, z: 0 },
   }
 
   constructor(scene: THREE.Scene) {
@@ -39,14 +39,15 @@ class WorkPage {
   }
 
   async loadFile(loader: GLTFLoader) {
-    this.gltf = await loader.loadAsync('./models/compress/Duck.glb', (gltf) => {
+    this.gltf = await loader.loadAsync('./models/compress/Work.glb', (gltf) => {
       // console.log(gltf)
       return gltf
     })
     this.gltf.scene.position.y = -90
     this.gltf.scene.rotation.y = 135
-    this.gltf.scene.scale.set(11, 11, 11)
-    // this.gltf.scene.scale.set(1, 1, 1)
+    // this.gltf.scene.scale.set(11, 11, 11)
+    // this.gltf.scene.scale.set(0.1, 0.1, 0.1)
+    this.gltf.scene.scale.setScalar(0.2)
     this.scene.add(this.gltf.scene)
 
     /*  this.reactModel = this.gltf.scene.getObjectByName('ReactJS') as THREE.Mesh

@@ -4,17 +4,21 @@ import Clickable from '../class/Clickable'
 import { CamCtlPosition } from '../class/CameraControlMove'
 
 class AndroidPage {
-  reactModel: THREE.Mesh | undefined
-  tailwindModel: THREE.Mesh | undefined
-  mongodbModel: THREE.Mesh | undefined
-  nodejsModel: THREE.Mesh | undefined
+  dartModel: THREE.Mesh | undefined
+  flutterModel: THREE.Mesh | undefined
+  kotlinModel: THREE.Mesh | undefined
+  javaModel: THREE.Mesh | undefined
+  appModel: THREE.Mesh | undefined
+  phoneModel: THREE.Mesh | undefined
+  android: THREE.Mesh | undefined
   planeModel: THREE.Mesh | undefined
+
   clickables: Clickable[] = [] // used in the raycaster intersects methods
   scene: THREE.Scene
   gltf: any | undefined
   pageControl: CamCtlPosition = {
-    cam: { x: 0, y: 5, z: -15 },
-    ctl: { x: 0, y: 0, z: 0 },
+    cam: { x: 1, y: 7, z: -14 },
+    ctl: { x: 0, y: 4, z: 0 },
   }
 
   constructor(scene: THREE.Scene) {
@@ -90,13 +94,12 @@ class AndroidPage {
     //   this.clickables.push(welcomeClickable)
   }
   animation(delta: number, time: number) {
-    this.reactModel!.rotation.y += delta
-    this.tailwindModel!.rotation.x += delta
-    this.mongodbModel!.rotation.z += delta
+    this.dartModel!.rotation.y += delta
+    this.flutterModel!.rotation.x += delta
+    this.kotlinModel!.rotation.z += delta
+    this.javaModel!.rotation.z += delta
 
-    this.nodejsModel!.rotation.z = Math.cos(time) * 0.5
-    this.nodejsModel!.rotation.x = Math.sin(time) * 0.4 + 1.5
-    this.nodejsModel!.rotation.y = Math.cos(time) * 0.2
+    this.phoneModel!.rotation.z = Math.cos(time) * 0.5
   }
 }
 
