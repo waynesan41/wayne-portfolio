@@ -188,7 +188,7 @@ function animate() {
   homePage.animation(delta)
   flowerGrow.animation(delta)
   webAppPage.animation(delta, time)
-
+  educationPage.animation(delta, time)
   renderer.render(scene, camera)
 }
 

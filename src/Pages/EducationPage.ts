@@ -4,17 +4,18 @@ import Clickable from '../class/Clickable'
 import { CamCtlPosition } from '../class/CameraControlMove'
 
 class EducationPage {
-  reactModel: THREE.Mesh | undefined
-  tailwindModel: THREE.Mesh | undefined
-  mongodbModel: THREE.Mesh | undefined
-  nodejsModel: THREE.Mesh | undefined
-  planeModel: THREE.Mesh | undefined
+  moneyModel: THREE.Mesh | undefined
+  homeModel: THREE.Mesh | undefined
+  degreeModel: THREE.Mesh | undefined
+  schoolModel: THREE.Mesh | undefined
+  coinModel: THREE.Mesh | undefined
   clickables: Clickable[] = [] // used in the raycaster intersects methods
   scene: THREE.Scene
+  systemGroup: THREE.Group = new THREE.Group()
   gltf: any | undefined
   pageControl: CamCtlPosition = {
-    cam: { x: 0, y: 5, z: -15 },
-    ctl: { x: 0, y: 0, z: 0 },
+    cam: { x: 0, y: 3, z: -10 },
+    ctl: { x: 0, y: 3, z: 0 },
   }
 
   constructor(scene: THREE.Scene) {
@@ -31,7 +32,7 @@ class EducationPage {
 
   async loadFile(loader: GLTFLoader) {
     this.gltf = await loader.loadAsync(
-      './models/compress/School.glb',
+      './models/compress/Education.glb',
       (gltf) => {
         // console.log(gltf)
         return gltf
@@ -40,63 +41,33 @@ class EducationPage {
     this.gltf.scene.position.y = -120
     // this.gltf.scene.rotation.y = 0
     // this.gltf.scene.scale.set(11, 11, 11)
-    this.gltf.scene.scale.set(0.5, 0.5, 0.5)
+    this.gltf.scene.scale.set(0.2, 0.2, 0.2)
     this.scene.add(this.gltf.scene)
 
-    /*  this.reactModel = this.gltf.scene.getObjectByName('ReactJS') as THREE.Mesh
-    this.tailwindModel = this.gltf.scene.getObjectByName(
-      'Tailwind'
-    ) as THREE.Mesh
-    this.mongodbModel = this.gltf.scene.getObjectByName('MongoDB') as THREE.Mesh
-    this.nodejsModel = this.gltf.scene.getObjectByName('NodeJS') as THREE.Mesh
-    this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh */
+    this.moneyModel = this.gltf.scene.getObjectByName('Money') as THREE.Mesh
+    this.homeModel = this.gltf.scene.getObjectByName('House') as THREE.Mesh
+    this.degreeModel = this.gltf.scene.getObjectByName('Degree') as THREE.Mesh
+    this.schoolModel = this.gltf.scene.getObjectByName('School') as THREE.Mesh
 
-    // console.log(this.gltf.scene)
+    this.systemGroup.add(this.moneyModel)
+    this.systemGroup.add(this.homeModel)
+    this.systemGroup.add(this.degreeModel)
 
-    /* this.gltf = await loader.loadAsync('./models/Icons.glb', (gltf) => {
-      console.log(gltf)
-      return gltf
-    })
-    this.gltf.scene.position.y = -15
-    this.gltf.scene.rotation.y = 90
-    this.gltf.scene.scale.set(11, 11, 11)
-    this.scene.add(this.gltf.scene)
+    this.gltf.scene.add(this.systemGroup)
+    // this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh
+    // this.degreeModel!.setRotationFromAxisAngle(this.schoolModel!.position, 1)
 
-    this.reactModel = this.gltf.scene.getObjectByName('ReactJS') as THREE.Mesh
-    this.tailwindModel = this.gltf.scene.getObjectByName(
-      'Tailwind'
-    ) as THREE.Mesh
-    this.mongodbModel = this.gltf.scene.getObjectByName('MongoDB') as THREE.Mesh
-    this.nodejsModel = this.gltf.scene.getObjectByName('NodeJS') as THREE.Mesh
-    this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh
-
-    console.log(this.gltf.scene) */
-
-    // const pillerClickable = new Clickable(this.pillerModel, 1)
-    // const welcomeClickable = new Clickable(this.welcomeModel, 2)
-    // this.scene.add(welcomeClickable)
-    // this.scene.add(this.planeModel)
-    // this.scene.add(pillerClickable)
-    // this.clickables.push(pillerClickable)
-    // this.clickables.push(welcomeClickable)
-    //   this.pillerModel = home.scene.getObjectByName('Piller') as THREE.Mesh
-    //   this.planeModel = home.scene.getObjectByName('Plane') as THREE.Mesh
-    //   this.welcomeModel = home.scene.getObjectByName('Welcome') as THREE.Mesh
-    //   const pillerClickable = new Clickable(this.pillerModel, 1)
-    //   const welcomeClickable = new Clickable(this.welcomeModel, 2)
-    //   this.scene.add(welcomeClickable)
-    //   this.scene.add(pillerClickable)
-    //   this.clickables.push(pillerClickable)
-    //   this.clickables.push(welcomeClickable)
+    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+    console.log(this.schoolModel)
   }
   animation(delta: number, time: number) {
-    this.reactModel!.rotation.y += delta
-    this.tailwindModel!.rotation.x += delta
-    this.mongodbModel!.rotation.z += delta
-
-    this.nodejsModel!.rotation.z = Math.cos(time) * 0.5
+    this.systemGroup.rotation.y += delta * 0.3
+    this.moneyModel!.rotation.z -= delta * 0.5
+    this.homeModel!.rotation.y -= delta * 0.5
+    this.degreeModel!.rotation.y -= delta * 0.5
+    /* this.nodejsModel!.rotation.z = Math.cos(time) * 0.5
     this.nodejsModel!.rotation.x = Math.sin(time) * 0.4 + 1.5
-    this.nodejsModel!.rotation.y = Math.cos(time) * 0.2
+    this.nodejsModel!.rotation.y = Math.cos(time) * 0.2 */
   }
 }
 

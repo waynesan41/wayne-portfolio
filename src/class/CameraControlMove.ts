@@ -73,7 +73,7 @@ class CameraControlMove {
   positionCamera() {
     this.downBtn.disabled = true
     this.upBtn.disabled = true
-    const floorNum = 3
+    const floorNum = 4
     this.currentFloor = floorNum
     // this.scene.background = colors[floorNum]
     // this.scene.backgroundIntensity = 0.1
@@ -93,6 +93,7 @@ class CameraControlMove {
 
     // this.control.enableRotate = false
     // this.control.enableZoom = false
+
     this.control.enablePan = false
     this.control.minDistance = 4
     this.control.maxDistance = 18
