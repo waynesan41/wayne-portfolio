@@ -86,17 +86,20 @@ class CameraControlMove {
     this.scene.background = new THREE.Color(colors[floorNum])
 
     // this.control.target.set(mesh.position.x, mesh.position.y, mesh.position.z)
-    this.control.minPolarAngle = Math.PI / 5 // ~ 100 degrees
-    this.control.maxPolarAngle = Math.PI / 2 + Math.PI / 16 // ~ 100 degrees
+    //=================================================
+    // this.control.minPolarAngle = Math.PI / 5 // ~ 100 degrees
+    // this.control.maxPolarAngle = Math.PI / 2 + Math.PI / 16 // ~ 100 degrees
+    //=================================================
     // this.control.minAzimuthAngle = Math.PI / 2 + Math.PI / 16
     // this.control.maxAzimuthAngle = Math.PI / 2 + Math.PI / 16
 
     // this.control.enableRotate = false
     // this.control.enableZoom = false
 
+    //=============================================
     this.control.enablePan = false
-    this.control.minDistance = 4
-    this.control.maxDistance = 18
+    // this.control.minDistance = 4
+    // this.control.maxDistance = 18
 
     // this.animateBackground(2)
   }
