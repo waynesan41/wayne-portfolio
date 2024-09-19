@@ -91,7 +91,7 @@ class WebAppPage {
     // Instanced of Mesh [][][][][][]
     const matrix = new THREE.Matrix4()
     // const color = new THREE.Color()
-    const count = 234
+    const count = 216
 
     const bookGeometry = this.bookmark.geometry
       .rotateY(Math.PI / 2)
@@ -111,10 +111,10 @@ class WebAppPage {
     matrix.setPosition(vector3Pos)
     // matrix.setPosition(this.bookmark.position)
     let i = 0
-    for (let z = 0; z < 25; z++) {
-      const zGap = z * 2.5
+    for (let z = 0; z < 12; z++) {
+      const zGap = z * 2.6
       for (let x = 0; x < 18; x++) {
-        const xGap = x * 1.8
+        const xGap = x * 1.75
         matrix.setPosition(
           vector3Pos.x - xGap,
           vector3Pos.y,

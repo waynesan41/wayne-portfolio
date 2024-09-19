@@ -10,12 +10,13 @@ import WebAppPage from './Pages/WebAppPage'
 import WorkPage from './Pages/WorkPage'
 import EducationPage from './Pages/EducationPage'
 import AndroidPage from './Pages/AndroidPage'
-import { navToggle, stopLoading } from './class/StartScript'
+import { keyboardInput, navToggle, stopLoading } from './class/StartScript'
 import mainContent from './components/MainContent'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import ClickRaycast from './class/ClickRaycast'
 import ClickInstancedRaycast from './type/ClickInstancedRaycast'
+import WorkArrow from './class/WorkArrow'
 
 let camera: THREE.PerspectiveCamera,
   scene: THREE.Scene,
@@ -42,6 +43,7 @@ const clock = new THREE.Clock()
 
 let homePage: HomePage,
   flowerGrow: HomeFlower,
+  workArrow: WorkArrow,
   webAppPage: WebAppPage,
   androidPage: AndroidPage,
   workPage: WorkPage,
@@ -50,8 +52,6 @@ let homePage: HomePage,
 init()
 
 async function init() {
-  await mainContent()
-  await navToggle()
   scene = new THREE.Scene()
   renderer = new THREE.WebGLRenderer({ antialias: true })
   renderer.setPixelRatio(window.devicePixelRatio)
@@ -65,6 +65,11 @@ async function init() {
   )
   controls = new OrbitControls(camera, renderer.domElement)
 
+  // Starter Script
+  await mainContent()
+  await navToggle()
+  await keyboardInput(controls)
+
   await new RGBELoader()
     // .loadAsync('img/venice_sunset_1k.hdr')
     .loadAsync('img/sky-compress.hdr')
@@ -72,31 +77,6 @@ async function init() {
       texture.mapping = THREE.EquirectangularReflectionMapping
       scene.environment = texture
     })
-
-  window.addEventListener('keydown', function (e: KeyboardEvent) {
-    // controls.autoRotate = true
-    // controls.autoRotateSpeed *= -1
-    // console.log(e)
-    if (controls.autoRotate != true) {
-      if (e.code == 'ArrowRight') {
-        controls.autoRotate = true
-        controls.autoRotateSpeed = -9
-      }
-      if (e.code == 'ArrowLeft') {
-        controls.autoRotate = true
-        controls.autoRotateSpeed = 9
-      }
-    }
-  })
-  window.addEventListener('keyup', function (e: KeyboardEvent) {
-    // console.log(e)
-    controls.autoRotate = false
-    if (e.code == 'ArrowRight') {
-      controls.autoRotate = false
-    } else if (e.code == 'ArrowLeft') {
-      controls.autoRotate = false
-    }
-  })
 
   cameraControlMove = new CameraControlMove(scene, camera, controls)
 
@@ -110,6 +90,7 @@ async function init() {
   flowerGrow = new HomeFlower(scene)
   await flowerGrow.loadFile(loader)
   flowerGrow.resample(homePage.planeModel)
+  // flowerGrow.resample(scene)
 
   // ================ WEBAPP Page Loading
   webAppPage = new WebAppPage(scene)
@@ -127,6 +108,12 @@ async function init() {
   workPage = new WorkPage(scene)
   await workPage.loadFile(loader)
   cameraControlMove.addTween(workPage.gltf.scene!, workPage.pageControl)
+
+  // Arrow in Work Page
+  workArrow = new WorkArrow(scene)
+  await workArrow.loadFile(workPage.arrowModel!)
+  // await workArrow.loadFile(loader)
+  workArrow.resample(workPage.planeModel)
 
   // ================ EDUCATION Page Loading
   educationPage = new EducationPage(scene)
@@ -187,6 +174,7 @@ function animate() {
   cameraControlMove.animation(delta)
   homePage.animation(delta)
   flowerGrow.animation(delta)
+  workArrow.animation(delta)
   webAppPage.animation(delta, time)
   educationPage.animation(delta, time)
   renderer.render(scene, camera)

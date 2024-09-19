@@ -1,3 +1,5 @@
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+
 export async function navToggle() {
   // Menu Toggle for Small Screen
   //----------------------------------------------------------------------------
@@ -94,15 +96,93 @@ export async function navToggle() {
 
   // Keyboard Short Cut
   //----------------------------------------------------------------------------
+}
+
+export async function keyboardInput(controls: OrbitControls) {
   const upBtn = document.getElementById('up-btn')
   const downBtn = document.getElementById('down-btn')
+  const navBtn = document.getElementsByClassName('option') as any
+
   window.addEventListener('keydown', function (e: KeyboardEvent) {
     console.log(e)
-    if (e.code == 'ArrowUp') {
+    // console.log(navBtn)
+
+    switch (e.key) {
+      case 'ArrowUp':
+        upBtn?.click()
+        break
+      case 'ArrowDown':
+        downBtn?.click()
+        break
+      case 'ArrowRight':
+        controls.autoRotate = true
+        controls.autoRotateSpeed = -9
+        break
+      case 'ArrowRight':
+        controls.autoRotate = true
+        controls.autoRotateSpeed = 9
+        break
+      case '1':
+        navBtn[0].click()
+        break
+      case '2':
+        navBtn[1].click()
+        break
+      case '3':
+        navBtn[2].click()
+        break
+      case '4':
+        navBtn[3].click()
+        break
+      case '5':
+        navBtn[4].click()
+        break
+    }
+    /* if (e.code == 'ArrowUp') {
       upBtn?.click()
     }
     if (e.code == 'ArrowDown') {
       downBtn?.click()
+    }
+    if (e.code == '1') {
+      // Home Page
+    }
+
+    if (controls.autoRotate != true) {
+      if (e.code == 'ArrowRight') {
+        controls.autoRotate = true
+        controls.autoRotateSpeed = -9
+      }
+      if (e.code == 'ArrowLeft') {
+        controls.autoRotate = true
+        controls.autoRotateSpeed = 9
+      }
+    } */
+  })
+
+  window.addEventListener('keydown', function (e: KeyboardEvent) {
+    // controls.autoRotate = true
+    // controls.autoRotateSpeed *= -1
+    // console.log(e)
+    if (controls.autoRotate != true) {
+      if (e.code == 'ArrowRight') {
+        controls.autoRotate = true
+        controls.autoRotateSpeed = -9
+      }
+      if (e.code == 'ArrowLeft') {
+        controls.autoRotate = true
+        controls.autoRotateSpeed = 9
+      }
+    }
+  })
+
+  window.addEventListener('keyup', function (e: KeyboardEvent) {
+    // console.log(e)
+    controls.autoRotate = false
+    if (e.code == 'ArrowRight') {
+      controls.autoRotate = false
+    } else if (e.code == 'ArrowLeft') {
+      controls.autoRotate = false
     }
   })
 }

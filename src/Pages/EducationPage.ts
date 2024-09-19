@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import Clickable from '../class/Clickable'
 import { CamCtlPosition } from '../class/CameraControlMove'
+import { drawIndex } from 'three/webgpu'
 
 class EducationPage {
   moneyModel: THREE.Mesh | undefined
@@ -67,7 +68,7 @@ class EducationPage {
 
     const matrixCoin = new THREE.Matrix4()
     const matrixDollar = new THREE.Matrix4()
-    const count = 9
+    const count = 29
 
     // const coinGeometry = this.coinModel.clone()
     console.log(this.coinModel)
@@ -104,14 +105,15 @@ class EducationPage {
     // vector3Coin.y += 0
     vector3Dollar.y += 0.2
     matrixCoin.setPosition(vector3Coin)
-    // matrixCoin.makeRotationY(Math.PI / 2)
+    matrixCoin.makeRotationY(Math.PI / 2)
     matrixCoin.makeRotationX(Math.PI)
     matrixDollar.setPosition(vector3Dollar)
     matrixDollar.makeRotationY(Math.PI)
     let i = 0
 
-    for (let z = 0; z < count; z++) {
-      const zGap = z * 1
+    for (let z = 0; z < 6; z++) {
+      const zGap = z * 1.5
+      if (z == 1) continue
       matrixCoin.setPosition(vector3Coin.x, vector3Coin.y, vector3Coin.z - zGap)
       this.instancedCoin.setMatrixAt(i, matrixCoin)
       matrixDollar.setPosition(
@@ -122,6 +124,30 @@ class EducationPage {
       this.instancedDollar.setMatrixAt(i, matrixDollar)
       i++
     }
+
+    for (let angle = 0; angle < 20; angle += 0.1) {
+      // const zGap = x * 1
+
+      let xGap = 4.5 * Math.cos(angle * Math.PI)
+      let zGap = 4.5 * Math.sin(angle * Math.PI) - 3
+      // matrixCoin.makeRotationY(Math.cos(angle))
+      matrixDollar.makeRotationY(Math.PI * angle)
+      matrixCoin.setPosition(
+        vector3Coin.x + xGap,
+        vector3Coin.y,
+        vector3Coin.z - zGap
+      )
+      matrixDollar.setPosition(
+        vector3Dollar.x + xGap,
+        vector3Dollar.y,
+        vector3Dollar.z - zGap
+      )
+
+      this.instancedCoin.setMatrixAt(i, matrixCoin)
+      this.instancedDollar.setMatrixAt(i, matrixDollar)
+      i++
+    }
+
     this.scene.add(this.instancedCoin)
     this.scene.add(this.instancedDollar)
     // this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh

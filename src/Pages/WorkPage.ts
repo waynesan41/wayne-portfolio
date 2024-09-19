@@ -13,10 +13,7 @@ dracoLoader.setDecoderPath('jsm/libs/draco/') // loading from own webserver
 dracoLoader.setDecoderConfig({ type: 'js' })
 
 class WorkPage {
-  reactModel: THREE.Mesh | undefined
-  tailwindModel: THREE.Mesh | undefined
-  mongodbModel: THREE.Mesh | undefined
-  nodejsModel: THREE.Mesh | undefined
+  arrowModel: THREE.Mesh | undefined
   planeModel: THREE.Mesh | undefined
   clickables: Clickable[] = [] // used in the raycaster intersects methods
   scene: THREE.Scene
@@ -43,20 +40,26 @@ class WorkPage {
       // console.log(gltf)
       return gltf
     })
-    this.gltf.scene.position.y = -90
+
     this.gltf.scene.rotation.y = 135
+    this.gltf.scene.position.y = -90
     // this.gltf.scene.scale.set(11, 11, 11)
     // this.gltf.scene.scale.set(0.1, 0.1, 0.1)
-    this.gltf.scene.scale.setScalar(0.2)
-    this.scene.add(this.gltf.scene)
+    this.gltf.scene.scale.setScalar(1.7)
 
-    /*  this.reactModel = this.gltf.scene.getObjectByName('ReactJS') as THREE.Mesh
-    this.tailwindModel = this.gltf.scene.getObjectByName(
-      'Tailwind'
-    ) as THREE.Mesh
-    this.mongodbModel = this.gltf.scene.getObjectByName('MongoDB') as THREE.Mesh
-    this.nodejsModel = this.gltf.scene.getObjectByName('NodeJS') as THREE.Mesh
-    this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh */
+    // this.reactModel = this.gltf.scene.getObjectByName('ReactJS') as THREE.Mesh
+    // this.tailwindModel = this.gltf.scene.getObjectByName(
+    //   'Tailwind'
+    // ) as THREE.Mesh
+    // this.mongodbModel = this.gltf.scene.getObjectByName('MongoDB') as THREE.Mesh
+    this.arrowModel = this.gltf.scene.getObjectByName('Arrow') as THREE.Mesh
+    // this.arrowModel.getWorldPosition(this.arrowModel.position)
+    this.planeModel = this.gltf.scene.getObjectByName('Egg') as THREE.Mesh
+    // this.planeModel.getWorldPosition(this.planeModel.position)
+    // this.planeModel = this.gltf.scene.getObjectByName('Level') as THREE.Mesh
+    // this.gltf.scene.remove(this.planeModel)
+    // this.scene.add(this.planeModel)
+    this.scene.add(this.gltf.scene)
 
     // console.log(this.gltf.scene)
 
@@ -97,13 +100,12 @@ class WorkPage {
     //   this.clickables.push(welcomeClickable)
   }
   animation(delta: number, time: number) {
-    this.reactModel!.rotation.y += delta
-    this.tailwindModel!.rotation.x += delta
-    this.mongodbModel!.rotation.z += delta
-
-    this.nodejsModel!.rotation.z = Math.cos(time) * 0.5
-    this.nodejsModel!.rotation.x = Math.sin(time) * 0.4 + 1.5
-    this.nodejsModel!.rotation.y = Math.cos(time) * 0.2
+    // this.reactModel!.rotation.y += delta
+    // this.tailwindModel!.rotation.x += delta
+    // this.mongodbModel!.rotation.z += delta
+    // this.nodejsModel!.rotation.z = Math.cos(time) * 0.5
+    // this.nodejsModel!.rotation.x = Math.sin(time) * 0.4 + 1.5
+    // this.nodejsModel!.rotation.y = Math.cos(time) * 0.2
   }
 }
 
