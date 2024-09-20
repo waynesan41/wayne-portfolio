@@ -2,10 +2,8 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 import { CamCtlPosition } from '../class/CameraControlMove'
-import WebAppClickable from '../class/WebAppClickable'
-import Clickable from '../class/Clickable'
+
 import ClickRaycast from '../class/ClickRaycast'
-import { Tween } from '@tweenjs/tween.js'
 import ClickInstancedRaycast from '../type/ClickInstancedRaycast'
 
 const color = new THREE.Color()
@@ -198,7 +196,9 @@ class WebAppPage {
 
     // Ray Casting Bookmark Instanced xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     const bookmarkIcon = this.instancedBook as ClickInstancedRaycast
-    bookmarkIcon.update = (instanceId: number) => {}
+    bookmarkIcon.update = (instanceId: number) => {
+      //DO Nothing
+    }
     bookmarkIcon.changeColor = (instanceId: number) => {
       //Hover animation
       const color = new THREE.Color()

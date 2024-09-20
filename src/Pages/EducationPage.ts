@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import Clickable from '../class/Clickable'
 import { CamCtlPosition } from '../class/CameraControlMove'
 import { drawIndex } from 'three/webgpu'
+import ClickRaycast from '../class/ClickRaycast'
 
 class EducationPage {
   moneyModel: THREE.Mesh | undefined
@@ -15,7 +16,7 @@ class EducationPage {
   instancedCoin: THREE.InstancedMesh | undefined
   instancedDollar: THREE.InstancedMesh | undefined
 
-  clickables: Clickable[] = [] // used in the raycaster intersects methods
+  clickables: ClickRaycast[] = [] // used in the raycaster intersects methods
 
   scene: THREE.Scene
   systemGroup: THREE.Group = new THREE.Group()
@@ -54,7 +55,8 @@ class EducationPage {
     this.moneyModel = this.gltf.scene.getObjectByName('Money') as THREE.Mesh
     this.homeModel = this.gltf.scene.getObjectByName('House') as THREE.Mesh
     this.degreeModel = this.gltf.scene.getObjectByName('Degree') as THREE.Mesh
-    this.schoolModel = this.gltf.scene.getObjectByName('School') as THREE.Mesh
+    // this.schoolModel = this.gltf.scene.getObjectByName('School') as THREE.Mesh
+
     this.coinModel = this.gltf.scene.getObjectByName('Coin')
       .children[0] as THREE.Mesh
     this.dollarModel = this.gltf.scene.getObjectByName('Coin')
@@ -66,6 +68,55 @@ class EducationPage {
 
     this.gltf.scene.add(this.systemGroup)
 
+    // const jumpCpp = this.gltf.scene.getObjectByName('JumpCpp') as ClickRaycast
+    const jumpCpp = addRaycast(
+      this.gltf.scene.getObjectByName('JumpCpp'),
+      'https://www.cprogramming.com/c++book/'
+    ) as ClickRaycast
+    const blueBrown = addRaycast(
+      this.gltf.scene.getObjectByName('BlueBrown'),
+      'https://www.3blue1brown.com/'
+    ) as ClickRaycast
+    const sbcode = addRaycast(
+      this.gltf.scene.getObjectByName('Sbcode'),
+      'https://sbcode.net/threejs/'
+    ) as ClickRaycast
+    const traversyMedia = addRaycast(
+      this.gltf.scene.getObjectByName('TraversyMedia'),
+      'https://www.traversymedia.com/'
+    ) as ClickRaycast
+    const webDevSimplified = addRaycast(
+      this.gltf.scene.getObjectByName('WebDevSimplified'),
+      'https://courses.webdevsimplified.com/'
+    ) as ClickRaycast
+    const udemy = addRaycast(
+      this.gltf.scene.getObjectByName('Udemy'),
+      'https://www.udemy.com/user/maximilian-schwarzmuller/'
+    ) as ClickRaycast
+    const startCpp = addRaycast(
+      this.gltf.scene.getObjectByName('Cpp'),
+      'https://www.pearson.com/en-us/subject-catalog/p/starting-out-with-c-from-control-structures-to-objects/P200000007369/9780134443829'
+    ) as ClickRaycast
+    const linux = addRaycast(
+      this.gltf.scene.getObjectByName('Linux'),
+      'https://www.learnlinux.tv/'
+    ) as ClickRaycast
+    /* this.gltf.scene.add(
+      addRaycast(jumpCpp, 'https://www.cprogramming.com/c++book/')
+    ) */
+
+    this.clickables.push(jumpCpp)
+    this.clickables.push(blueBrown)
+    this.clickables.push(sbcode)
+    this.clickables.push(traversyMedia)
+    this.clickables.push(webDevSimplified)
+    this.clickables.push(udemy)
+    this.clickables.push(startCpp)
+    this.clickables.push(linux)
+
+    // =========================================================================
+    // ==== Coin Instaned Mesh
+    // =========================================================================
     const matrixCoin = new THREE.Matrix4()
     const matrixDollar = new THREE.Matrix4()
     const count = 29
@@ -95,7 +146,6 @@ class EducationPage {
     )
 
     // const vector3Pos = this.coinModel.children[0].position as THREE.Vector3
-
     this.coinModel.getWorldPosition(this.coinModel.position)
     this.dollarModel.getWorldPosition(this.dollarModel.position)
     console.log(this.coinModel.position)
@@ -163,7 +213,43 @@ class EducationPage {
     /* this.nodejsModel!.rotation.z = Math.cos(time) * 0.5
     this.nodejsModel!.rotation.x = Math.sin(time) * 0.4 + 1.5
     this.nodejsModel!.rotation.y = Math.cos(time) * 0.2 */
+
+    this.clickables.forEach((p) => {
+      p.update(delta)
+    })
   }
 }
 
 export default EducationPage
+
+function addRaycast(object: ClickRaycast, url: string) {
+  const x = object.scale.x
+  const y = object.scale.y
+  const z = object.scale.z
+  // console.log(object.scale.x)
+  // console.log(object.scale.y)
+  // console.log(object.scale.z)
+
+  object.hovered = false
+  object.update = (delta: number) => {
+    if (object.hovered) {
+      object.scale.x = lerp(object.scale.x, x * 1.5, delta * 5)
+      object.scale.y = lerp(object.scale.y, y * 1.5, delta * 5)
+      object.scale.z = lerp(object.scale.z, z * 1.5, delta * 5)
+    } else {
+      object.scale.x = lerp(object.scale.x, x, delta * 5)
+      object.scale.y = lerp(object.scale.y, y, delta * 5)
+      object.scale.z = lerp(object.scale.z, z, delta * 5)
+    }
+  }
+  object.clickObj = () => {
+    console.log('slick')
+    window.open(url, '_blank')
+  }
+
+  return object
+}
+function lerp(from: number, to: number, speed: number) {
+  const amount = (1 - speed) * from + speed * to
+  return Math.abs(from - to) < 0.001 ? to : amount
+}

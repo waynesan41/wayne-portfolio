@@ -1,5 +1,4 @@
 import * as THREE from 'three'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js'
 
 // Source: https://gist.github.com/gre/1650294
@@ -45,7 +44,7 @@ class WorkArrow {
 
   //==========================================================
   // async loadFile(loader: GLTFLoader) {
-  async loadFile(arrowMesh: THREE.Mesh) {
+  loadFile(arrowMesh: THREE.Mesh) {
     /* const flower: any = await loader.loadAsync(
       './models/Flower.glb',
       function (gltf) {

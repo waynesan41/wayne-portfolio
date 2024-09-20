@@ -96,8 +96,10 @@ async function init() {
   webAppPage = new WebAppPage(scene)
   await webAppPage.loadFile(loader)
   cameraControlMove.addTween(webAppPage.gltf.scene!, webAppPage.pageControl)
-  doubleClickable = clickable.concat(webAppPage.clickables) // Double Click
-  hoverable = clickable.concat(webAppPage.clickables)
+  // doubleClickable = clickable.concat(webAppPage.clickables) // Double Click
+  doubleClickable = webAppPage.clickables // Double Click
+  // hoverable = clickable.concat(webAppPage.clickables)
+  hoverable = webAppPage.clickables
 
   // ================ MOBILE Page Loading
   androidPage = new AndroidPage(scene)
@@ -122,6 +124,8 @@ async function init() {
     educationPage.gltf.scene!,
     educationPage.pageControl
   )
+  doubleClickable = doubleClickable.concat(educationPage.clickables)
+  hoverable = hoverable.concat(educationPage.clickables)
 
   console.log(clickable)
   await addClickRaycast(clickable)

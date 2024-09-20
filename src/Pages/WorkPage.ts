@@ -53,6 +53,7 @@ class WorkPage {
     // ) as THREE.Mesh
     // this.mongodbModel = this.gltf.scene.getObjectByName('MongoDB') as THREE.Mesh
     this.arrowModel = this.gltf.scene.getObjectByName('Arrow') as THREE.Mesh
+    this.gltf.scene.remove(this.arrowModel)
     // this.arrowModel.getWorldPosition(this.arrowModel.position)
     this.planeModel = this.gltf.scene.getObjectByName('Egg') as THREE.Mesh
     // this.planeModel.getWorldPosition(this.planeModel.position)
