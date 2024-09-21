@@ -118,7 +118,7 @@ export async function keyboardInput(controls: OrbitControls) {
         controls.autoRotate = true
         controls.autoRotateSpeed = -9
         break
-      case 'ArrowRight':
+      case 'ArrowLeft':
         controls.autoRotate = true
         controls.autoRotateSpeed = 9
         break
@@ -160,7 +160,7 @@ export async function keyboardInput(controls: OrbitControls) {
     } */
   })
 
-  window.addEventListener('keydown', function (e: KeyboardEvent) {
+  /* window.addEventListener('keydown', function (e: KeyboardEvent) {
     // controls.autoRotate = true
     // controls.autoRotateSpeed *= -1
     // console.log(e)
@@ -174,7 +174,7 @@ export async function keyboardInput(controls: OrbitControls) {
         controls.autoRotateSpeed = 9
       }
     }
-  })
+  }) */
 
   window.addEventListener('keyup', function (e: KeyboardEvent) {
     // console.log(e)

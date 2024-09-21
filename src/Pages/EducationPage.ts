@@ -22,7 +22,7 @@ class EducationPage {
   systemGroup: THREE.Group = new THREE.Group()
   gltf: any | undefined
   pageControl: CamCtlPosition = {
-    cam: { x: 0, y: 9, z: -10 },
+    cam: { x: 0, y: 9, z: -14 },
     ctl: { x: 0, y: 3, z: 0 },
   }
 
@@ -49,7 +49,7 @@ class EducationPage {
     this.gltf.scene.position.y = -120
     // this.gltf.scene.rotation.y = 0
     // this.gltf.scene.scale.set(11, 11, 11)
-    this.gltf.scene.scale.set(0.2, 0.2, 0.2)
+    this.gltf.scene.scale.set(0.3, 0.3, 0.3)
     this.scene.add(this.gltf.scene)
 
     this.moneyModel = this.gltf.scene.getObjectByName('Money') as THREE.Mesh
@@ -119,13 +119,13 @@ class EducationPage {
     // =========================================================================
     const matrixCoin = new THREE.Matrix4()
     const matrixDollar = new THREE.Matrix4()
-    const count = 29
+    const count = 48
 
     // const coinGeometry = this.coinModel.clone()
     console.log(this.coinModel)
     console.log(this.coinModel.position)
     console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-    const size = 0.0022
+    const size = 0.003
     const coinGeometry = this.coinModel.geometry.scale(size, size, size).clone()
     const coinMaterial = this.coinModel.material
 
@@ -153,7 +153,7 @@ class EducationPage {
     const vector3Coin = this.coinModel.position as THREE.Vector3
     const vector3Dollar = this.dollarModel.position as THREE.Vector3
     // vector3Coin.y += 0
-    vector3Dollar.y += 0.2
+    vector3Dollar.y += 0.3
     matrixCoin.setPosition(vector3Coin)
     matrixCoin.makeRotationY(Math.PI / 2)
     matrixCoin.makeRotationX(Math.PI)
@@ -161,9 +161,9 @@ class EducationPage {
     matrixDollar.makeRotationY(Math.PI)
     let i = 0
 
-    for (let z = 0; z < 6; z++) {
+    for (let z = 0; z < 9; z++) {
       const zGap = z * 1.5
-      if (z == 1) continue
+      if (z == 3) continue
       matrixCoin.setPosition(vector3Coin.x, vector3Coin.y, vector3Coin.z - zGap)
       this.instancedCoin.setMatrixAt(i, matrixCoin)
       matrixDollar.setPosition(
@@ -175,11 +175,11 @@ class EducationPage {
       i++
     }
 
-    for (let angle = 0; angle < 20; angle += 0.1) {
+    for (let angle = 0; angle < 2; angle += 0.05) {
       // const zGap = x * 1
 
-      let xGap = 4.5 * Math.cos(angle * Math.PI)
-      let zGap = 4.5 * Math.sin(angle * Math.PI) - 3
+      let xGap = 7.5 * Math.cos(angle * Math.PI)
+      let zGap = 7.5 * Math.sin(angle * Math.PI) - 3
       // matrixCoin.makeRotationY(Math.cos(angle))
       matrixDollar.makeRotationY(Math.PI * angle)
       matrixCoin.setPosition(
@@ -222,7 +222,7 @@ class EducationPage {
 
 export default EducationPage
 
-function addRaycast(object: ClickRaycast, url: string) {
+export function addRaycast(object: ClickRaycast, url: string) {
   const x = object.scale.x
   const y = object.scale.y
   const z = object.scale.z

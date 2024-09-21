@@ -113,7 +113,7 @@ async function init() {
 
   // Arrow in Work Page
   workArrow = new WorkArrow(scene)
-  await workArrow.loadFile(workPage.arrowModel!)
+  workArrow.loadFile(workPage.arrowModel!)
   // await workArrow.loadFile(loader)
   workArrow.resample(workPage.planeModel)
 

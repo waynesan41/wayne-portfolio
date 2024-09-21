@@ -5,6 +5,7 @@ import { CamCtlPosition } from '../class/CameraControlMove'
 
 import ClickRaycast from '../class/ClickRaycast'
 import ClickInstancedRaycast from '../type/ClickInstancedRaycast'
+import { addRaycast } from './EducationPage'
 
 const color = new THREE.Color()
 
@@ -53,7 +54,7 @@ class WebAppPage {
     )
     this.gltf.scene.position.y = -30
     // this.gltf.scene.rotation.y = 135
-    this.gltf.scene.scale.set(9, 9, 9)
+    this.gltf.scene.scale.set(8, 8, 8)
     // this.scene.add(this.gltf.scene) // This is now added later
 
     this.reactModel = this.gltf.scene.getObjectByName('ReactJS') as THREE.Mesh
@@ -72,12 +73,22 @@ class WebAppPage {
       'Cloudflare'
     ) as THREE.Mesh
 
-    // this.handyWeb = this.gltf.scene.getObjectByName('HandyWeb') as THREE.Mesh
+    // const youtubeModel = this.gltf.scene.getObjectByName('Youtube') as ClickRaycast
+
     this.youtube = this.gltf.scene.getObjectByName('Youtube') as ClickRaycast
-    this.handyWeb = this.gltf.scene.getObjectByName('HandyWeb') as ClickRaycast
-    this.handyStore = this.gltf.scene.getObjectByName(
-      'ChromeWebStore'
+
+    const handyWebModel = addRaycast(
+      this.gltf.scene.getObjectByName('HandyWeb'),
+      'https://handybookmark.com/login'
     ) as ClickRaycast
+    const handyStoreModel = addRaycast(
+      this.gltf.scene.getObjectByName('HandyWeb'),
+      'https://chromewebstore.google.com/detail/handy-bookmark/eoaminfjobnfghjcdhpcjndoakidhgod'
+    ) as ClickRaycast
+    // this.handyWeb = this.gltf.scene.getObjectByName('HandyWeb') as ClickRaycast
+    // this.handyStore = this.gltf.scene.getObjectByName(
+    //   'ChromeWebStore'
+    // ) as ClickRaycast
 
     console.log('----------------------------')
     console.log(this.youtube)
@@ -89,11 +100,11 @@ class WebAppPage {
     // Instanced of Mesh [][][][][][]
     const matrix = new THREE.Matrix4()
     // const color = new THREE.Color()
-    const count = 216
+    const count = 234
 
     const bookGeometry = this.bookmark.geometry
       .rotateY(Math.PI / 2)
-      .scale(0.7, 0.7, 0.7)
+      .scale(0.5, 0.5, 0.5)
       .clone()
     const bookMaterial = this.bookmark.material
 
@@ -109,10 +120,10 @@ class WebAppPage {
     matrix.setPosition(vector3Pos)
     // matrix.setPosition(this.bookmark.position)
     let i = 0
-    for (let z = 0; z < 12; z++) {
-      const zGap = z * 2.6
+    for (let z = 0; z < 13; z++) {
+      const zGap = z * 2.1
       for (let x = 0; x < 18; x++) {
-        const xGap = x * 1.75
+        const xGap = x * 1.56
         matrix.setPosition(
           vector3Pos.x - xGap,
           vector3Pos.y,
@@ -127,7 +138,7 @@ class WebAppPage {
     this.scene.add(this.instancedBook)
 
     // Ray Casting Handy Website xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    const handyWeb = this.handyWeb
+    /* const handyWeb = this.handyWeb
     handyWeb.hovered = false
     handyWeb.update = (delta: number) => {
       //Hover animation
@@ -139,11 +150,11 @@ class WebAppPage {
     }
     handyWeb.clickObj = () => {
       window.open('https://handybookmark.com/login', '_blank')
-    }
-    this.clickables.push(handyWeb)
+    } */
+    this.clickables.push(handyWebModel)
 
     // Ray Casting Chrome Web Store xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    const handyStore = this.handyStore
+    /* const handyStore = this.handyStore
     handyStore.hovered = false
     handyStore.update = (delta: number) => {
       //Hover animation
@@ -158,8 +169,8 @@ class WebAppPage {
         'https://chromewebstore.google.com/detail/handy-bookmark/eoaminfjobnfghjcdhpcjndoakidhgod',
         '_blank'
       )
-    }
-    this.clickables.push(handyStore)
+    } */
+    this.clickables.push(handyStoreModel)
 
     // Ray Casting Youtube Video xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     const youtubeOut = this.youtube.children[0] as ClickRaycast

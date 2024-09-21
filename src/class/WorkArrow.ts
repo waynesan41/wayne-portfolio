@@ -43,18 +43,8 @@ class WorkArrow {
   }
 
   //==========================================================
-  // async loadFile(loader: GLTFLoader) {
-  loadFile(arrowMesh: THREE.Mesh) {
-    /* const flower: any = await loader.loadAsync(
-      './models/Flower.glb',
-      function (gltf) {
-        return gltf
-      }
-    )
-    // const clickable = new Clickable(pillerModel)
-    const _stemMesh = flower.scene.getObjectByName('Stem') as THREE.Mesh
-    const _blossomMesh = flower.scene.getObjectByName('Blossom') as THREE.Mesh */
-
+  // loadFile(arrowMesh: THREE.Mesh) {
+  async loadFile(arrowMesh: THREE.Mesh) {
     this.stemGeometry = arrowMesh.geometry.clone()
     // this.blossomGeometry = _blossomMesh.geometry.clone()
 
