@@ -27,14 +27,15 @@ class MobileAppPage {
   }
 
   async loadFile() {
-    this.gltf = await loader.loadAsync('./models/School.glb', (gltf) => {
+    this.gltf = await loader.loadAsync('./models/Android.glb', (gltf) => {
       console.log(gltf)
       return gltf
     })
     this.gltf.scene.position.y = -45
     // this.gltf.scene.rotation.y = 0
     // this.gltf.scene.scale.set(11, 11, 11)
-    this.gltf.scene.scale.set(0.5, 0.5, 0.5)
+    const sceneScale = 1
+    this.gltf.scene.scale.set(sceneScale, sceneScale, sceneScale)
     this.scene.add(this.gltf.scene)
 
     /*  this.reactModel = this.gltf.scene.getObjectByName('ReactJS') as THREE.Mesh

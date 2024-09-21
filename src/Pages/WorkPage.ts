@@ -41,8 +41,8 @@ class WorkPage {
       return gltf
     })
 
+    this.gltf.scene.position.y = -150
     this.gltf.scene.rotation.y = 135
-    this.gltf.scene.position.y = -90
     // this.gltf.scene.scale.set(11, 11, 11)
     // this.gltf.scene.scale.set(0.1, 0.1, 0.1)
     this.gltf.scene.scale.setScalar(1.7)

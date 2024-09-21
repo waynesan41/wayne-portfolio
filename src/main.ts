@@ -113,7 +113,7 @@ async function init() {
 
   // Arrow in Work Page
   workArrow = new WorkArrow(scene)
-  workArrow.loadFile(workPage.arrowModel!)
+  await workArrow.loadFile(workPage.arrowModel!)
   // await workArrow.loadFile(loader)
   workArrow.resample(workPage.planeModel)
 
@@ -178,7 +178,7 @@ function animate() {
   cameraControlMove.animation(delta)
   homePage.animation(delta)
   flowerGrow.animation(delta)
-  workArrow.animation(delta)
+  workArrow.animation()
   webAppPage.animation(delta, time)
   educationPage.animation(delta, time)
   renderer.render(scene, camera)

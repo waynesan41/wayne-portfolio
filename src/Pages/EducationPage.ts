@@ -46,7 +46,7 @@ class EducationPage {
         return gltf
       }
     )
-    this.gltf.scene.position.y = -120
+    this.gltf.scene.position.y = -200
     // this.gltf.scene.rotation.y = 0
     // this.gltf.scene.scale.set(11, 11, 11)
     this.gltf.scene.scale.set(0.3, 0.3, 0.3)

@@ -52,7 +52,7 @@ class WebAppPage {
         return gltf
       }
     )
-    this.gltf.scene.position.y = -30
+    this.gltf.scene.position.y = -50
     // this.gltf.scene.rotation.y = 135
     this.gltf.scene.scale.set(8, 8, 8)
     // this.scene.add(this.gltf.scene) // This is now added later
@@ -82,8 +82,16 @@ class WebAppPage {
       'https://handybookmark.com/login'
     ) as ClickRaycast
     const handyStoreModel = addRaycast(
-      this.gltf.scene.getObjectByName('HandyWeb'),
+      this.gltf.scene.getObjectByName('ChromeWebStore'),
       'https://chromewebstore.google.com/detail/handy-bookmark/eoaminfjobnfghjcdhpcjndoakidhgod'
+    ) as ClickRaycast
+    const lightSS = addRaycast(
+      this.gltf.scene.getObjectByName('Light'),
+      'https://handybookmark.com/login'
+    ) as ClickRaycast
+    const darkSS = addRaycast(
+      this.gltf.scene.getObjectByName('Dark'),
+      'https://handybookmark.com/login'
     ) as ClickRaycast
     // this.handyWeb = this.gltf.scene.getObjectByName('HandyWeb') as ClickRaycast
     // this.handyStore = this.gltf.scene.getObjectByName(
@@ -137,40 +145,12 @@ class WebAppPage {
     }
     this.scene.add(this.instancedBook)
 
-    // Ray Casting Handy Website xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    /* const handyWeb = this.handyWeb
-    handyWeb.hovered = false
-    handyWeb.update = (delta: number) => {
-      //Hover animation
-      if (handyWeb.hovered) {
-        handyWeb.scale.setScalar(lerp(handyWeb.scale.x, 0.25, delta * 5))
-      } else {
-        handyWeb.scale.setScalar(lerp(handyWeb.scale.x, 0.13, delta * 5))
-      }
-    }
-    handyWeb.clickObj = () => {
-      window.open('https://handybookmark.com/login', '_blank')
-    } */
-    this.clickables.push(handyWebModel)
+    // Ray Casting Handy Website xxxxxxxxxxxxxxxxxxxxxxx3xxxxxxxxxxxxxxxxxx
 
-    // Ray Casting Chrome Web Store xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    /* const handyStore = this.handyStore
-    handyStore.hovered = false
-    handyStore.update = (delta: number) => {
-      //Hover animation
-      if (handyStore.hovered) {
-        handyStore.scale.setScalar(lerp(handyStore.scale.x, 0.25, delta * 5))
-      } else {
-        handyStore.scale.setScalar(lerp(handyStore.scale.x, 0.13, delta * 5))
-      }
-    }
-    handyStore.clickObj = () => {
-      window.open(
-        'https://chromewebstore.google.com/detail/handy-bookmark/eoaminfjobnfghjcdhpcjndoakidhgod',
-        '_blank'
-      )
-    } */
     this.clickables.push(handyStoreModel)
+    this.clickables.push(handyWebModel)
+    this.clickables.push(lightSS)
+    this.clickables.push(darkSS)
 
     // Ray Casting Youtube Video xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     const youtubeOut = this.youtube.children[0] as ClickRaycast
@@ -178,8 +158,21 @@ class WebAppPage {
     const youtube = this.youtube
     youtubeIn.hovered = false
     youtubeOut.hovered = false
+    const x = youtube.scale.x
+    const y = youtube.scale.y
+    const z = youtube.scale.z
     youtubeOut.update = (delta: number) => {
       //Hover animation
+
+      if (youtubeOut.hovered || youtubeIn.hovered) {
+        youtube.scale.x = lerp(youtube.scale.x, x * 5.5, delta * 5)
+        youtube.scale.y = lerp(youtube.scale.y, y * 5.5, delta * 5)
+        youtube.scale.z = lerp(youtube.scale.z, z * 5.5, delta * 5)
+      } else {
+        youtube.scale.x = lerp(youtube.scale.x, x * 3.5, delta * 5)
+        youtube.scale.y = lerp(youtube.scale.y, y * 3.5, delta * 5)
+        youtube.scale.z = lerp(youtube.scale.z, z * 3.5, delta * 5)
+      }
       if (youtubeOut.hovered || youtubeIn.hovered) {
         console.log('hover')
         youtube.scale.setScalar(lerp(youtube.scale.y, 0.1, delta * 5))
@@ -240,14 +233,8 @@ class WebAppPage {
     this.tailwindModel!.rotation.x += delta * 0.7
     this.typeScript!.rotation.z += delta * 0.7
 
-    // this.nodejsModel!.rotation.z = Math.cos(time) * 0.2
     this.nodejsModel!.rotation.x = Math.sin(time) * 0.4 + 1.5
-    // this.nodejsModel!.rotation.y = Math.cos(time) * 0.2
-
-    // this.mongodbModel!.rotation.z = Math.cos(time) * 0.2
     this.mongodbModel!.rotation.x = Math.sin(time) * 0.4 + 1.5
-    // this.mongodbModel!.rotation.y = Math.cos(time) * 0.2
-
     this.cloudflare!.rotation.x = Math.sin(time) * 0.4 + 1.5
 
     this.aws!.rotation.y = Math.cos(time) * 0.4
@@ -256,7 +243,6 @@ class WebAppPage {
     this.linux!.rotation.y += delta * 0.7
 
     // Ray casting
-
     this.clickables.forEach((p) => {
       p.update(delta)
     })

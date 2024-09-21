@@ -73,7 +73,7 @@ class CameraControlMove {
   positionCamera() {
     this.downBtn.disabled = true
     this.upBtn.disabled = true
-    const floorNum = 1
+    const floorNum = 3
     this.currentFloor = floorNum
     // this.scene.background = colors[floorNum]
     // this.scene.backgroundIntensity = 0.1

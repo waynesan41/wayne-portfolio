@@ -94,7 +94,7 @@ class WorkArrow {
     // Instance matrices will be updated every frame.
     this.stemMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
     // this.blossomMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
-    this.stemMesh.position.y = -85.5
+    this.stemMesh.position.y = -145.4
     this.stemMesh.scale.setScalar(2.1)
     this.scene.add(this.stemMesh)
     // this.scene.add(this.blossomMesh)
@@ -102,23 +102,6 @@ class WorkArrow {
 
   //==========================================================
   resample(planeModel: THREE.Mesh | undefined) {
-    //   const vertexCount = surface.geometry.getAttribute('position').count
-    // const vertexCount = planeModel!.geometry.getAttribute('position').count
-    // const position = planeModel!.geometry
-
-    // console.log(vertexCount)
-    // console.log(position)
-
-    // console.info(
-    //   'Sampling ' +
-    //     this.api.count +
-    //     ' points from a surface with ' +
-    //     vertexCount +
-    //     ' vertices...'
-    // )
-
-    //
-
     console.time('.build()')
 
     //   sampler = new MeshSurfaceSampler(surface)
@@ -161,7 +144,7 @@ class WorkArrow {
   }
   //==========================================================
   // updateParticle(i: number) {
-  updateParticle(i: number, delta: number) {
+  updateParticle(i: number) {
     // Update lifecycle.
 
     // this.ages[i] += 0.008
@@ -192,11 +175,11 @@ class WorkArrow {
     // this.blossomMesh!.setMatrixAt(i, this.dummy.matrix)
   } // Update Partical
 
-  animation(delta: number) {
+  animation() {
     // if (this.stemMesh && this.blossomMesh) {
     if (this.stemMesh) {
       for (let i = 0; i < this.api.count; i++) {
-        this.updateParticle(i, delta)
+        this.updateParticle(i)
       }
 
       this.stemMesh.instanceMatrix.needsUpdate = true

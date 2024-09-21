@@ -17,7 +17,7 @@ class AndroidPage {
   scene: THREE.Scene
   gltf: any | undefined
   pageControl: CamCtlPosition = {
-    cam: { x: 1, y: 7, z: -14 },
+    cam: { x: 1, y: 10, z: -25 },
     ctl: { x: 0, y: 4, z: 0 },
   }
 
@@ -41,57 +41,13 @@ class AndroidPage {
         return gltf
       }
     )
-    this.gltf.scene.position.y = -60
-    this.gltf.scene.rotation.y = 135
-    this.gltf.scene.scale.set(4, 4, 4)
-    // this.gltf.scene.scale.set(1, 1, 1)
+    this.gltf.scene.position.y = -100
+    this.gltf.scene.rotation.y = Math.PI
+    const sceneScale = 7.3
+    this.gltf.scene.scale.set(sceneScale, sceneScale, sceneScale)
     this.scene.add(this.gltf.scene)
 
-    /*  this.reactModel = this.gltf.scene.getObjectByName('ReactJS') as THREE.Mesh
-    this.tailwindModel = this.gltf.scene.getObjectByName(
-      'Tailwind'
-    ) as THREE.Mesh
-    this.mongodbModel = this.gltf.scene.getObjectByName('MongoDB') as THREE.Mesh
-    this.nodejsModel = this.gltf.scene.getObjectByName('NodeJS') as THREE.Mesh
-    this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh */
-
-    // console.log(this.gltf.scene)
-
-    /* this.gltf = await loader.loadAsync('./models/Icons.glb', (gltf) => {
-      console.log(gltf)
-      return gltf
-    })
-    this.gltf.scene.position.y = -15
-    this.gltf.scene.rotation.y = 90
-    this.gltf.scene.scale.set(11, 11, 11)
-    this.scene.add(this.gltf.scene)
-
-    this.reactModel = this.gltf.scene.getObjectByName('ReactJS') as THREE.Mesh
-    this.tailwindModel = this.gltf.scene.getObjectByName(
-      'Tailwind'
-    ) as THREE.Mesh
-    this.mongodbModel = this.gltf.scene.getObjectByName('MongoDB') as THREE.Mesh
-    this.nodejsModel = this.gltf.scene.getObjectByName('NodeJS') as THREE.Mesh
-    this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh
-
-    console.log(this.gltf.scene) */
-
-    // const pillerClickable = new Clickable(this.pillerModel, 1)
-    // const welcomeClickable = new Clickable(this.welcomeModel, 2)
-    // this.scene.add(welcomeClickable)
-    // this.scene.add(this.planeModel)
-    // this.scene.add(pillerClickable)
-    // this.clickables.push(pillerClickable)
-    // this.clickables.push(welcomeClickable)
-    //   this.pillerModel = home.scene.getObjectByName('Piller') as THREE.Mesh
-    //   this.planeModel = home.scene.getObjectByName('Plane') as THREE.Mesh
-    //   this.welcomeModel = home.scene.getObjectByName('Welcome') as THREE.Mesh
-    //   const pillerClickable = new Clickable(this.pillerModel, 1)
-    //   const welcomeClickable = new Clickable(this.welcomeModel, 2)
-    //   this.scene.add(welcomeClickable)
-    //   this.scene.add(pillerClickable)
-    //   this.clickables.push(pillerClickable)
-    //   this.clickables.push(welcomeClickable)
+    // Model Assignment
   }
   animation(delta: number, time: number) {
     this.dartModel!.rotation.y += delta
