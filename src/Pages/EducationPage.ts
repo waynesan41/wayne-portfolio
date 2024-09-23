@@ -231,15 +231,16 @@ export function addRaycast(object: ClickRaycast, url: string) {
   // console.log(object.scale.z)
 
   object.hovered = false
+  const speed = 10
   object.update = (delta: number) => {
     if (object.hovered) {
-      object.scale.x = lerp(object.scale.x, x * 1.5, delta * 5)
-      object.scale.y = lerp(object.scale.y, y * 1.5, delta * 5)
-      object.scale.z = lerp(object.scale.z, z * 1.5, delta * 5)
+      object.scale.x = lerp(object.scale.x, x * 1.5, delta * speed)
+      object.scale.y = lerp(object.scale.y, y * 1.5, delta * speed)
+      object.scale.z = lerp(object.scale.z, z * 1.5, delta * speed)
     } else {
-      object.scale.x = lerp(object.scale.x, x, delta * 5)
-      object.scale.y = lerp(object.scale.y, y, delta * 5)
-      object.scale.z = lerp(object.scale.z, z, delta * 5)
+      object.scale.x = lerp(object.scale.x, x, delta * speed)
+      object.scale.y = lerp(object.scale.y, y, delta * speed)
+      object.scale.z = lerp(object.scale.z, z, delta * speed)
     }
   }
   object.clickObj = () => {

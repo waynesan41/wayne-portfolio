@@ -534,3 +534,18 @@ dialog::backdrop {
     transform: translate(calc(100% / 3));
   }
 }
+
+.loading-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.loadingPercent {
+  margin: 10px;
+  text-align: center;
+  align-self: center;
+  font-family: sans-serif;
+  color: white;
+  letter-spacing: 0.3rem;
+  font-size: 40px;
+  font-weight: bolder;
+}
