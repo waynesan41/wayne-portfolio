@@ -22,7 +22,7 @@ class EducationPage {
   systemGroup: THREE.Group = new THREE.Group()
   gltf: any | undefined
   pageControl: CamCtlPosition = {
-    cam: { x: 0, y: 9, z: -14 },
+    cam: { x: 0, y: 9, z: -19 },
     ctl: { x: 0, y: 3, z: 0 },
   }
 
@@ -38,11 +38,15 @@ class EducationPage {
     // await this.loadFile()
   }
 
-  async loadFile(loader: GLTFLoader) {
+  async loadFile(loader: GLTFLoader, percent: HTMLSpanElement) {
     this.gltf = await loader.loadAsync(
       './models/compress/Education.glb',
       (gltf) => {
-        // console.log(gltf)
+        // console.log(gltf.loaded)
+
+        const percentComplete = (gltf.loaded / gltf.total) * 20 + 79
+        percent!.innerText = percentComplete.toString()
+
         return gltf
       }
     )

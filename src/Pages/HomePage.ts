@@ -35,11 +35,13 @@ class HomePage {
   }
 
   //   loadFile(home: any) {
-  async loadFile(loader: GLTFLoader) {
+  async loadFile(loader: GLTFLoader, percent: HTMLSpanElement) {
     this.gltf = await loader.loadAsync(
       // './models/compress/HomeSection.glb',
       './models/compress/HomeCool.glb',
       (gltf) => {
+        const percentComplete = (gltf.loaded / gltf.total) * 15 + 3
+        percent!.innerText = percentComplete.toString()
         return gltf
       }
     )

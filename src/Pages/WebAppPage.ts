@@ -44,11 +44,13 @@ class WebAppPage {
     this.scene = scene
   }
 
-  async loadFile(loader: GLTFLoader) {
+  async loadFile(loader: GLTFLoader, percent: HTMLSpanElement) {
     this.gltf = await loader.loadAsync(
       './models/compress/Icons.glb',
       (gltf) => {
         // console.log(gltf)
+        const percentComplete = (gltf.loaded / gltf.total) * 20 + 27
+        percent!.innerText = percentComplete.toString()
         return gltf
       }
     )

@@ -35,9 +35,11 @@ class WorkPage {
     // await this.loadFile()
   }
 
-  async loadFile(loader: GLTFLoader) {
+  async loadFile(loader: GLTFLoader, percent: HTMLSpanElement) {
     this.gltf = await loader.loadAsync('./models/compress/Work.glb', (gltf) => {
       // console.log(gltf)
+      const percentComplete = (gltf.loaded / gltf.total) * 20 + 68
+      percent!.innerText = percentComplete.toString()
       return gltf
     })
 

@@ -33,11 +33,13 @@ class AndroidPage {
     // await this.loadFile()
   }
 
-  async loadFile(loader: GLTFLoader) {
+  async loadFile(loader: GLTFLoader, percent: HTMLSpanElement) {
     this.gltf = await loader.loadAsync(
       './models/compress/Android.glb',
       (gltf) => {
         // console.log(gltf)
+        const percentComplete = (gltf.loaded / gltf.total) * 20 + 47
+        percent!.innerText = percentComplete.toString()
         return gltf
       }
     )

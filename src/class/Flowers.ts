@@ -44,10 +44,12 @@ class HomeFlower {
   }
 
   //==========================================================
-  async loadFile(loader: GLTFLoader) {
+  async loadFile(loader: GLTFLoader, percent: HTMLSpanElement) {
     const flower: any = await loader.loadAsync(
       './models/Flower.glb',
       function (gltf) {
+        const percentComplete = (gltf.loaded / gltf.total) * 5 + 11
+        percent!.innerText = percentComplete.toString()
         return gltf
       }
     )
