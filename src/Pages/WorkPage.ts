@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import Clickable from '../class/Clickable'
 import { CamCtlPosition } from '../class/CameraControlMove'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import { changePercent } from '../class/GlobalHelperFunction'
 
 const dracoLoader = new DRACOLoader()
 // dracoLoader.setDecoderPath(
@@ -35,11 +36,12 @@ class WorkPage {
     // await this.loadFile()
   }
 
-  async loadFile(loader: GLTFLoader, percent: HTMLSpanElement) {
+  async loadFile(loader: GLTFLoader) {
     this.gltf = await loader.loadAsync('./models/compress/Work.glb', (gltf) => {
       // console.log(gltf)
-      const percentComplete = (gltf.loaded / gltf.total) * 20 + 68
-      percent!.innerText = percentComplete.toString()
+      changePercent(gltf.loaded, gltf.total, 5, 64)
+      // const percentComplete = (gltf.loaded / gltf.total) * 20 + 68
+      // percent!.innerText = percentComplete.toString()
       return gltf
     })
 

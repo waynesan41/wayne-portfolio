@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import Clickable from '../class/Clickable'
 import { CamCtlPosition } from '../class/CameraControlMove'
+import { changePercent } from '../class/GlobalHelperFunction'
 
 class AndroidPage {
   dartModel: THREE.Mesh | undefined
@@ -33,13 +34,14 @@ class AndroidPage {
     // await this.loadFile()
   }
 
-  async loadFile(loader: GLTFLoader, percent: HTMLSpanElement) {
+  async loadFile(loader: GLTFLoader) {
     this.gltf = await loader.loadAsync(
-      './models/compress/Android.glb',
+      './models/compress/Mobile.glb',
       (gltf) => {
         // console.log(gltf)
-        const percentComplete = (gltf.loaded / gltf.total) * 20 + 47
-        percent!.innerText = percentComplete.toString()
+        changePercent(gltf.loaded, gltf.total, 16, 48)
+        // const percentComplete = (gltf.loaded / gltf.total) * 20 + 47
+        // percent!.innerText = percentComplete.toString()
         return gltf
       }
     )

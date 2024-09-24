@@ -4,6 +4,7 @@ import { CamCtlPosition } from '../class/CameraControlMove'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import ClickRaycast from '../class/ClickRaycast'
 import { update } from '@tweenjs/tween.js'
+import { changePercent } from '../class/GlobalHelperFunction'
 
 let clock = new THREE.Clock()
 
@@ -35,13 +36,15 @@ class HomePage {
   }
 
   //   loadFile(home: any) {
-  async loadFile(loader: GLTFLoader, percent: HTMLSpanElement) {
+  async loadFile(loader: GLTFLoader) {
     this.gltf = await loader.loadAsync(
       // './models/compress/HomeSection.glb',
       './models/compress/HomeCool.glb',
       (gltf) => {
-        const percentComplete = (gltf.loaded / gltf.total) * 15 + 3
-        percent!.innerText = percentComplete.toString()
+        changePercent(gltf.loaded, gltf.total, 22, 2)
+
+        // const percentComplete = Math.trunc((gltf.loaded / gltf.total) * 15 + 3)
+        // percent!.innerText = percentComplete.toString()
         return gltf
       }
     )

@@ -4,6 +4,7 @@ import Clickable from '../class/Clickable'
 import { CamCtlPosition } from '../class/CameraControlMove'
 import { drawIndex } from 'three/webgpu'
 import ClickRaycast from '../class/ClickRaycast'
+import { changePercent } from '../class/GlobalHelperFunction'
 
 class EducationPage {
   moneyModel: THREE.Mesh | undefined
@@ -38,14 +39,15 @@ class EducationPage {
     // await this.loadFile()
   }
 
-  async loadFile(loader: GLTFLoader, percent: HTMLSpanElement) {
+  async loadFile(loader: GLTFLoader) {
     this.gltf = await loader.loadAsync(
       './models/compress/Education.glb',
       (gltf) => {
         // console.log(gltf.loaded)
 
-        const percentComplete = (gltf.loaded / gltf.total) * 20 + 79
-        percent!.innerText = percentComplete.toString()
+        changePercent(gltf.loaded, gltf.total, 30, 69)
+        // const percentComplete = (gltf.loaded / gltf.total) * 20 + 79
+        // percent!.innerText = percentComplete.toString()
 
         return gltf
       }

@@ -6,6 +6,7 @@ import { CamCtlPosition } from '../class/CameraControlMove'
 import ClickRaycast from '../class/ClickRaycast'
 import ClickInstancedRaycast from '../type/ClickInstancedRaycast'
 import { addRaycast } from './EducationPage'
+import { changePercent } from '../class/GlobalHelperFunction'
 
 const color = new THREE.Color()
 
@@ -44,13 +45,15 @@ class WebAppPage {
     this.scene = scene
   }
 
-  async loadFile(loader: GLTFLoader, percent: HTMLSpanElement) {
+  async loadFile(loader: GLTFLoader) {
     this.gltf = await loader.loadAsync(
-      './models/compress/Icons.glb',
+      './models/compress/WebApp.glb',
       (gltf) => {
         // console.log(gltf)
-        const percentComplete = (gltf.loaded / gltf.total) * 20 + 27
-        percent!.innerText = percentComplete.toString()
+        changePercent(gltf.loaded, gltf.total, 21, 27)
+
+        // const percentComplete = (gltf.loaded / gltf.total) * 20 + 27
+        // percent!.innerText = percentComplete.toString()
         return gltf
       }
     )

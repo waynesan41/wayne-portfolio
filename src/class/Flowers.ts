@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js'
+import { changePercent } from './GlobalHelperFunction'
 
 // Source: https://gist.github.com/gre/1650294
 const easeOutCubic = function (t: number) {
@@ -44,12 +45,13 @@ class HomeFlower {
   }
 
   //==========================================================
-  async loadFile(loader: GLTFLoader, percent: HTMLSpanElement) {
+  async loadFile(loader: GLTFLoader) {
     const flower: any = await loader.loadAsync(
       './models/Flower.glb',
       function (gltf) {
-        const percentComplete = (gltf.loaded / gltf.total) * 5 + 11
-        percent!.innerText = percentComplete.toString()
+        changePercent(gltf.loaded, gltf.total, 3, 24)
+        // const percentComplete = (gltf.loaded / gltf.total) * 5 + 11
+        // percent!.innerText = percentComplete.toString()
         return gltf
       }
     )

@@ -79,24 +79,22 @@ async function init() {
     })
 
   cameraControlMove = new CameraControlMove(scene, camera, controls)
-  const livePercent = document.getElementById(
-    'percentNumber'
-  ) as HTMLSpanElement
+
   // ================ Home Page Loading
   homePage = new HomePage(scene)
-  await homePage.loadFile(loader, livePercent)
+  await homePage.loadFile(loader)
   cameraControlMove.addTween(homePage.gltf.scene!, homePage.pageControl)
   clickable = clickable.concat(homePage.clickables) // Clickable
 
   // Flower in HOME PAGE
   flowerGrow = new HomeFlower(scene)
-  await flowerGrow.loadFile(loader, livePercent)
+  await flowerGrow.loadFile(loader)
   flowerGrow.resample(homePage.planeModel)
   // flowerGrow.resample(scene)
 
   // ================ WEBAPP Page Loading
   webAppPage = new WebAppPage(scene)
-  await webAppPage.loadFile(loader, livePercent)
+  await webAppPage.loadFile(loader)
   cameraControlMove.addTween(webAppPage.gltf.scene!, webAppPage.pageControl)
   // doubleClickable = clickable.concat(webAppPage.clickables) // Double Click
   doubleClickable = webAppPage.clickables // Double Click
@@ -105,12 +103,12 @@ async function init() {
 
   // ================ MOBILE Page Loading
   androidPage = new AndroidPage(scene)
-  await androidPage.loadFile(loader, livePercent)
+  await androidPage.loadFile(loader)
   cameraControlMove.addTween(androidPage.gltf.scene!, androidPage.pageControl)
 
   // ================ WORK Page Loading
   workPage = new WorkPage(scene)
-  await workPage.loadFile(loader, livePercent)
+  await workPage.loadFile(loader)
   cameraControlMove.addTween(workPage.gltf.scene!, workPage.pageControl)
 
   // Arrow in Work Page
@@ -121,7 +119,7 @@ async function init() {
 
   // ================ EDUCATION Page Loading
   educationPage = new EducationPage(scene)
-  await educationPage.loadFile(loader, livePercent)
+  await educationPage.loadFile(loader)
   cameraControlMove.addTween(
     educationPage.gltf.scene!,
     educationPage.pageControl
