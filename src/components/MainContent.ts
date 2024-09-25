@@ -52,10 +52,7 @@ const contents = [
 ]
 
 const mainContent = async () => {
-  console.log('sss')
   const mainAppend = document.getElementById('main-content') as HTMLElement
-
-  console.log(mainAppend)
 
   contents.forEach((element) => {
     const section = document.createElement('section')

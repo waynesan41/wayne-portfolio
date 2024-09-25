@@ -9,7 +9,7 @@ import HomeFlower from './class/Flowers'
 import WebAppPage from './Pages/WebAppPage'
 import WorkPage from './Pages/WorkPage'
 import EducationPage from './Pages/EducationPage'
-import AndroidPage from './Pages/AndroidPage'
+import MobileAppPage from './Pages/MobileAppPage'
 import { keyboardInput, navToggle, stopLoading } from './class/StartScript'
 import mainContent from './components/MainContent'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
@@ -45,7 +45,7 @@ let homePage: HomePage,
   flowerGrow: HomeFlower,
   workArrow: WorkArrow,
   webAppPage: WebAppPage,
-  androidPage: AndroidPage,
+  mobileAppPage: MobileAppPage,
   workPage: WorkPage,
   educationPage: EducationPage
 
@@ -96,15 +96,22 @@ async function init() {
   webAppPage = new WebAppPage(scene)
   await webAppPage.loadFile(loader)
   cameraControlMove.addTween(webAppPage.gltf.scene!, webAppPage.pageControl)
-  // doubleClickable = clickable.concat(webAppPage.clickables) // Double Click
-  doubleClickable = webAppPage.clickables // Double Click
-  // hoverable = clickable.concat(webAppPage.clickables)
-  hoverable = webAppPage.clickables
+  doubleClickable = clickable.concat(webAppPage.clickables) // Double Click
+  hoverable = clickable.concat(webAppPage.clickables)
+  // doubleClickable = webAppPage.clickables // Double Click
+  // hoverable = webAppPage.clickables
 
   // ================ MOBILE Page Loading
-  androidPage = new AndroidPage(scene)
-  await androidPage.loadFile(loader)
-  cameraControlMove.addTween(androidPage.gltf.scene!, androidPage.pageControl)
+  mobileAppPage = new MobileAppPage(scene)
+  await mobileAppPage.loadFile(loader)
+  cameraControlMove.addTween(
+    mobileAppPage.gltf.scene!,
+    mobileAppPage.pageControl
+  )
+  doubleClickable = doubleClickable.concat(mobileAppPage.clickables) // Double Click
+  hoverable = hoverable.concat(mobileAppPage.clickables) // Double Click
+  clickable = clickable.concat(mobileAppPage.oneClickable) // Double Click
+  hoverable = hoverable.concat(mobileAppPage.oneClickable)
 
   // ================ WORK Page Loading
   workPage = new WorkPage(scene)
@@ -127,7 +134,6 @@ async function init() {
   doubleClickable = doubleClickable.concat(educationPage.clickables)
   hoverable = hoverable.concat(educationPage.clickables)
 
-  console.log(clickable)
   await addClickRaycast(clickable)
   await addDoubleClickRaycast(doubleClickable)
   await addHoverRaycast(hoverable)
@@ -179,6 +185,7 @@ function animate() {
   homePage.animation(delta)
   flowerGrow.animation(delta)
   workArrow.animation()
+  mobileAppPage.animation(delta, time)
   webAppPage.animation(delta, time)
   educationPage.animation(delta, time)
   renderer.render(scene, camera)
@@ -190,18 +197,16 @@ async function addClickRaycast(clickables: ClickRaycast[]) {
       (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
       -(e.clientY / renderer.domElement.clientHeight) * 2 + 1
     )
-    console.log(mouse)
 
     raycaster.setFromCamera(mouse, camera)
     intersects = raycaster.intersectObjects(clickables, true)
-
     // intersects = raycaster.intersectObjects(pickables, false)
 
-    console.log(intersects)
-
-    intersects.length && (intersects[0].object as ClickRaycast).clickObj()
+    intersects.length &&
+      (intersects[0].object as ClickRaycast).clickObj(intersects[0])
   })
 }
+
 async function addDoubleClickRaycast(doubleClickable: ClickRaycast[]) {
   //Ray Cast
   renderer.domElement.addEventListener('dblclick', (e) => {
@@ -209,15 +214,12 @@ async function addDoubleClickRaycast(doubleClickable: ClickRaycast[]) {
       (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
       -(e.clientY / renderer.domElement.clientHeight) * 2 + 1
     )
-
     raycaster.setFromCamera(mouse, camera)
     intersects = raycaster.intersectObjects(doubleClickable, true)
+    // console.log(intersects)
 
-    // intersects = raycaster.intersectObjects(pickables, false)
-
-    console.log(intersects)
-
-    intersects.length && (intersects[0].object as ClickRaycast).clickObj()
+    intersects.length &&
+      (intersects[0].object as ClickRaycast).clickObj(intersects[0])
   })
 }
 
@@ -228,6 +230,7 @@ async function addHoverRaycast(hoverable: ClickRaycast[]) {
   renderer.domElement.addEventListener('mousemove', (e) => {
     move(e)
   })
+  // Function
   function move(e: any) {
     mouse.set(
       (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
@@ -238,39 +241,46 @@ async function addHoverRaycast(hoverable: ClickRaycast[]) {
 
     raycaster.setFromCamera(mouse, camera)
     intersects = raycaster.intersectObjects(hoverable, false)
-    // console.log(clickables)
+    // console.log(intersects)
 
     if (intersects.length) {
       // IF it is an Instanced Mesh
-      // console.log(intersects[0].instanceId)
       const instanceId = intersects[0].instanceId
-
       if (instanceId) {
         const instanceObj = intersects[0].object as ClickInstancedRaycast
         instanceObj.changeColor(instanceId)
-        /* const color = new THREE.Color()
-        instanceObj.getColorAt(instanceId, color)
-        console.log(color)
-        if (color.equals(new THREE.Color(0xffffff))) {
-          instanceObj.setColorAt(
-            instanceId,
-            color.setHex(Math.random() * 0xffffff)
-          )
-          instanceObj.instanceColor!.needsUpdate = true
-        } */
       } else {
+        ;(intersects[0].object as ClickRaycast).intersectObj = intersects[0]
+
+        // For Regular Hover
         ;(intersects[0].object as ClickRaycast).hovered = true
       }
     }
-    // intersects.length && ((intersects[0].object as ClickRaycast).hovered = true)
-
-    // console.log(intersects)
   }
 }
-/* const percentage = document.getElementById('percentNumber')
-function increasePercentage(num: number) {
-  //
-  // const p = inner
-  // percentage?.innerText =
+
+// Double Touch Google ANSWER
+
+/* function detectDoubleTap(element, callback, maxDelay = 300) {
+  let lastTapTime = 0;
+
+  element.addEventListener('touchstart', function(event) {
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - lastTapTime;
+
+    if (tapLength < maxDelay && tapLength > 0) {
+      event.preventDefault(); // Prevent default behavior like zooming
+      callback(event);
+    }
+
+    lastTapTime = currentTime;
+  });
 }
- */
+
+// Usage:
+const element = document.getElementById('myElement');
+
+detectDoubleTap(element, function(event) {
+  console.log('Double tap detected!');
+  // Your double-tap logic here
+}); */

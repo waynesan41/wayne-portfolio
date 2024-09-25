@@ -129,28 +129,17 @@ class HomeFlower {
     //     ' vertices...'
     // )
 
-    //
-
-    console.time('.build()')
-
     //   sampler = new MeshSurfaceSampler(surface)
     // console.log(planeModel)
     this.sampler = new MeshSurfaceSampler(planeModel!)
       .setWeightAttribute(this.api.distribution === 'weighted' ? 'uv' : null)
       .build()
 
-    // console.log(this.sampler)
-
-    console.timeEnd('.build()')
-    console.time('.sample()')
-
     for (let i = 0; i < this.api.count; i++) {
       this.ages[i] = Math.random()
       this.scales[i] = scaleCurve(this.ages[i])
       this.resampleParticle(i)
     }
-
-    console.timeEnd('.sample()')
 
     this.stemMesh!.instanceMatrix.needsUpdate = true
     this.blossomMesh!.instanceMatrix.needsUpdate = true

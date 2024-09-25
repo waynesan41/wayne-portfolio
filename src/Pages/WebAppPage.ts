@@ -5,15 +5,10 @@ import { CamCtlPosition } from '../class/CameraControlMove'
 
 import ClickRaycast from '../class/ClickRaycast'
 import ClickInstancedRaycast from '../type/ClickInstancedRaycast'
-import { addRaycast } from './EducationPage'
+import { addRaycast, lerp } from '../class/GlobalHelperFunction'
 import { changePercent } from '../class/GlobalHelperFunction'
 
 const color = new THREE.Color()
-
-function lerp(from: number, to: number, speed: number) {
-  const amount = (1 - speed) * from + speed * to
-  return Math.abs(from - to) < 0.001 ? to : amount
-}
 
 class WebAppPage {
   reactModel: THREE.Mesh | undefined
@@ -34,7 +29,7 @@ class WebAppPage {
   instancedBook: THREE.InstancedMesh | undefined
   // instancedBook: ClickInstancedRaycast | undefined
 
-  clickables: ClickRaycast[] = [] // used in the raycaster intersects methods
+  clickables: ClickRaycast[] & ClickInstancedRaycast[] = [] // used in the raycaster intersects methods
   scene: THREE.Scene
   gltf: any | undefined
   pageControl: CamCtlPosition = {
@@ -98,13 +93,6 @@ class WebAppPage {
       this.gltf.scene.getObjectByName('Dark'),
       'https://handybookmark.com/login'
     ) as ClickRaycast
-    // this.handyWeb = this.gltf.scene.getObjectByName('HandyWeb') as ClickRaycast
-    // this.handyStore = this.gltf.scene.getObjectByName(
-    //   'ChromeWebStore'
-    // ) as ClickRaycast
-
-    console.log('----------------------------')
-    console.log(this.youtube)
 
     this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh
     this.bookmark = this.gltf.scene.getObjectByName('Bookmark') as THREE.Mesh
@@ -163,26 +151,35 @@ class WebAppPage {
     const youtube = this.youtube
     youtubeIn.hovered = false
     youtubeOut.hovered = false
+
+    const hoverScale = 1.5
+    const defaultScale = 1
+
     const x = youtube.scale.x
     const y = youtube.scale.y
     const z = youtube.scale.z
     youtubeOut.update = (delta: number) => {
       //Hover animation
-
       if (youtubeOut.hovered || youtubeIn.hovered) {
-        youtube.scale.x = lerp(youtube.scale.x, x * 5.5, delta * 5)
-        youtube.scale.y = lerp(youtube.scale.y, y * 5.5, delta * 5)
-        youtube.scale.z = lerp(youtube.scale.z, z * 5.5, delta * 5)
+        youtube.scale.x = lerp(youtube.scale.x, x * hoverScale, delta * 5)
+        youtube.scale.y = lerp(youtube.scale.y, y * hoverScale, delta * 5)
+        youtube.scale.z = lerp(youtube.scale.z, z * hoverScale, delta * 5)
       } else {
-        youtube.scale.x = lerp(youtube.scale.x, x * 3.5, delta * 5)
-        youtube.scale.y = lerp(youtube.scale.y, y * 3.5, delta * 5)
-        youtube.scale.z = lerp(youtube.scale.z, z * 3.5, delta * 5)
+        youtube.scale.x = lerp(youtube.scale.x, x * defaultScale, delta * 5)
+        youtube.scale.y = lerp(youtube.scale.y, y * defaultScale, delta * 5)
+        youtube.scale.z = lerp(youtube.scale.z, z * defaultScale, delta * 5)
       }
       if (youtubeOut.hovered || youtubeIn.hovered) {
-        console.log('hover')
-        youtube.scale.setScalar(lerp(youtube.scale.y, 0.1, delta * 5))
+        // youtube.scale.setScalar(lerp(youtube.scale.y, 0.1, delta * 5))
+        youtube.scale.x = lerp(youtube.scale.x, x * hoverScale, delta * 5)
+        youtube.scale.y = lerp(youtube.scale.y, y * hoverScale, delta * 5)
+        youtube.scale.z = lerp(youtube.scale.z, z * hoverScale, delta * 5)
       } else {
-        youtube.scale.setScalar(lerp(youtube.scale.y, 0.07, delta * 5))
+        // youtube.scale.setScalar(lerp(youtube.scale.y, 0.07, delta * 5))
+
+        youtube.scale.x = lerp(youtube.scale.x, x * defaultScale, delta * 5)
+        youtube.scale.y = lerp(youtube.scale.y, y * defaultScale, delta * 5)
+        youtube.scale.z = lerp(youtube.scale.z, z * defaultScale, delta * 5)
       }
     }
     youtubeIn.update = (delta: number) => {
@@ -204,6 +201,7 @@ class WebAppPage {
     this.clickables.push(youtubeIn)
 
     // Ray Casting Bookmark Instanced xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // const bookmarkIcon = this.instancedBook as ClickInstancedRaycast
     const bookmarkIcon = this.instancedBook as ClickInstancedRaycast
     bookmarkIcon.update = (instanceId: number) => {
       //DO Nothing

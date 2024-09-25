@@ -102,8 +102,6 @@ class WorkArrow {
 
   //==========================================================
   resample(planeModel: THREE.Mesh | undefined) {
-    console.time('.build()')
-
     //   sampler = new MeshSurfaceSampler(surface)
     // console.log(planeModel)
     this.sampler = new MeshSurfaceSampler(planeModel!)
@@ -111,18 +109,11 @@ class WorkArrow {
       // .setWeightAttribute(this.api.distribution === 'weighted' ? 'uv' : null)
       .build()
 
-    // console.log(this.sampler)
-
-    console.timeEnd('.build()')
-    console.time('.sample()')
-
     for (let i = 0; i < this.api.count; i++) {
       this.ages[i] = Math.random()
       this.scales[i] = scaleCurve(this.ages[i])
       this.resampleParticle(i)
     }
-
-    console.timeEnd('.sample()')
 
     this.stemMesh!.instanceMatrix.needsUpdate = true
     // this.blossomMesh!.instanceMatrix.needsUpdate = true
@@ -133,13 +124,19 @@ class WorkArrow {
     this.sampler!.sample(this._position, this._normal)
     // this.sampler!.sample(this._position, this._normal)
     this._normal.add(this._position)
+    // this.dummy.rotation.x = 50
+    // this.dummy.rotation.y = 1.5
+    // this.dummy.rotation.z = 50
 
     this.dummy.position.copy(this._position)
     this.dummy.scale.set(this.scales[i], this.scales[i], this.scales[i])
     this.dummy.lookAt(this._normal)
+    this.dummy.rotateZ(Math.random() * Math.PI)
+
     this.dummy.updateMatrix()
 
     this.stemMesh!.setMatrixAt(i, this.dummy.matrix)
+    this.stemMesh?.rotateX
     // this.blossomMesh!.setMatrixAt(i, this.dummy.matrix)
   }
   //==========================================================

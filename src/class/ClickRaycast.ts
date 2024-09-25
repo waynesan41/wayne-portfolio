@@ -12,8 +12,13 @@ interface ClickRaycast extends Mesh {
   hovered: boolean
   pause: boolean
   y: number
+  intersectObj?: any
 
-  clickObj(): void
+  moveX: number
+  moveZ: number
+  rotate: number
+
+  clickObj(mesh?: any): void
   update(delta: number): void
 }
 

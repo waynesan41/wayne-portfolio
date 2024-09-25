@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import Clickable from '../class/Clickable'
+
 import { CamCtlPosition } from '../class/CameraControlMove'
-import { drawIndex } from 'three/webgpu'
+import { addRaycast } from '../class/GlobalHelperFunction'
 import ClickRaycast from '../class/ClickRaycast'
 import { changePercent } from '../class/GlobalHelperFunction'
 
@@ -128,9 +128,6 @@ class EducationPage {
     const count = 48
 
     // const coinGeometry = this.coinModel.clone()
-    console.log(this.coinModel)
-    console.log(this.coinModel.position)
-    console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
     const size = 0.003
     const coinGeometry = this.coinModel.geometry.scale(size, size, size).clone()
     const coinMaterial = this.coinModel.material
@@ -154,8 +151,7 @@ class EducationPage {
     // const vector3Pos = this.coinModel.children[0].position as THREE.Vector3
     this.coinModel.getWorldPosition(this.coinModel.position)
     this.dollarModel.getWorldPosition(this.dollarModel.position)
-    console.log(this.coinModel.position)
-    console.log(this.dollarModel.position)
+
     const vector3Coin = this.coinModel.position as THREE.Vector3
     const vector3Dollar = this.dollarModel.position as THREE.Vector3
     // vector3Coin.y += 0
@@ -208,8 +204,6 @@ class EducationPage {
     this.scene.add(this.instancedDollar)
     // this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh
     // this.degreeModel!.setRotationFromAxisAngle(this.schoolModel!.position, 1)
-
-    console.log(this.schoolModel)
   }
   animation(delta: number, time: number) {
     this.systemGroup.rotation.y += delta * 0.3
@@ -227,36 +221,3 @@ class EducationPage {
 }
 
 export default EducationPage
-
-export function addRaycast(object: ClickRaycast, url: string) {
-  const x = object.scale.x
-  const y = object.scale.y
-  const z = object.scale.z
-  // console.log(object.scale.x)
-  // console.log(object.scale.y)
-  // console.log(object.scale.z)
-
-  object.hovered = false
-  const speed = 10
-  object.update = (delta: number) => {
-    if (object.hovered) {
-      object.scale.x = lerp(object.scale.x, x * 1.5, delta * speed)
-      object.scale.y = lerp(object.scale.y, y * 1.5, delta * speed)
-      object.scale.z = lerp(object.scale.z, z * 1.5, delta * speed)
-    } else {
-      object.scale.x = lerp(object.scale.x, x, delta * speed)
-      object.scale.y = lerp(object.scale.y, y, delta * speed)
-      object.scale.z = lerp(object.scale.z, z, delta * speed)
-    }
-  }
-  object.clickObj = () => {
-    console.log('slick')
-    window.open(url, '_blank')
-  }
-
-  return object
-}
-function lerp(from: number, to: number, speed: number) {
-  const amount = (1 - speed) * from + speed * to
-  return Math.abs(from - to) < 0.001 ? to : amount
-}

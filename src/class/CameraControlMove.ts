@@ -58,13 +58,12 @@ class CameraControlMove {
     })
     this.navBtn = document.getElementsByClassName('option') as any
     this.content = document.getElementsByClassName('content') as any
-    console.log(this.content)
+
     // Add Event Listener for Menu Button
     for (let i = 0; i < this.navBtn.length; i++) {
       this.navBtn[i].addEventListener('click', () => {
         // const num = e.target.parentNode.getAttribute('data')
         const num = Number(this.navBtn[i].getAttribute('data'))
-        console.log(num)
         this.selectFloor(num)
       })
     }
@@ -73,7 +72,7 @@ class CameraControlMove {
   positionCamera() {
     this.downBtn.disabled = true
     this.upBtn.disabled = true
-    const floorNum = 4
+    const floorNum = 0
     this.currentFloor = floorNum
     // this.scene.background = colors[floorNum]
     // this.scene.backgroundIntensity = 0.1
@@ -136,7 +135,7 @@ class CameraControlMove {
 
   selectFloor(floorNum: number) {
     console.log(floorNum)
-    this.currentFloor = floorNum
+
     this.doAnimation(floorNum)
   }
 

@@ -104,7 +104,6 @@ export async function keyboardInput(controls: OrbitControls) {
   const navBtn = document.getElementsByClassName('option') as any
 
   window.addEventListener('keydown', function (e: KeyboardEvent) {
-    console.log(e)
     // console.log(navBtn)
 
     switch (e.key) {
