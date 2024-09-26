@@ -68,7 +68,7 @@ export async function navToggle() {
   // Button Sound Effect
   //----------------------------------------------------------------------------
   // Credit Dialog
-
+  //
   const dialog = document.getElementById('creditPopup') as HTMLDialogElement
   const showButton = document.querySelector('dialog + button')
   const closeButton = document.querySelector('#creditPopup button')
@@ -93,10 +93,30 @@ export async function navToggle() {
       dialog.close()
     }
   })
-
-  // Keyboard Short Cut
   //----------------------------------------------------------------------------
+
+  // 717 Work Popup
+  const dialog717 = document.getElementById('workDialog') as HTMLDialogElement
+  const closeWorkDialog = document.querySelector('#workDialog button')
+  closeWorkDialog?.addEventListener('click', () => {
+    dialog717?.close()
+  })
+  dialog717?.addEventListener('click', function (e: any) {
+    // Dialog
+    let rect = e.target.getBoundingClientRect()
+    if (
+      rect.left > e.clientX ||
+      rect.right < e.clientX ||
+      rect.top > e.clientY ||
+      rect.bottom < e.clientY
+    ) {
+      dialog717.close()
+    }
+  })
 }
+
+// Keyboard Short Cut
+//----------------------------------------------------------------------------
 
 export async function keyboardInput(controls: OrbitControls) {
   const upBtn = document.getElementById('up-btn')
@@ -137,43 +157,22 @@ export async function keyboardInput(controls: OrbitControls) {
         navBtn[4].click()
         break
     }
-    /* if (e.code == 'ArrowUp') {
-      upBtn?.click()
+    switch (e.key) {
+      case 'ArrowUp':
+      case 'ArrowDown':
+      case 'ArrowRight':
+      case 'ArrowLeft':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+        const allDialog = this.document.querySelector(
+          'dialog[open=""]'
+        ) as HTMLDialogElement
+        allDialog?.close()
     }
-    if (e.code == 'ArrowDown') {
-      downBtn?.click()
-    }
-    if (e.code == '1') {
-      // Home Page
-    }
-
-    if (controls.autoRotate != true) {
-      if (e.code == 'ArrowRight') {
-        controls.autoRotate = true
-        controls.autoRotateSpeed = -9
-      }
-      if (e.code == 'ArrowLeft') {
-        controls.autoRotate = true
-        controls.autoRotateSpeed = 9
-      }
-    } */
   })
-
-  /* window.addEventListener('keydown', function (e: KeyboardEvent) {
-    // controls.autoRotate = true
-    // controls.autoRotateSpeed *= -1
-    // console.log(e)
-    if (controls.autoRotate != true) {
-      if (e.code == 'ArrowRight') {
-        controls.autoRotate = true
-        controls.autoRotateSpeed = -9
-      }
-      if (e.code == 'ArrowLeft') {
-        controls.autoRotate = true
-        controls.autoRotateSpeed = 9
-      }
-    }
-  }) */
 
   window.addEventListener('keyup', function (e: KeyboardEvent) {
     // console.log(e)

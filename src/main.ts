@@ -118,6 +118,10 @@ async function init() {
   await workPage.loadFile(loader)
   cameraControlMove.addTween(workPage.gltf.scene!, workPage.pageControl)
 
+  // clickable = clickable.concat(workPage.clickables) // Double Click
+  doubleClickable = doubleClickable.concat(workPage.clickables) // Double Click
+  hoverable = hoverable.concat(workPage.clickables) // Double Click
+
   // Arrow in Work Page
   workArrow = new WorkArrow(scene)
   await workArrow.loadFile(workPage.arrowModel!)
@@ -139,30 +143,13 @@ async function init() {
   await addHoverRaycast(hoverable)
 
   //--------------------------------------------------
-  cameraControlMove.positionCamera()
+  cameraControlMove.positionCamera(3)
   //--------------------------------------------------
   // Stop Loading
   //--------------------------------------------------
   await stopLoading()
 
-  /* let scrollPercent = 0
-  document.body.onscroll = () => {
-    //calculate the current scroll progress as a percentage
-    scrollPercent =
-      ((document.documentElement.scrollTop || document.body.scrollTop) /
-        ((document.documentElement.scrollHeight || document.body.scrollHeight) -
-          document.documentElement.clientHeight)) *
-      100
-    ;(document.getElementById('scrollProgress') as HTMLDivElement).innerText =
-      'Scroll Progress : ' + scrollPercent.toFixed(2)
-  } */
-  //--------------------------------------------------
-  // stats = new Stats()
-  // document.body.appendChild(stats.dom)
-  // renderer.domElement.style.position = 'fixed'
   document.body.appendChild(renderer.domElement)
-  // document.getElementById('three')?.appendChild(renderer.domElement)
-
   window.addEventListener('resize', onWindowResize)
   animate()
 } // END Init
@@ -187,6 +174,7 @@ function animate() {
   workArrow.animation()
   mobileAppPage.animation(delta, time)
   webAppPage.animation(delta, time)
+  workPage.animation(delta, time)
   educationPage.animation(delta, time)
   renderer.render(scene, camera)
 }
@@ -206,21 +194,56 @@ async function addClickRaycast(clickables: ClickRaycast[]) {
       (intersects[0].object as ClickRaycast).clickObj(intersects[0])
   })
 }
-
+let expired: any
 async function addDoubleClickRaycast(doubleClickable: ClickRaycast[]) {
   //Ray Cast
   renderer.domElement.addEventListener('dblclick', (e) => {
+    dbTouch(e)
+  })
+
+  let touchType
+  if (navigator.userAgent.includes('Android')) {
+    touchType = 'touchend'
+  } else {
+    touchType = 'touchstart'
+  }
+  renderer.domElement.addEventListener(touchType, (e: any) => {
+    // Function goes
+    // console.log(e)
+    // console.log(e.touches[0])
+
+    if (e.touches.length === 1) {
+      if (!expired) {
+        expired = e.timeStamp + 400
+      } else if (e.timeStamp <= expired) {
+        // remove the default of this event ( Zoom )
+        // e.preventDefault()
+
+        dbTouch(e.touches[0])
+        // then reset the variable for other "double Touches" event
+        expired = null
+      } else {
+        // if the second touch was expired, make it as it's the first
+        expired = e.timeStamp + 400
+      }
+    }
+  })
+  function dbTouch(e: any) {
     mouse.set(
       (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
       -(e.clientY / renderer.domElement.clientHeight) * 2 + 1
     )
+    // mouse.set(
+    //   (e.clientX / renderer.domElement.clientWidth) * 2 - 1,
+    //   -(e.clientY / renderer.domElement.clientHeight) * 2 + 1
+    // )
     raycaster.setFromCamera(mouse, camera)
     intersects = raycaster.intersectObjects(doubleClickable, true)
     // console.log(intersects)
 
     intersects.length &&
       (intersects[0].object as ClickRaycast).clickObj(intersects[0])
-  })
+  }
 }
 
 async function addHoverRaycast(hoverable: ClickRaycast[]) {
@@ -261,26 +284,33 @@ async function addHoverRaycast(hoverable: ClickRaycast[]) {
 
 // Double Touch Google ANSWER
 
-/* function detectDoubleTap(element, callback, maxDelay = 300) {
-  let lastTapTime = 0;
-
-  element.addEventListener('touchstart', function(event) {
-    const currentTime = new Date().getTime();
-    const tapLength = currentTime - lastTapTime;
-
-    if (tapLength < maxDelay && tapLength > 0) {
-      event.preventDefault(); // Prevent default behavior like zooming
-      callback(event);
+/* Based on this http://jsfiddle.net/brettwp/J4djY/*/
+/* function detectDoubleTapClosure() {
+  let lastTap = 0
+  let timeout: number
+  return function detectDoubleTap(event: any) {
+    const curTime = new Date().getTime()
+    const tapLen = curTime - lastTap
+    if (tapLen < 500 && tapLen > 0) {
+      console.log('Double tapped!')
+      event.preventDefault()
+    } else {
+      timeout = setTimeout(() => {
+        clearTimeout(timeout)
+      }, 500)
     }
-
-    lastTapTime = currentTime;
-  });
+    lastTap = curTime
+  }
 }
 
-// Usage:
-const element = document.getElementById('myElement');
 
-detectDoubleTap(element, function(event) {
-  console.log('Double tap detected!');
-  // Your double-tap logic here
-}); */
+if (
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  )
+) {
+  document.body.addEventListener('touchend', detectDoubleTapClosure(), {
+    passive: false,
+  })
+}
+ */

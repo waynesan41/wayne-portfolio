@@ -161,10 +161,16 @@ class MobileAppPage {
       //Hover animation
     }
     youtubeIn.clickObj = () => {
-      window.open('https://youtu.be/s-9rdQMt6rU', '_blank')
+      window.open(
+        'https://play.google.com/store/apps/details?id=com.pullyourselftogether.food_inventory_tracker&pli=1',
+        '_blank'
+      )
     }
     youtubeOut.clickObj = () => {
-      window.open('https://youtu.be/s-9rdQMt6rU', '_blank')
+      window.open(
+        'https://play.google.com/store/apps/details?id=com.pullyourselftogether.food_inventory_tracker&pli=1',
+        '_blank'
+      )
     }
 
     this.clickables.push(youtubeOut)

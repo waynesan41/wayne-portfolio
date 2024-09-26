@@ -69,10 +69,11 @@ class CameraControlMove {
     }
   }
 
-  positionCamera() {
+  positionCamera(selectedFloor: number) {
     this.downBtn.disabled = true
     this.upBtn.disabled = true
-    const floorNum = 0
+    // const floorNum = 0
+    const floorNum = selectedFloor
     this.currentFloor = floorNum
     // this.scene.background = colors[floorNum]
     // this.scene.backgroundIntensity = 0.1
@@ -135,7 +136,7 @@ class CameraControlMove {
 
   selectFloor(floorNum: number) {
     console.log(floorNum)
-
+    this.currentFloor = floorNum
     this.doAnimation(floorNum)
   }
 

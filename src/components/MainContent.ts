@@ -40,7 +40,7 @@ const contents = [
   {
     title: 'Work Experience',
     content: string,
-    dialog: 'Click on Egg to put Dollar Sign',
+    dialog: 'Click on Egg to put Dollar Sign.',
     dialogContent: 'dance.webp',
   },
   {
@@ -79,7 +79,7 @@ const mainContent = async () => {
     dialogContent.appendChild(dialog)
 
     dialogContent.onclick = function (e: any) {
-      // Dialog
+      // Dialog close when click on outside of the Dialog Box
       let rect = e.target.getBoundingClientRect()
       if (
         rect.left > e.clientX ||
@@ -90,6 +90,9 @@ const mainContent = async () => {
         dialogContent.close()
       }
     }
+    // dialogContent.addEventListener('keydown', (e) => {
+    //   dialogContent.close()
+    // })
     closeBtn.onclick = () => {
       dialogContent.close()
     }
@@ -129,7 +132,7 @@ const mainContent = async () => {
     mainAppend?.appendChild(section)
 
     showBtn.onclick = () => {
-      console.log('Click Home  dialog')
+      console.log('Open Dialog!!')
       dialogContent?.showModal()
     }
     expandBtn.onclick = () => {

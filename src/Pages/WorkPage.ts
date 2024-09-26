@@ -1,22 +1,20 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import Clickable from '../class/Clickable'
+
 import { CamCtlPosition } from '../class/CameraControlMove'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
-import { changePercent } from '../class/GlobalHelperFunction'
+import { addRaycast, changePercent } from '../class/GlobalHelperFunction'
+import ClickRaycast from '../class/ClickRaycast'
 
 const dracoLoader = new DRACOLoader()
-// dracoLoader.setDecoderPath(
-//   'https://www.gstatic.com/draco/versioned/decoders/1.5.7/'
-// ) // loading from a CDN
-// dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/') // loading from a CDN
+
 dracoLoader.setDecoderPath('jsm/libs/draco/') // loading from own webserver
 dracoLoader.setDecoderConfig({ type: 'js' })
 
 class WorkPage {
   arrowModel: THREE.Mesh | undefined
   planeModel: THREE.Mesh | undefined
-  clickables: Clickable[] = [] // used in the raycaster intersects methods
+  clickables: ClickRaycast[] = [] // used in the raycaster intersects methods
   scene: THREE.Scene
   gltf: any | undefined
   pageControl: CamCtlPosition = {
@@ -26,14 +24,6 @@ class WorkPage {
 
   constructor(scene: THREE.Scene) {
     this.scene = scene
-    // this.scene.background = new THREE.Color(0x95a5a6)
-    // this.loadFile()
-
-    // loader.load('./models/HomeSection3.glb', (gltf) => {
-    //   return gltf
-    // })
-
-    // await this.loadFile()
   }
 
   async loadFile(loader: GLTFLoader) {
@@ -51,58 +41,27 @@ class WorkPage {
     // this.gltf.scene.scale.set(0.1, 0.1, 0.1)
     this.gltf.scene.scale.setScalar(1.7)
 
-    // this.reactModel = this.gltf.scene.getObjectByName('ReactJS') as THREE.Mesh
-    // this.tailwindModel = this.gltf.scene.getObjectByName(
-    //   'Tailwind'
-    // ) as THREE.Mesh
-    // this.mongodbModel = this.gltf.scene.getObjectByName('MongoDB') as THREE.Mesh
     this.arrowModel = this.gltf.scene.getObjectByName('Arrow') as THREE.Mesh
     this.gltf.scene.remove(this.arrowModel)
-    // this.arrowModel.getWorldPosition(this.arrowModel.position)
+
     this.planeModel = this.gltf.scene.getObjectByName('Egg') as THREE.Mesh
-    // this.planeModel.getWorldPosition(this.planeModel.position)
-    // this.planeModel = this.gltf.scene.getObjectByName('Level') as THREE.Mesh
-    // this.gltf.scene.remove(this.planeModel)
-    // this.scene.add(this.planeModel)
+
+    const logistics = addRaycast(
+      this.gltf.scene.getObjectByName('717'),
+      'https://www.udemy.com/user/maximilian-schwarzmuller/'
+    ) as ClickRaycast
+
+    logistics.clickObj = () => {
+      // Open Dialog
+      const dialog717 = document.getElementById(
+        'workDialog'
+      ) as HTMLDialogElement
+      dialog717.showModal()
+    }
+
+    this.clickables.push(logistics)
+
     this.scene.add(this.gltf.scene)
-
-    // console.log(this.gltf.scene)
-
-    /* this.gltf = await loader.loadAsync('./models/Icons.glb', (gltf) => {
-      console.log(gltf)
-      return gltf
-    })
-    this.gltf.scene.position.y = -15
-    this.gltf.scene.rotation.y = 90
-    this.gltf.scene.scale.set(11, 11, 11)
-    this.scene.add(this.gltf.scene)
-
-    this.reactModel = this.gltf.scene.getObjectByName('ReactJS') as THREE.Mesh
-    this.tailwindModel = this.gltf.scene.getObjectByName(
-      'Tailwind'
-    ) as THREE.Mesh
-    this.mongodbModel = this.gltf.scene.getObjectByName('MongoDB') as THREE.Mesh
-    this.nodejsModel = this.gltf.scene.getObjectByName('NodeJS') as THREE.Mesh
-    this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh
-
-    console.log(this.gltf.scene) */
-
-    // const pillerClickable = new Clickable(this.pillerModel, 1)
-    // const welcomeClickable = new Clickable(this.welcomeModel, 2)
-    // this.scene.add(welcomeClickable)
-    // this.scene.add(this.planeModel)
-    // this.scene.add(pillerClickable)
-    // this.clickables.push(pillerClickable)
-    // this.clickables.push(welcomeClickable)
-    //   this.pillerModel = home.scene.getObjectByName('Piller') as THREE.Mesh
-    //   this.planeModel = home.scene.getObjectByName('Plane') as THREE.Mesh
-    //   this.welcomeModel = home.scene.getObjectByName('Welcome') as THREE.Mesh
-    //   const pillerClickable = new Clickable(this.pillerModel, 1)
-    //   const welcomeClickable = new Clickable(this.welcomeModel, 2)
-    //   this.scene.add(welcomeClickable)
-    //   this.scene.add(pillerClickable)
-    //   this.clickables.push(pillerClickable)
-    //   this.clickables.push(welcomeClickable)
   }
   animation(delta: number, time: number) {
     // this.reactModel!.rotation.y += delta
@@ -111,6 +70,10 @@ class WorkPage {
     // this.nodejsModel!.rotation.z = Math.cos(time) * 0.5
     // this.nodejsModel!.rotation.x = Math.sin(time) * 0.4 + 1.5
     // this.nodejsModel!.rotation.y = Math.cos(time) * 0.2
+
+    this.clickables.forEach((p) => {
+      p.update(delta)
+    })
   }
 }
 
