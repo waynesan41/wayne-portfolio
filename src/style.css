@@ -486,9 +486,12 @@ dialog::backdrop {
 }
 /* HTML: <div class="loader"></div> */
 .loader {
+  /* --s: 25px; */
   --s: 25px;
+  /* --g: 5px; */
   --g: 5px;
 
+  /* width: calc(3 * (1.353 * var(--s) + var(--g))); */
   width: calc(3 * (1.353 * var(--s) + var(--g)));
   display: grid;
   justify-items: end;
@@ -538,6 +541,7 @@ dialog::backdrop {
 
 .loading-grid {
   display: grid;
+  justify-content: center;
   grid-template-columns: 1fr;
 }
 .loadingPercent {
@@ -549,4 +553,25 @@ dialog::backdrop {
   letter-spacing: 0.3rem;
   font-size: 40px;
   font-weight: bolder;
+}
+.tipImage {
+  align-items: center;
+  align-self: center;
+  margin: auto;
+  max-width: 97%;
+  max-height: 80vh;
+}
+.tipImageCredit {
+  align-items: center;
+  align-self: center;
+  margin: auto;
+  width: 100%;
+  max-height: 80vh;
+}
+.credit {
+  font-family: sans-serif;
+  color: white;
+  text-align: center;
+  align-items: center;
+  align-self: center;
 }

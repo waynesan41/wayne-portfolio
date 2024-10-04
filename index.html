@@ -9,8 +9,13 @@
   <body>
     <div id="loading">
       <div class="loading-grid">
-        <img />
-        <div class="loader"></div>
+        <div class="tipImage">
+          <img class="tipImage" src="public/img/pageTip/ControlTips.png" />
+        </div>
+        <div class="tipImage">
+          <div class="loader"></div>
+        </div>
+
         <div class="loadingPercent"><span id="percentNumber">1</span>%</div>
       </div>
     </div>
@@ -91,19 +96,41 @@
             <img src="img/close.svg" alt="close" height="30" width="30" />
           </span>
         </button>
-        <h1 class="page-title">Music</h1>
-        <a
-          style="color: white"
-          href="https://www.youtube.com/watch?v=eX4de4BH5lM"
-          target="_blank"
-          >Hollow Knight OST - Crossroads
-        </a>
+
+        <!-- Page Control Tips -->
+        <img class="tipImageCredit" src="public/img/pageTip/ControlTips.png" />
+        <div class="credit">
+          <h1>Music</h1>
+          <a
+            style="color: white"
+            href="https://www.youtube.com/watch?v=eX4de4BH5lM"
+            target="_blank"
+            >Hollow Knight OST - Crossroads
+          </a>
+          <h1>WebApp Page</h1>
+          <h2>AWS - 3D</h2>
+          <h2>Docker - 3D</h2>
+          <h2>Linux - 3D</h2>
+
+          <h1>Mobile App Page</h1>
+          <h2>Flutter - 3D</h2>
+          <h2>Java - 3D</h2>
+          <h2>Dart - 3D</h2>
+          <h2>Kotlin - 3D</h2>
+
+          <h1>Education Page</h1>
+          <h2>School - 3D</h2>
+          <h2>Coin - 3D</h2>
+          <h2>House - 3D</h2>
+          <h2>Cap - 3D</h2>
+        </div>
       </dialog>
 
       <button class="credit-btn">
         <img src="img/question.svg" alt="Question" height="25" width="25" />
       </button>
 
+      <!-- 717 Logistics Dialog -->
       <dialog id="workDialog">
         <button class="close-btn general-btn">
           <span>

@@ -65,11 +65,6 @@ async function init() {
   )
   controls = new OrbitControls(camera, renderer.domElement)
 
-  // Starter Script
-  await mainContent()
-  await navToggle()
-  await keyboardInput(controls)
-
   await new RGBELoader()
     // .loadAsync('img/venice_sunset_1k.hdr')
     .loadAsync('img/sky-compress.hdr')
@@ -143,11 +138,16 @@ async function init() {
   await addHoverRaycast(hoverable)
 
   //--------------------------------------------------
-  cameraControlMove.positionCamera(3)
+  cameraControlMove.positionCamera(0)
   //--------------------------------------------------
   // Stop Loading
   //--------------------------------------------------
   await stopLoading()
+
+  // Starter Script
+  await mainContent()
+  await navToggle()
+  await keyboardInput(controls)
 
   document.body.appendChild(renderer.domElement)
   window.addEventListener('resize', onWindowResize)
