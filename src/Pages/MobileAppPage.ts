@@ -4,7 +4,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { CamCtlPosition } from '../class/CameraControlMove'
 import { addRaycast, changePercent, lerp } from '../class/GlobalHelperFunction'
 import ClickRaycast from '../class/ClickRaycast'
-import { and, color } from 'three/webgpu'
 
 class MobileAppPage {
   dartModel: THREE.Mesh | undefined
@@ -187,6 +186,7 @@ class MobileAppPage {
     this.clickables.forEach((p) => {
       p.update(delta)
     })
+
     this.oneClickable.forEach((p) => {
       p.update(delta)
     })
