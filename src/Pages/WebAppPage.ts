@@ -94,7 +94,10 @@ class WebAppPage {
       'https://handybookmark.com/login'
     ) as ClickRaycast
 
-    this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh
+    // this.planeModel = this.gltf.scene.getObjectByName('Plane') as THREE.Mesh
+    const floorPlane = this.gltf.scene.getObjectByName('Plane') as ClickRaycast
+    floorPlane.update = () => {}
+    floorPlane.clickObj = () => {}
     this.bookmark = this.gltf.scene.getObjectByName('Bookmark') as THREE.Mesh
     this.bookmark.getWorldPosition(this.bookmark.position)
 
@@ -144,6 +147,7 @@ class WebAppPage {
     this.clickables.push(handyWebModel)
     this.clickables.push(lightSS)
     this.clickables.push(darkSS)
+    this.clickables.push(floorPlane)
 
     // Ray Casting Youtube Video xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     const youtubeOut = this.youtube.children[0] as ClickRaycast

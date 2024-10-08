@@ -258,14 +258,15 @@ body {
   text-align: center;
 }
 .pwords {
-  padding: 5px;
+  padding: 0px 5px;
   background: #444444e3;
   /* max-height: 40px; */
   /* display: inline; */
   /* opacity: 0.6; */
+  line-height: 1.5;
   color: white;
   font-size: x-large;
-  max-height: 1.2em;
+  max-height: 1.5em;
   overflow-x: hidden;
   overflow-y: hidden;
   /* width: 25%; */

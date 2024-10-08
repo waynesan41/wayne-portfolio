@@ -1,5 +1,3 @@
-import { Clock } from 'three'
-
 const string = `The spiral galaxy is classified as a Seyfert galaxy, one of the two largest groups of active galaxies, along with galaxies that host quasars
 
 . Seyfert galaxies aren’t as luminous and distant as quasars, making them a more convenient way to study similar phenomena in lower energy light, like infrared.
@@ -20,34 +18,50 @@ Arp 107 is located 465 million light-years from Earth in the constellation Leo M
 
 const contents = [
   {
-    title: 'Home',
-    content: string,
-    dialog: 'Click on the Stone to change movement.',
-    dialogContent: 'dance.webp',
+    title: 'About Me',
+    content: `<b>Welcome to my portfolio.</b> <br>
+    My name is Wayne. <br>
+    I am just a regular everyday normal developer.<br>
+    Working hard so my Boss (Cat) can have favorite fish can everyday.
+    `,
+    dialog: 'Click on the Piller to Change Movement.',
+    dialogContent: 'HomeTips.jpg',
   },
   {
     title: 'Web App',
-    content: string,
-    dialog: 'Hover over Bookmark to Change Color.',
-    dialogContent: 'dance.webp',
+    content: `This is a Full Stack Web App and Chrome Extension.<br>
+      The Goal for building this app is for me to learn. NodeJS, React and MongoDB.
+    `,
+    dialog: 'Double-click on following 3D Objects.',
+    dialogContent: 'WebAppTips.png',
   },
   {
     title: 'Mobile App',
-    content: string,
-    dialog: 'Click on Ground to move Smart Phone',
-    dialogContent: 'dance.webp',
+    content: `A Mobile App deploy on Play Store, developed using Flutter.<br><br>
+      The App use SQLlite in back ground to store user data locally.
+    `,
+    dialog: 'Click on ground surface to move the Android.',
+    dialogContent: 'MobileAppTips.jpg',
   },
   {
     title: 'Work Experience',
-    content: string,
-    dialog: 'Click on Egg to put Dollar Sign.',
-    dialogContent: 'dance.webp',
+    content: `I do not have realy Experience.<br>
+      I did create a chrome extension to may my job easier at the company I currently work.
+      <br>
+      I wanted to gain more expreience working with teams and other coders.
+      <br>
+    `,
+    dialog: 'Double-click on the Company to see Discriptions.',
+    dialogContent: 'WorkTips.jpg',
   },
   {
     title: 'Education',
-    content: string,
-    dialog: 'Click on the wheel to sping something something',
-    dialogContent: 'dance.webp',
+    content: `Stoped education for BS in Computer Science during Covid due to family and finical rasons.<br>
+      College Tution is very expensive.<br>
+      Most of the programming skills I learn over the years are free or very low price on Udemy.<br>
+    `,
+    dialog: 'Double-click on the following 3D Objects.',
+    dialogContent: 'EducationTips.jpg',
   },
 ]
 
@@ -72,8 +86,9 @@ const mainContent = async () => {
                 <img src="img/close.svg" alt="close" height="35" width="35" />
               </span>`
     dialog.innerHTML = `<h1 class="dialog-title">${element.dialog}</h1>
-    <div style="color: white">
-    <img src="img/pageTip/${element.dialogContent}" alt="Home ThreeJS Features." width="100%" />
+    <div style="color: white; text-align: center">
+    <img src="img/pageTip/${element.dialogContent}" alt="${element.title}" 
+    style="max-height: 80%; max-width: 80%"  />
     </div>`
     dialogContent.appendChild(closeBtn)
     dialogContent.appendChild(dialog)
@@ -106,12 +121,12 @@ const mainContent = async () => {
     `
 
     // Dialog
-
-    if (element.title == 'Home') {
+    if (element.dialogContent.includes('Home')) {
       section.className = 'content visible'
     } else {
       section.className = 'content'
     }
+
     pageTitle.className = 'page-title'
     pageContent.className = 'pwords'
     expandBtn.className = 'read'
@@ -122,7 +137,7 @@ const mainContent = async () => {
 
     pageTitle.appendChild(dialogContent)
     // pageTitle.innerHTML += element.title
-    pageContent.innerText = element.content
+    pageContent.innerHTML = element.content
     // divSection.appendChild(showBtn)
     divSection.appendChild(pageTitle)
     divSection.appendChild(pageContent)
