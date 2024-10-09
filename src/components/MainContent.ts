@@ -19,10 +19,21 @@ Arp 107 is located 465 million light-years from Earth in the constellation Leo M
 const contents = [
   {
     title: 'About Me',
-    content: `<b>Welcome to my portfolio.</b> <br>
-    My name is Wayne. <br>
-    I am just a regular everyday normal developer.<br>
-    Working hard so my Boss (Cat) can have favorite fish can everyday.
+    content: `
+    &emsp; Hello! I'm Wayne, a developer passionate about learning, building, and solving problems.
+    <br>
+    &emsp; My curiosity for science began in my early childhood, and the desire to continuously explore new technologies only increased.
+    <br>
+    &emsp; I thrive in collaborative environments and enjoy tackling complex challenges with a creative mindset.
+    <br>
+    <br>
+    &emsp; Currently, I am seeking new opportunities to further my growth and make impact to society.
+    <br>
+    - Email: <a style="color:white" href="mailto: waynesan41@gmail.com">waynesan41@gmail.com</a>
+    <br>
+    - Portfolio: <a style="color:white" href="https://github.com/waynesan41/wayne-portfolio">https://github.com/waynesan41/wayne-portfolio</a>
+    <br>
+    
     `,
     dialog: 'Click on the Piller to Change Movement.',
     dialogContent: 'HomeTips.jpg',
