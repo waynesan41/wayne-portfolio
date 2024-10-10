@@ -116,7 +116,8 @@ export async function navToggle() {
 }
 
 export async function combindHTMLContent() {
-  fetch('./src/components/credits.html')
+  const path = './content/'
+  fetch(path + 'credits.html')
     .then((response) => response.text())
     .then((html) => {
       // Use the fetched HTML content

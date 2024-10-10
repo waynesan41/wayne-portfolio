@@ -1,4 +1,4 @@
-const path = './src/components/'
+const path = './content/'
 
 export async function mainContent(floor: number) {
   let aboutHtml, webAppHtml, mobileAppHtml, experienceHtml, educationHtml
