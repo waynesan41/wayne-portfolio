@@ -77,10 +77,10 @@ body {
   margin: 0;
   height: auto;
   padding: 0;
-  z-index: 3;
+  z-index: 5;
 }
 .nav-over-lay {
-  z-index: 3 !important;
+  z-index: 4 !important;
 }
 
 @media only screen and (min-width: 1200px) {
@@ -233,7 +233,7 @@ body {
   max-height: fit-content;
   background-color: rgba(91, 91, 91, 0.367);
   padding: 4px;
-  z-index: 1;
+  z-index: 3;
   transition: 0.5s;
 }
 
@@ -575,4 +575,9 @@ dialog::backdrop {
   text-align: center;
   align-items: center;
   align-self: center;
+}
+
+/* Main Content Styling */
+.mainContent > * {
+  margin: 0px;
 }

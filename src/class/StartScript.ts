@@ -115,6 +115,16 @@ export async function navToggle() {
   })
 }
 
+export async function combindHTMLContent() {
+  fetch('./src/components/credits.html')
+    .then((response) => response.text())
+    .then((html) => {
+      // Use the fetched HTML content
+      const div = document.createElement('div')
+      div.innerHTML = html
+      document.getElementById('creditPopup')?.appendChild(div)
+    })
+}
 // Keyboard Short Cut
 //----------------------------------------------------------------------------
 

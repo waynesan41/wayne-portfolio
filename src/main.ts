@@ -10,8 +10,13 @@ import WebAppPage from './Pages/WebAppPage'
 import WorkPage from './Pages/WorkPage'
 import EducationPage from './Pages/EducationPage'
 import MobileAppPage from './Pages/MobileAppPage'
-import { keyboardInput, navToggle, stopLoading } from './class/StartScript'
-import mainContent from './components/MainContent'
+import {
+  combindHTMLContent,
+  keyboardInput,
+  navToggle,
+  stopLoading,
+} from './class/StartScript'
+import { mainContent } from './components/MainContent'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import ClickRaycast from './class/ClickRaycast'
@@ -138,20 +143,24 @@ async function init() {
   await addHoverRaycast(hoverable)
 
   //--------------------------------------------------
-  cameraControlMove.positionCamera(0)
+  // Set Camera Floor
+  const startFloor = 0
+  cameraControlMove.positionCamera(startFloor)
+
+  // Starter Script
+  await mainContent(startFloor)
+  await combindHTMLContent()
+  await navToggle()
+  await keyboardInput(controls)
+
   //--------------------------------------------------
   // Stop Loading
   //--------------------------------------------------
-  await stopLoading()
-
-  // Starter Script
-  await mainContent()
-  await navToggle()
-  await keyboardInput(controls)
 
   document.body.appendChild(renderer.domElement)
   window.addEventListener('resize', onWindowResize)
   animate()
+  await stopLoading()
 } // END Init
 
 function onWindowResize() {
