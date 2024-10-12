@@ -15,6 +15,12 @@ export async function mainContent(floor: number) {
       // Use the fetched HTML content
       webAppHtml = html
     })
+  await fetch(path + 'mobileApp.html')
+    .then((response) => response.text())
+    .then((html) => {
+      // Use the fetched HTML content
+      mobileAppHtml = html
+    })
 
   const contents = [
     {
@@ -31,9 +37,7 @@ export async function mainContent(floor: number) {
     },
     {
       title: 'Mobile App',
-      content: `A Mobile App deploy on Play Store, developed using Flutter.<br><br>
-      The App use SQLlite in back ground to store user data locally.
-    `,
+      content: mobileAppHtml,
       dialog: 'Click on ground surface to move the Android.',
       dialogContent: 'MobileAppTips.jpg',
     },

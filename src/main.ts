@@ -144,7 +144,7 @@ async function init() {
 
   //--------------------------------------------------
   // Set Camera Floor
-  const startFloor = 0
+  const startFloor = 2
   cameraControlMove.positionCamera(startFloor)
 
   // Starter Script

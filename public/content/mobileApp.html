@@ -1,0 +1,129 @@
+<div class="mainContent">
+  <h3>Personal Project: Mobile App (Android)</h3>
+  <hr />
+  <p style="margin: 10px 0px">
+    <strong>Project Title:</strong> Food Inventory Tracker (<a
+      style="color: white"
+      href="https://play.google.com/store/apps/details?id=com.pullyourselftogether.food_inventory_tracker&pli=1"
+      target="_blank"
+      >Play Store</a
+    >)<br /><strong>Technologies Used:</strong>
+    Flutter, Dart
+  </p>
+  <hr />
+  <h3>Overview</h3>
+  <p>
+    &emsp; Food Inventory Tracker is a mobile app that helps users manage their
+    groceries by allowing them to track, sort and search individual food items.
+    This comprehensive tracking system allow users to manage their groceries
+    efficiently to avoid waste.
+  </p>
+  <hr />
+  <h3>Features</h3>
+  <ol>
+    <li><strong>Tracking Items</strong></li>
+    <ul>
+      <li>Users can create, edit, and delete food items.</li>
+      <li>
+        Users can hide specific items from the main list, allowing them to
+        declutter their inventory view without permanently removing items.
+      </li>
+      <li>
+        If an item is accidentally deleted, users can easily undo the action and
+        restore it to the inventory.
+      </li>
+    </ul>
+    <li><strong>Image Input</strong></li>
+    <ul>
+      <li>
+        Users can attach images to food items by capturing a photo directly from
+        the camera or selecting one from the gallery for easy visual
+        identification.
+      </li>
+    </ul>
+    <li><strong>Filter Items</strong>:</li>
+    <ul>
+      <li>
+        Quickly find specific items in the inventory using the search function.
+      </li>
+      <li>
+        Easily sort the inventory by date added or expiration date to prioritize
+        items that need to be used first.
+      </li>
+    </ul>
+    <li><strong>UI Theme:</strong></li>
+    <ul>
+      <li>
+        Users can toggle between dark and light themes, providing a customizable
+        and comfortable viewing experience based on personal preference.
+      </li>
+    </ul>
+  </ol>
+  <hr />
+  <h3>Technical Implementation</h3>
+  <ul>
+    <li><strong>State Management:</strong></li>
+    <ul>
+      <li>
+        Used <strong>Flutter&rsquo;s </strong><code>Provider</code
+        ><strong> package</strong> for efficient state management, ensuring that
+        the app remains responsive and updates the UI automatically based on
+        changes to the inventory.
+      </li>
+    </ul>
+    <li><strong>Local Database Storage:</strong></li>
+    <ul>
+      <li>
+        Integrated <strong>SQLite</strong> using the
+        <code>sqflite</code> package for local data storage, allowing users to
+        store food items, descriptions, expiration dates, and image URIs.
+      </li>
+    </ul>
+    <li><strong>Image Handling:</strong></li>
+    <ul>
+      <li>
+        Implemented <strong>image capture</strong> via the device's camera and
+        <strong>image selection</strong> from the gallery using the
+        <code> image_picker </code>
+        package.
+      </li>
+    </ul>
+    <li><strong>Persistent Theme Switching:</strong></li>
+    <ul>
+      <li>
+        Light and dark theme persistence using
+        <code>SharedPreferences</code>, so the user's theme preference is
+        remembered even after closing the app.
+      </li>
+    </ul>
+  </ul>
+  <hr />
+  <h3>Challenges</h3>
+  <ul>
+    <li><strong>State Management</strong></li>
+    <ul>
+      <li>
+        One of the significant challenges I faced during the development of the
+        app was deciding which state management library to use. Flutter offers
+        various options, including
+        <code>Provider, flutter_bloc, Riverpod</code>, and others. Each library
+        has its own strengths and weaknesses, which took additional time to
+        research and compare those libraries.
+      </li>
+    </ul>
+  </ul>
+  <hr />
+  <h3>Conclusion</h3>
+  <p>
+    &emsp; The Food Inventory Tracker demonstrates my ability to build a
+    cross-platform mobile application with state management, and local data
+    storage solutions. Through features like camera and gallery access and theme
+    persistence, I&rsquo;ve created a app that can helps manage groceries items.
+    This project showcases my expertise in Flutter development and emphasizes my
+    ability to integrate various technologies to create a mobile app. The
+    challenge of selecting the right state management solution ultimately
+    enhanced my understanding of Flutter.
+  </p>
+  <hr />
+  <br />
+</div>
