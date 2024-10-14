@@ -144,7 +144,7 @@ async function init() {
 
   //--------------------------------------------------
   // Set Camera Floor
-  const startFloor = 1
+  const startFloor = 0
   cameraControlMove.positionCamera(startFloor)
 
   // Starter Script
@@ -161,6 +161,7 @@ async function init() {
   window.addEventListener('resize', onWindowResize)
   animate()
   await stopLoading()
+  renderer.setSize(window.innerWidth, window.innerHeight)
 } // END Init
 
 function onWindowResize() {
