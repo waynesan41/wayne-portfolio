@@ -95,6 +95,7 @@ export async function navToggle() {
   })
   //----------------------------------------------------------------------------
 
+  //++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // 717 Work Popup
   const dialog717 = document.getElementById('workDialog') as HTMLDialogElement
   const closeWorkDialog = document.querySelector('#workDialog button')
@@ -115,6 +116,8 @@ export async function navToggle() {
   })
 }
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Credit Content
 export async function combindHTMLContent() {
   const path = './content/'
   fetch(path + 'credits.html')
@@ -124,6 +127,15 @@ export async function combindHTMLContent() {
       const div = document.createElement('div')
       div.innerHTML = html
       document.getElementById('creditPopup')?.appendChild(div)
+    })
+
+  fetch(path + '717logistics.html')
+    .then((response) => response.text())
+    .then((html) => {
+      // Use the fetched HTML content
+      const div = document.createElement('div')
+      div.innerHTML = html
+      document.getElementById('jobDiscription')?.appendChild(div)
     })
 }
 // Keyboard Short Cut

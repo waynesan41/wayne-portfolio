@@ -21,6 +21,18 @@ export async function mainContent(floor: number) {
       // Use the fetched HTML content
       mobileAppHtml = html
     })
+  await fetch(path + 'experience.html')
+    .then((response) => response.text())
+    .then((html) => {
+      // Use the fetched HTML content
+      experienceHtml = html
+    })
+  await fetch(path + 'education.html')
+    .then((response) => response.text())
+    .then((html) => {
+      // Use the fetched HTML content
+      educationHtml = html
+    })
 
   const contents = [
     {
@@ -43,21 +55,13 @@ export async function mainContent(floor: number) {
     },
     {
       title: 'Work Experience',
-      content: `I do not have realy Experience.<br>
-      I did create a chrome extension to may my job easier at the company I currently work.
-      <br>
-      I wanted to gain more expreience working with teams and other coders.
-      <br>
-    `,
+      content: experienceHtml,
       dialog: 'Double-click on the Company to see Discriptions.',
       dialogContent: 'WorkTips.jpg',
     },
     {
       title: 'Education',
-      content: `Stoped education for BS in Computer Science during Covid due to family and finical rasons.<br>
-      College Tution is very expensive.<br>
-      Most of the programming skills I learn over the years are free or very low price on Udemy.<br>
-    `,
+      content: educationHtml,
       dialog: 'Double-click on the following 3D Objects.',
       dialogContent: 'EducationTips.jpg',
     },
